@@ -1,0 +1,51 @@
+#ifndef MINISHELL_H
+#define MINISHELL_H
+
+#include <stdio.h>          // printf
+#include <stdlib.h>         // malloc, free, exit, getenv
+#include <string.h>         // strerror
+#include <unistd.h>         // write, read, access, close, fork, execve, getcwd, chdir, dup, dup2, isatty, ttyname, ttyslot
+#include <fcntl.h>          // open
+#include <errno.h>          // perror, strerror
+#include <sys/wait.h>       // wait, waitpid, wait3, wait4
+#include <signal.h>         // signal, sigaction, sigemptyset, sigaddset, kill
+#include <sys/stat.h>       // stat, lstat, fstat
+#include <dirent.h>         // opendir, readdir, closedir
+#include <termios.h>        // tcsetattr, tcgetattr
+#include <sys/ioctl.h>      // ioctl
+#include <term.h>           // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+#include <readline/readline.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
+#include <readline/history.h>   // add_history, rl_clear_history
+#include <stdbool.h>
+
+
+typedef enum s_type
+{
+    TOKEN_WORD,       // command or argument
+    TOKEN_PIPE,       // |
+    TOKEN_REDIRECT_IN,    // <
+    TOKEN_REDIRECT_OUT,  // >
+    TOKEN_APPEND,         // >>
+    TOKEN_HEREDOC
+}   t_type;
+
+typedef struct s_token
+{
+    char    *value;
+    t_type  type;
+    struct s_token *next;
+}   t_token;
+
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t count, size_t size);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+int		ft_isspace(int c);
+char	**ft_split(char const *s);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+
+int    main_parse(char *s);
+
+#endif
