@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 22:53:24 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/13 16:10:24 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/15 10:08:12 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	char	*p;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	p = malloc(ft_strlen(s1) + 1);
 	if (p == NULL)
 		return (NULL);

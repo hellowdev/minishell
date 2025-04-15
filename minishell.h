@@ -45,7 +45,16 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+t_token *ft_lstlast(t_token *lst);
+void    ft_lstadd_back(t_token **lst, t_token *new);
+t_token *ft_lstnew(void *content);
+
 
 int    main_parse(char *s);
-
+int	red_infile(char *s, t_token **token);
+int here_doc(char *s, t_token **token);
+int	in_heredoc(char *s, t_token **head, int *j, int *i);
+int	words(char *s, t_token **head);
+int is_spcharc(char c);
+void	skip_space(char *s, int *i);
 #endif

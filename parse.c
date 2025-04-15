@@ -8,25 +8,34 @@ int is_spcharc(char c)
 		return (1);
 	return (0);
 }
-int	red_infile(char *s)
+void	skip_space(char *s, int *i)
 {
-	int i;
 
-	i = 1;
-	if (s[0] != '<')
-		return (0);
-	while (s && s[i])
+	while (ft_isspace(s[*i]) == 1)
+		(*i)++;
+}
+
+
+int	in_heredoc(char *s, t_token **head, int *j, int *i)
+{
+	
+	if (s[*i] == '<' && s[*i + 1] != '<')
 	{
-		if (is_spcharc(s[i]) == 0 && s[i] != 32)
-			return (i);
-		else if (is_spcharc(s[i]) == 1)
+		*j = red_infile(&s[*i], head);
+		if (*j == -1)
 		{
-			printf("error in infile\n");
-			return(-10);
-			// systax error
+			return (-1);
 		}
-		i++;
 	}
+	else if (s[*i] == '<' && s[*i + 1] == '<')
+	{
+		*j = here_doc(&s[*i], head);
+		if (*j == -1)
+		{
+			return (-1);
+		}
+	}
+	*i += *j;
 	return (i);
 }
 int	double_qoute(char *s, t_token *new)
@@ -34,7 +43,7 @@ int	double_qoute(char *s, t_token *new)
 	int i;
 	// char *p;
 	i = 0;
-	while (s && s[++i])
+	while (s && s[++i]) // 
 	{
 		if (s[i] == 34)
 		{
@@ -45,6 +54,7 @@ int	double_qoute(char *s, t_token *new)
 	}
 	return (i);
 }
+
 int	words(char *s, t_token **head)
 {
 	int i;
@@ -58,11 +68,14 @@ int	words(char *s, t_token **head)
 	if (is_spcharc(s[i]) == 1)
 	{
 		printf("error in words\n");
-		return (-10);
 		// systax error
+		// update $?
+		return (0);
 	}
+
 	while (s && s[i] && s[i] != 32)
 	{
+		
 		if (s[i] == 34)
 		{
 			new->value = ft_substr(s, 0, i);
@@ -74,28 +87,6 @@ int	words(char *s, t_token **head)
 	new->value = ft_strjoin(new->value, ft_substr(s, j, i));
 	printf("[%s]\n", new->value);
 	return (i);
-}
-
-int    main_parse(char *s)
-{
-	int i;
-	int j;
-	t_token *head;
-	
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		j = red_infile(&s[i]);
-		if (j == -10)
-			return (-1);
-		i += j;
-		
-		i += words(&s[i], &head);
-		// red_outfile(&s[i]);
-		i++;
-	}
-	return 1;
 }
 
 

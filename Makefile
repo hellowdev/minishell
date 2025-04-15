@@ -7,7 +7,8 @@ NAME = minishell
 SRC = 	minishell.c tools/ft_split.c  tools/ft_bzero.c\
 		tools/ft_calloc.c	tools/ft_memcpy.c	tools/ft_strdup.c\
 		tools/ft_strjoin.c	tools/ft_strlen.c	tools/ft_isspace.c\
-		parse.c 	tools/ft_substr.c
+		parse.c 	tools/ft_substr.c 	infile_herdoc.c 	tools/ft_lstlast.c\
+		tools/ft_lstnew.c 	tools/ft_lstadd_back.c
 
 OBJ = $(SRC:.c=.o)
 

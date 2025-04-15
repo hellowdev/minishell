@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 23:20:17 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/14 21:32:51 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/15 10:15:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	char	*p;
 
-	if (!s)
+	if (!s) // || (!start && !len)
 		return (NULL);
 	if (len > ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
