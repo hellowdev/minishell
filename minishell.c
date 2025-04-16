@@ -1,34 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/04/16 21:36:51 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-extern char **environ;
-
-void	tokenization(char *s, t_token **head)
-{
-	int i;
-	int j;
-
-	j = 0;
-	i = 0;	
-	while (s[i])
-	{
-		i += infile_heredoc(&s[i], head);
-		i += outfile_append(&s[i], head);
-		i += handle_pipe(&s[i], head);
-		i += check_words(&s[i], head);
-		if (ft_isspace(s[i]) == 1)
-			i++;
-	}
-}
-
-void	main_parse(char *s)
-{
-	t_token *head;
-
-	head = NULL;
-	tokenization(s, &head);
-}
-
-
 
 int main( int ac, char **av)
 {
@@ -46,6 +28,4 @@ int main( int ac, char **av)
 			free(line);
 		}
 	}
-	
-	
 }

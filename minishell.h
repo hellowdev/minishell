@@ -18,6 +18,8 @@
 # include <readline/history.h>   // add_history, rl_clear_history
 # include <stdbool.h>
 
+extern char **environ;
+
 typedef enum s_type
 {
     TOKEN_WORD,
@@ -41,6 +43,16 @@ typedef struct s_env
     char	*value_env;
 	struct s_env *next;
 }	t_env;
+
+typedef struct s_parce
+{
+    char    **cmd;
+	char	**infiles;
+    char	**outfiles;
+    char    **heredoc;
+    bool    append;
+	struct s_env *next;
+}	t_parce;
 
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
@@ -74,9 +86,13 @@ int		ft_lenspace(char *s);
 int		check_words(char *s, t_token **head);
 int		doub_qt(char *s);
 
+
 // ------------------------ COPY_ENV ----------------------- //
 t_env   *lstnew_env(void *name, void *value);
 void    env_add_back(t_env **lst, t_env *new);
 void	ft_lstdelone(t_env *lst);
+void	copy_env(t_env **head);
+int     len_equal(char *s);
+
 
 # endif
