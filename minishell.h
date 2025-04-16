@@ -36,6 +36,13 @@ typedef struct s_token
     struct s_token *next;
 }   t_token;
 
+typedef struct s_env
+{
+	char	*name_env;
+    char	*value_env;
+	struct s_env *next;
+}	t_env;
+
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -50,7 +57,7 @@ void    ft_lstadd_back(t_token **lst, t_token *new);
 t_token *ft_lstnew(void *content);
 
 
-int    main_parse(char *s);
+void    main_parse(char *s);
 int	red_infile(t_token **token);
 int	red_outfile(t_token **token);
 int here_doc(t_token **token);
@@ -62,6 +69,10 @@ int	outfile_append(char *s, t_token **head);
 int	append(t_token **token);
 int	handle_pipe(char *s, t_token **head);
 int	ft_lenspace(char *s);
-int	len_qt(char *s);
+int	check_words(char *s, t_token **head);
+int	doub_qt(char *s);
 
+t_env   *lstnew_env(void *name, void *value);
+void    env_add_back(t_env **lst, t_env *new);
+void	ft_lstdelone(t_env *lst);
 #endif

@@ -26,7 +26,7 @@ int	handle_pipe(char *s, t_token **head)
 		new = ft_lstnew(ft_strdup("|"));
 		new->type = TOKEN_PIPE;
 		ft_lstadd_back(head, new);
-		printf("pipe: [%s]\n", new->value);
+		// printf("pipe: [%s]\n", new->value);
 		return (1);
 	}
 	return (0);
