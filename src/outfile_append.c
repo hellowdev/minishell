@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 int	outfile_append(char *s, t_token **head)
 {
@@ -17,7 +17,6 @@ int	red_outfile(t_token **token)
 	new = ft_lstnew(ft_strdup(">"));
 	new->type = TOKEN_REDIRECT_OUT;
 	ft_lstadd_back(token, new);
-	// printf("outfile: [%s]\n", new->value);
 	return (1);
 }
 
@@ -27,6 +26,5 @@ int	append(t_token **token)
 	new = ft_lstnew(ft_strdup(">>"));
 	new->type = TOKEN_APPEND;
 	ft_lstadd_back(token, new);
-	// printf("append: [%s]\n", new->value);
 	return (2);
 }

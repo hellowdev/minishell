@@ -28,52 +28,7 @@ void	main_parse(char *s)
 	tokenization(s, &head);
 }
 
-int	len_equal(char *s)
-{
-	int cnt;
 
-	cnt = 0;
-	while (s[cnt] && s[cnt] != '=')
-		cnt++;
-	return (cnt);
-}
-
-void	copy_env(t_env **head)
-{
-	int		i;
-	t_env	*new;
-	char	*name;
-	char	*value;
-
-	i = 0;
-	while (environ[i])
-	{
-		name = ft_substr(environ[i], 0, len_equal(environ[i]));
-		value = ft_substr(environ[i], len_equal(environ[i]) + 1, ft_strlen(environ[i]));
-		new = lstnew_env(name, value);
-		env_add_back(head, new);
-		i++;
-	}
-	
-}
-
-void	display(t_env *list)
-{
-	while (list)
-	{
-		printf("%s=", list->name_env);
-		printf("%s\n", list->value_env);
-		list = list->next;
-	}
-	
-}
-
-void	disp_ar(char **str)
-{
-	int i = 0;
-	while (str[i])
-		printf("%s\n", str[i++]);
-}
 
 int main( int ac, char **av)
 {
@@ -90,7 +45,6 @@ int main( int ac, char **av)
 			main_parse(line);
 			free(line);
 		}
-		
 	}
 	
 	

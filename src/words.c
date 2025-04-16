@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 int	doub_qt(char *s)
 {
@@ -57,7 +57,6 @@ int words(char *s, t_token **token)
 	ret = ft_lenspace(s);
 	new = ft_lstnew(ft_substr(s, 0, ret));
 	new->type = TOKEN_WORD;
-	// printf("word: [%s]\n", new->value);
 	ft_lstadd_back(token, new);
 	return (ret); 
 }
