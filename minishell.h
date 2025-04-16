@@ -51,10 +51,17 @@ t_token *ft_lstnew(void *content);
 
 
 int    main_parse(char *s);
-int	red_infile(char *s, t_token **token);
-int here_doc(char *s, t_token **token);
-int	in_heredoc(char *s, t_token **head, int *j, int *i);
+int	red_infile(t_token **token);
+int	red_outfile(t_token **token);
+int here_doc(t_token **token);
+int	infile_heredoc(char *s, t_token **head);
 int	words(char *s, t_token **head);
 int is_spcharc(char c);
-void	skip_space(char *s, int *i);
+int	skip_space(char *s);
+int	outfile_append(char *s, t_token **head);
+int	append(t_token **token);
+int	handle_pipe(char *s, t_token **head);
+int	ft_lenspace(char *s);
+int	len_qt(char *s);
+
 #endif

@@ -1,9 +1,17 @@
 #include "../minishell.h"
 
-void ft_lstadd_back(t_token **lst, t_token *new)
+void	ft_lstadd_back(t_token **lst, t_token *new)
 {
-	if (!*lst || !new)
+	t_token	*last;
+
+	if (!lst || !new)
 		return ;
-	t_token *last = ft_lstlast(*lst);
-	last->next = new;
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		last = ft_lstlast(*lst);
+		last->next = new;
+	}
 }
+

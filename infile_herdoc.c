@@ -1,33 +1,36 @@
 #include "minishell.h"
 
-int	red_infile(char *s, t_token **token)
+int	infile_heredoc(char *s, t_token **head)
 {
 	int i;
-
 	i = 0;
-	
-	t_token *new;
-	new->type = TOKEN_REDIRECT_IN;
-	new = ft_lstnew(ft_strdup(s));
-	ft_lstadd_back(token, new);
-	// while (s[i] && s[i] !=)
-	// {
-	// 	if (is_spcharc(s[i]) == 0 && s[i] != 32) // <fe"
-	// 		return (i);
-	// 	else if (is_spcharc(s[i]) == 1)
-	// 	{
-	// 		printf("error in infile\n");
-	// 		return(-1);
-	// 		// systax error
-	// 		// update exit status variable
-	// 	}
-	// 	i++;
-	// }
-	// return (i);
+	if (s && s[i] == '<' && s[i + 1] != '<')
+		i += red_infile(head);
+	else if (s && s[i] == '<' && s[i + 1] == '<')
+		i += here_doc(head);
+	return (i);
 }
 
-// int here_doc(char *s, t_token **token)
-// {
+int	red_infile(t_token **token)
+{	
+	t_token *new;
+	new = ft_lstnew(ft_strdup("<"));
+	new->type = TOKEN_REDIRECT_IN;
+	ft_lstadd_back(token, new);
+	printf("infile: [%s]\n", new->value);
+	return (1);
+}
+
+int here_doc(t_token **token)
+{
+	t_token *new;
+	new = ft_lstnew(ft_strdup("<<"));
+	
+	new->type = TOKEN_HEREDOC;
+	ft_lstadd_back(token, new);
+	printf("heredoc: [%s]\n", new->value);
+	return (2);
+
+}
 
 
-// }
