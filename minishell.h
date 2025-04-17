@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/04/17 17:55:55 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -22,12 +34,12 @@ extern char **environ;
 
 typedef enum s_type
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,       
-    TOKEN_REDIRECT_IN,    
-    TOKEN_REDIRECT_OUT,  
-    TOKEN_APPEND,
-    TOKEN_HEREDOC
+    WORD,
+    PIPE,       
+    REDIRECT_IN,    
+    REDIRECT_OUT,  
+    APPEND,
+    HEREDOC
 }   t_type;
 
 typedef struct s_token
@@ -46,11 +58,11 @@ typedef struct s_env
 
 typedef struct s_parce
 {
-    char    **cmd;
+    char	**cmd;
 	char	**infiles;
     char	**outfiles;
-    char    **heredoc;
-    bool    append;
+    char	**heredoc;
+    char	**append;
 	struct s_env *next;
 }	t_parce;
 
@@ -94,5 +106,5 @@ void	ft_lstdelone(t_env *lst);
 void	copy_env(t_env **head);
 int     len_equal(char *s);
 
-
+int		valid_word(char *s);
 # endif

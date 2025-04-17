@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   words.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/04/17 17:24:40 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	doub_qt(char *s)
@@ -40,7 +52,7 @@ int	ft_lenspace(char *s)
 	i = 0;
 	
 	while (s[i] && ft_isspace(s[i]) == 0 \
-	&& s[i] != '<' && s[i] != '>'  && s[i] != '|')
+	&& s[i] != '<' && s[i] != '>' && s[i] != '|')
 	{
 		if (s[i] == 34)
 			i += doub_qt(&s[i]); // i += len_qt(&s[i + 1]); ???
@@ -56,7 +68,7 @@ int words(char *s, t_token **token)
 	int ret;
 	ret = ft_lenspace(s);
 	new = ft_lstnew(ft_substr(s, 0, ret));
-	new->type = TOKEN_WORD;
+	new->type = WORD;
 	ft_lstadd_back(token, new);
 	return (ret); 
 }

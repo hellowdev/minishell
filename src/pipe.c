@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/16 21:50:14 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/04/17 17:24:31 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int is_spcharc(char c)
@@ -24,7 +36,7 @@ int	handle_pipe(char *s, t_token **head)
 	if (s[0] == '|')
 	{	
 		new = ft_lstnew(ft_strdup("|"));
-		new->type = TOKEN_PIPE;
+		new->type = PIPE;
 		ft_lstadd_back(head, new);
 		return (1);
 	}

@@ -23,7 +23,8 @@ SRC = 	minishell.c \
 		src/pipe.c\
 		src/outfile_append.c \
 		src/infile_herdoc.c \
-		src/copy_env.c 
+		src/copy_env.c\
+		src/valid_word.c
 
 OBJ = $(SRC:.c=.o)
 
