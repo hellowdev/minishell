@@ -63,10 +63,22 @@ void	heredoc_data(t_token *head, t_parce *newnode)
 		
 	}
 }
-void	word_data(t_token *head, t_parce *newnode)
+int	count_cmd(t_token *head)
+{
+	int i;
+
+	i = 0;
+	while (head && head->type == WORD)
+	{
+		
+	}
+	
+}
+void	cmd_data(t_token *head, t_parce *newnode)
 {
 	static int i;
-	
+	// value WORD == echo -> -n -> "test"
+	// cmd == 3
 	if (head->type == WORD && valid_word(head->value) == 1)
 	{
 		newnode->cmd[i] = ft_strdup(head->value);

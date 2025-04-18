@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/18 12:06:56 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/18 12:52:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	pars_ing(t_token *head)
 		outfile_data(head, newnode);
 		append_data(head, newnode);
 		heredoc_data(head, newnode);
-		word_data(head, newnode);
+		cmd_data(head, newnode);
 		head = head->next;
 	}
 	
