@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/17 18:28:49 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/18 12:06:56 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,24 @@ void	tokenization(char *s, t_token **head)
 			i++;
 	}
 }
+
 int	pars_ing(t_token *head)
 {
-	int		i;
-	int		c;
-	int		o;
-	t_parce	*list;
-
-	i = 0;
-	c = 0;
-	o = 0;
+	
+	t_parce *newnode = malloc(sizeof(t_parce));
+    
+    if (!newnode)
+        return (NULL);
+	
 	if (head->type == PIPE)
-		return (free(head), write(2, "syntax error near unexpected token `|'", 39), 1);
-	else if (head->type == WORD)
-		list->cmd[c++] = ft_strdup(head->value);
+		return (ft_lstclear(head), write(2, "syntax error near unexpected token", 35), 258);	
 	while (head)
 	{
-		if (head->type == REDIRECT_IN && valid_word(head->next) == 1)
-		{
-			list->infiles[i++] = ft_strdup(head->next->value);
-			head = head->next;
-		}
-		else if (head->type == REDIRECT_OUT && valid_word(head->next))
-		{
-			list->outfiles[o++] = ft_strdup(head->next->value);
-			head = head->next;
-		}
-		
+		infile_data(head, newnode);
+		outfile_data(head, newnode);
+		append_data(head, newnode);
+		heredoc_data(head, newnode);
+		word_data(head, newnode);
 		head = head->next;
 	}
 	
@@ -67,7 +58,7 @@ void	main_parse(char *s)
 
 	head = NULL;
 	tokenization(s, &head);
-	pars_ing(&head);
+	pars_ing(head);
 	
     // syntax_validation(head);
 }

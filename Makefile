@@ -24,7 +24,9 @@ SRC = 	minishell.c \
 		src/outfile_append.c \
 		src/infile_herdoc.c \
 		src/copy_env.c\
-		src/valid_word.c
+		src/valid_word.c\
+		src/get_data.c\
+		src/forfree.c\
 
 OBJ = $(SRC:.c=.o)
 

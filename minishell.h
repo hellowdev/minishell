@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/17 17:55:55 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/18 11:25:48 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,14 @@ void	copy_env(t_env **head);
 int     len_equal(char *s);
 
 int		valid_word(char *s);
+
+// ------------------------ parse_data ----------------------- //
+void	infile_data(t_token **head, t_parce *newnode);
+void	outfile_data(t_token **head, t_parce *newnode);
+void	append_data(t_token **head, t_parce *newnode);
+void	heredoc_data(t_token **head, t_parce *newnode);
+void	word_data(t_token **head, t_parce *newnode);
+// ------------------------ free_data ----------------------- //
+void	ft_lstclear(t_token **lst);
+void	doubfree(char **s)
 # endif
