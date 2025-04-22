@@ -6,7 +6,7 @@
 /*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/18 15:30:13 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/04/22 18:22:10 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ void	data_alloc(t_token *head, t_parce **newnode)
 	}
 }
 
-int	pars_ing(t_env *env, t_token *head)
+int	pars_ing(t_parce **lst, t_env *env, t_token *head)
 {
-	t_parce	*lst;
 	t_parce *newnode;
 
 	newnode = malloc(sizeof(t_parce));
@@ -65,7 +64,7 @@ int	pars_ing(t_env *env, t_token *head)
 	data_alloc(head, &newnode);
 
 	if (head->type == PIPE)
-		return (ft_lstclear(head), write(2, "syntax error near unexpected token", 35), 258);	
+		return (ft_lstclear(head), write(2, "syntax error near unexpected token", 35), 258);
 	while (head)
 	{
 		infile_data(env, head, newnode);
@@ -80,10 +79,9 @@ int	pars_ing(t_env *env, t_token *head)
 void	main_parse(t_env *env, char *s)
 {
 	t_token *head;
+	t_parce *list;
 
 	head = NULL;
 	tokenization(s, &head);
-	pars_ing(env, head);
-	
-    // syntax_validation(head);
+	pars_ing(&list, env, head);
 }

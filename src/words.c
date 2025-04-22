@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   words.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/17 17:24:40 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/22 17:52:24 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_lenspace(char *s)
 	&& s[i] != '<' && s[i] != '>' && s[i] != '|')
 	{
 		if (s[i] == 34)
-			i += doub_qt(&s[i]); // i += len_qt(&s[i + 1]); ???
+			i += doub_qt(&s[i]);
 		else if (s[i] == 39)
 			i += sing_qt(&s[i]);
 		i++;
