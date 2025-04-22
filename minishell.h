@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/18 12:52:57 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/18 15:34:24 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_parce
 	char	**infiles;
     char	**outfiles;
     char	**heredoc;
-    char	**append;
+    bool	*append;
 	struct s_env *next;
 }	t_parce;
 
@@ -83,7 +83,7 @@ void    ft_lstadd_back(t_token **lst, t_token *new);
 t_token *ft_lstnew(void *content);
 
 // ------------------------ TOKENIZATION ----------------------- //
-void	main_parse(char *s);
+void	main_parse(t_env *env, char *s);
 int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
 int		here_doc(t_token **token);
@@ -102,19 +102,25 @@ int		doub_qt(char *s);
 // ------------------------ COPY_ENV ----------------------- //
 t_env   *lstnew_env(void *name, void *value);
 void    env_add_back(t_env **lst, t_env *new);
-void	ft_lstdelone(t_env *lst);
 void	copy_env(t_env **head);
 int     len_equal(char *s);
 
-int		valid_word(char *s);
+// ------------------------ ALLOCATE_DATA ----------------------- //
 
-// ------------------------ parse_data ----------------------- //
-void	infile_data(t_token *head, t_parce *newnode);
-void	outfile_data(t_token *head, t_parce *newnode);
-void	append_data(t_token *head, t_parce *newnode);
-void	heredoc_data(t_token *head, t_parce *newnode);
-void	cmd_data(t_token *head, t_parce *newnode);
+int     count_cmd(t_token *head);
+int     count_infiles(t_token *head);
+int		count_outfiles(t_token *head);
+int		count_heredoc(t_token *head);
+void	data_alloc(t_token *head, t_parce **newnode);
+// ------------------------ PARCE_DATA ----------------------- //
+
+void    update_status(t_env *env);
+void	infile_data(t_env *env, t_token *head, t_parce *newnode);
+void	outfile_data(t_env *env, t_token *head, t_parce *newnode);
+void	heredoc_data(t_env *env, t_token *head, t_parce *newnode);
+void	cmd_data(t_env *env, t_token *head, t_parce *newnode);
+int		valid_word(char *s);
 // ------------------------ free_data ----------------------- //
-void	ft_lstclear(t_token **lst);
-void	doubfree(char **s)
+void	ft_lstclear(t_token *lst);
+void	doubfree(char **s);
 # endif

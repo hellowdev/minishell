@@ -28,20 +28,20 @@ void	doubfree(char **s)
 	}
 	free(s);
 }
-void	free_doublst(t_parce *head)
-{
-	if (!head)
-		return ;
+// void	free_doublst(t_parce *head)
+// {
+// 	if (!head)
+// 		return ;
 
-    t_token *tmp;
-	tmp = head;
+//     t_token *tmp;
+// 	tmp = head;
     
-    while (tmp)
-    {
-        tmp = tmp->next;
-		free(lst->value);
-		doubfree(head);
-		free(lst);
-        lst = tmp;
-    }
-}
+//     while (tmp)
+//     {
+//         tmp = tmp->next;
+// 		free(lst->value);
+// 		doubfree(head);
+// 		free(lst);
+//         lst = tmp;
+//     }
+// }

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	infile_data(t_token *head, t_parce *newnode)
+void	infile_data(t_env *env, t_token *head, t_parce *newnode)
 {
 	static int i;
 	
@@ -12,43 +12,33 @@ void	infile_data(t_token *head, t_parce *newnode)
 	}
 	else if (head->type == REDIRECT_IN && valid_word(head->next) != 1)
 	{
-		return (ft_lstclear(head), , write(2, "syntax error near unexpected token", 35), 258);
+		update_status(env);
+		write(2, "syntax error near unexpected token", 35);
+		return (ft_lstclear(head)/*, free cmd , free outfiles, free infiles, free appends, free heredocs*/);
 	}
-	else
 	
 }
-void	outfile_data(t_token *head, t_parce *newnode)
+void	outfile_data(t_env *env, t_token *head, t_parce *newnode)
 {
 	static int i;
 
-	if (head->type == REDIRECT_OUT && valid_word(head->next) == 1)
+	if ((head->type == REDIRECT_OUT || head->type == APPEND) && valid_word(head->next) == 1)
 	{
 		newnode->outfiles[i] = ft_strdup(head->next->value);
 		head = head->next;
 		i++;
+		if (head->type == REDIRECT_OUT)
+			newnode->append[i] = false;
+		else if (head->type == APPEND)
+			newnode->append[i] = true;
 	}
 	else if (head->type == REDIRECT_OUT && valid_word(head->next) != 1)
 	{
 		
 	}
-	else
 }
-void	append_data(t_token *head, t_parce *newnode)
-{
-	static int i;
 
-	if (head->type == APPEND && valid_word(head->next) == 1)
-	{
-		newnode->append[i] = ft_strdup(head->next->value);
-		i++;
-		head = head->next;
-	}
-	else if (head->type == APPEND && valid_word(head->next) != 1)
-	{
-		
-	}
-}
-void	heredoc_data(t_token *head, t_parce *newnode)
+void	heredoc_data(t_env *env, t_token *head, t_parce *newnode)
 {
 	static int i;
 
@@ -63,18 +53,8 @@ void	heredoc_data(t_token *head, t_parce *newnode)
 		
 	}
 }
-int	count_cmd(t_token *head)
-{
-	int i;
 
-	i = 0;
-	while (head && head->type == WORD)
-	{
-		
-	}
-	
-}
-void	cmd_data(t_token *head, t_parce *newnode)
+void	cmd_data(t_env *env, t_token *head, t_parce *newnode)
 {
 	static int i;
 	// value WORD == echo -> -n -> "test"

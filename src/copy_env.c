@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/16 21:49:59 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/18 15:21:19 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,6 @@ void	copy_env(t_env **head)
 		env_add_back(head, new);
 		i++;
 	}
+	new = lstnew_env(ft_strdup("status"), ft_strdup("0"));
+	env_add_back(head, new);
 }

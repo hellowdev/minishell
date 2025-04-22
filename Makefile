@@ -27,6 +27,8 @@ SRC = 	minishell.c \
 		src/valid_word.c\
 		src/get_data.c\
 		src/forfree.c\
+		src/count_data.c\
+		src/update_status.c
 
 OBJ = $(SRC:.c=.o)
 
