@@ -6,20 +6,12 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:14 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/17 17:24:31 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/23 12:17:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int is_spcharc(char c)
-{
-	if ((c == '|' || c == '>'
-	|| c == '&' || c == '(' || c == ')' 
-	|| c == '#' || c == ';' || c == '<'))
-		return (1);
-	return (0);
-}
 int	skip_space(char *s)
 {
 	int i;

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/17 17:24:11 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:08:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	red_outfile(t_token **token)
 {
     t_token *new;
 	new = ft_lstnew(ft_strdup(">"));
-	new->type = REDIRECT_OUT;
+	new->type = RED_OUT;
 	ft_lstadd_back(token, new);
 	return (1);
 }

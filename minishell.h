@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/18 15:34:24 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/04/23 17:35:06 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef enum s_type
 {
     WORD,
     PIPE,       
-    REDIRECT_IN,    
-    REDIRECT_OUT,  
+    RED_IN,   
+    RED_OUT,
     APPEND,
     HEREDOC
 }   t_type;
@@ -63,7 +63,7 @@ typedef struct s_parce
     char	**outfiles;
     char	**heredoc;
     bool	*append;
-	struct s_env *next;
+	struct s_parce *next;
 }	t_parce;
 
 // --------------------------- DISPLAY ----------------------- //
@@ -81,6 +81,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 t_token *ft_lstlast(t_token *lst);
 void    ft_lstadd_back(t_token **lst, t_token *new);
 t_token *ft_lstnew(void *content);
+int     ft_strcmp(char *s1, char *s2);
 
 // ------------------------ TOKENIZATION ----------------------- //
 void	main_parse(t_env *env, char *s);
@@ -97,7 +98,7 @@ int		handle_pipe(char *s, t_token **head);
 int		ft_lenspace(char *s);
 int		check_words(char *s, t_token **head);
 int		doub_qt(char *s);
-
+int     sing_qt(char *s);
 
 // ------------------------ COPY_ENV ----------------------- //
 t_env   *lstnew_env(void *name, void *value);
@@ -112,15 +113,20 @@ int     count_infiles(t_token *head);
 int		count_outfiles(t_token *head);
 int		count_heredoc(t_token *head);
 void	data_alloc(t_token *head, t_parce **newnode);
-// ------------------------ PARCE_DATA ----------------------- //
+// ------------------------ tokenization_DATA ----------------------- //
 
+void	tokenization(char *s, t_token **head);
+
+int 	infile_data(t_env *env, t_token **head, t_parce *newnode);
+int 	outfile_data(t_env *env, t_token **head, t_parce *newnode);
+int 	heredoc_data(t_env *env, t_token **head, t_parce *newnode);
+// ------------------------ PARCE_DATA ----------------------- //
 void    update_status(t_env *env);
-void	infile_data(t_env *env, t_token *head, t_parce *newnode);
-void	outfile_data(t_env *env, t_token *head, t_parce *newnode);
-void	heredoc_data(t_env *env, t_token *head, t_parce *newnode);
-void	cmd_data(t_env *env, t_token *head, t_parce *newnode);
-int		valid_word(char *s);
+int 	cmd_data(t_env *env, t_token *head, t_parce *newnode);
+void    pars_ing(t_parce **lst, t_env *env, t_token *head);
+int		valid_word(t_token *head);
 // ------------------------ free_data ----------------------- //
 void	ft_lstclear(t_token *lst);
 void	doubfree(char **s);
+void	parse_add_back(t_parce **lst, t_parce *new);
 # endif

@@ -17,18 +17,21 @@ SRC = 	minishell.c \
 		tools/ft_lstnew.c \
 		tools/ft_substr.c \
 		tools/ft_lstlast.c \
+		tools/ft_strcmp.c \
 		tools/ft_lstadd_back.c \
-		src/parse.c\
-		src/words.c\
-		src/pipe.c\
-		src/outfile_append.c \
-		src/infile_herdoc.c \
-		src/copy_env.c\
-		src/valid_word.c\
-		src/get_data.c\
-		src/forfree.c\
-		src/count_data.c\
-		src/update_status.c
+		parse/parse.c\
+		token/words.c\
+		token/tokenz.c\
+		token/pipe.c\
+		token/outfile_append.c \
+		token/infile_herdoc.c \
+		parse/copy_env.c\
+		parse/valid_word.c\
+		parse/get_data.c\
+		parse/forfree.c\
+		parse/count_data.c\
+		parse/update_status.c\
+
 
 OBJ = $(SRC:.c=.o)
 

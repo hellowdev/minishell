@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   words.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/22 17:52:24 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/04/23 12:37:14 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	doub_qt(char *s)
 	return (i);
 }
 
-
 int	sing_qt(char *s)
 {
 	int i;
@@ -39,9 +38,10 @@ int	check_words(char *s, t_token **head)
 {
 	int i;
 	i = 0;
-	if (s[i] && ft_isspace(s[i]) == 0 && (s[i] != '<' && (s[i] != '<' \
-		&& s[i + 1] != '<')) && (s[i] != '>' && (s[i] != '>' \
-		&& s[i + 1] != '>')) && (s[i] != '|'))
+	if (s[i] && ft_isspace(s[i]) == 0 \
+	&& (s[i] != '<' && (s[i] != '<' \
+	&& s[i + 1] != '<')) && (s[i] != '>' && (s[i] != '>' \
+	&& s[i + 1] != '>')) && (s[i] != '|'))
 			i += words(&s[i], head);
 	return (i);
 }
