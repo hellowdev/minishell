@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 17:35:06 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/23 22:45:25 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ typedef struct s_parce
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
+
 // --------------------------- TOOLS ----------------------- //
+
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -84,6 +86,7 @@ t_token *ft_lstnew(void *content);
 int     ft_strcmp(char *s1, char *s2);
 
 // ------------------------ TOKENIZATION ----------------------- //
+
 void	main_parse(t_env *env, char *s);
 int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
@@ -99,8 +102,10 @@ int		ft_lenspace(char *s);
 int		check_words(char *s, t_token **head);
 int		doub_qt(char *s);
 int     sing_qt(char *s);
+void	tokenization(char *s, t_token **head);
 
 // ------------------------ COPY_ENV ----------------------- //
+
 t_env   *lstnew_env(void *name, void *value);
 void    env_add_back(t_env **lst, t_env *new);
 void	copy_env(t_env **head);
@@ -112,21 +117,21 @@ int     count_cmd(t_token *head);
 int     count_infiles(t_token *head);
 int		count_outfiles(t_token *head);
 int		count_heredoc(t_token *head);
-void	data_alloc(t_token *head, t_parce **newnode);
-// ------------------------ tokenization_DATA ----------------------- //
+t_parce	*data_alloc(t_token *head);
 
-void	tokenization(char *s, t_token **head);
-
-int 	infile_data(t_env *env, t_token **head, t_parce *newnode);
-int 	outfile_data(t_env *env, t_token **head, t_parce *newnode);
-int 	heredoc_data(t_env *env, t_token **head, t_parce *newnode);
 // ------------------------ PARCE_DATA ----------------------- //
+
 void    update_status(t_env *env);
-int 	cmd_data(t_env *env, t_token *head, t_parce *newnode);
+int 	cmd_data(t_env *env, t_token *head, t_parce *newnode, int *x);
+int 	infile_data(t_env *env, t_token **head, t_parce *newnode, int *x);
+int 	outfile_data(t_env *env, t_token **head, t_parce *newnode, int *x);
+int 	heredoc_data(t_env *env, t_token **head, t_parce *newnode, int *x);
 void    pars_ing(t_parce **lst, t_env *env, t_token *head);
 int		valid_word(t_token *head);
+void	parse_add_back(t_parce **lst, t_parce *new);
+
 // ------------------------ free_data ----------------------- //
+
 void	ft_lstclear(t_token *lst);
 void	doubfree(char **s);
-void	parse_add_back(t_parce **lst, t_parce *new);
 # endif

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 12:37:14 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/23 21:20:27 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ int	check_words(char *s, t_token **head)
 {
 	int i;
 	i = 0;
-	if (s[i] && ft_isspace(s[i]) == 0 \
-	&& (s[i] != '<' && (s[i] != '<' \
-	&& s[i + 1] != '<')) && (s[i] != '>' && (s[i] != '>' \
-	&& s[i + 1] != '>')) && (s[i] != '|'))
+
+	if (s[i] && !ft_isspace(s[i]) && s[i] != '<' && s[i] != '>' && s[i] != '|')
 			i += words(&s[i], head);
 	return (i);
 }
@@ -66,6 +64,7 @@ int words(char *s, t_token **token)
 {
 	t_token *new;
 	int ret;
+	
 	ret = ft_lenspace(s);
 	new = ft_lstnew(ft_substr(s, 0, ret));
 	new->type = WORD;

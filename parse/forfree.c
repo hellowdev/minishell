@@ -33,13 +33,13 @@ void	doubfree(char **s)
 // 	if (!head)
 // 		return ;
 
-//     t_token *tmp;
+//     t_parce *tmp;
 // 	tmp = head;
     
 //     while (tmp)
 //     {
 //         tmp = tmp->next;
-// 		free(lst->value);
+// 		free(head.);
 // 		doubfree(head);
 // 		free(lst);
 //         lst = tmp;

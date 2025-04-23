@@ -1,29 +1,46 @@
 #include "../minishell.h"
 
-int	count_cmd(t_token *head)
-{
-	int		i;
-	int		j;
-	t_token	*tmp;
+// int	count_cmd(t_token *head)
+// {
+// 	int		i;
+// 	int		j;
+// 	t_token	*tmp;
 
-	tmp = head;
+// 	tmp = head;
+// 	i = 0;
+// 	j = 0;
+// 	while (head && head->type != PIPE)
+// 	{
+// 		if ((head->type == RED_IN )\
+// 		|| (head->type == RED_OUT )\
+// 		|| (head->type == APPEND ))
+// 			i++;
+// 		head =  head->next;	
+// 	}
+// 	while (tmp && tmp->type != PIPE)
+// 	{
+// 		if (tmp->type == WORD)
+// 			j++;
+// 		tmp = tmp->next;
+// 	}
+// 	printf("%d\n", j - i + 1);
+// 	return (j - i + 1);
+// }
+
+int count_cmd(t_token *head)
+{
+	int i;
+
 	i = 0;
-	j = 0;
 	while (head && head->type != PIPE)
 	{
-		if ((head->type == RED_IN )\
-		|| (head->type == RED_OUT )\
-		|| (head->type == APPEND ))
+		if (head->type != WORD && head->next)
+			head = head->next;
+		else if (head->type == WORD)
 			i++;
-		head =  head->next;	
+		head = head->next;
 	}
-	while (tmp && tmp->type != PIPE)
-	{
-		if (tmp->type == WORD)
-			j++;
-		tmp = tmp->next;
-	}
-	return (j - i + 1);
+	return (i);
 }
 
 int count_infiles(t_token *head)

@@ -1,13 +1,19 @@
 #include "../minishell.h"
 
-int	infile_data(t_env *env, t_token **head, t_parce *newnode)
+int	infile_data(t_env *env, t_token **head, t_parce *newnode, int *x)
 {
 	static int i;
-	
+	if (*x == 1)
+	{
+		*x = 0;
+		i = 0;
+	}
 	if ((*head)->next && (*head)->type == RED_IN \
 	&& valid_word((*head)->next) == 1)
 	{
+	printf("[%d]\n", i);
 		newnode->infiles[i] = ft_strdup((*head)->next->value);
+		// printf("inf > [%s]\n", newnode->infiles[i]);
 		newnode->infiles[i + 1] = NULL;
 		(*head) = (*head)->next;
 		i++;
@@ -17,9 +23,14 @@ int	infile_data(t_env *env, t_token **head, t_parce *newnode)
 		return (update_status(env), 1);
 	return (0);
 }
-int	outfile_data(t_env *env, t_token **head, t_parce *newnode)
+int	outfile_data(t_env *env, t_token **head, t_parce *newnode, int *x)
 {
 	static int i;
+	if (*x == 1)
+	{
+		*x = 0;
+		i = 0;
+	}
 	if ((*head)->next && ((*head)->type == RED_OUT \
 	|| (*head)->type == APPEND) && valid_word((*head)->next) == 1)
 	{
@@ -38,10 +49,14 @@ int	outfile_data(t_env *env, t_token **head, t_parce *newnode)
 	return (0);
 }
 
-int	heredoc_data(t_env *env, t_token **head, t_parce *newnode)
+int	heredoc_data(t_env *env, t_token **head, t_parce *newnode, int *x)
 {
 	static int i;
-
+	if (*x == 1)
+	{
+		*x = 0;
+		i = 0;
+	}
 	if ((*head)->next && (*head)->type == HEREDOC && valid_word((*head)->next) == 1)
 	{
 		newnode->heredoc[i] = ft_strdup((*head)->next->value);
@@ -54,13 +69,18 @@ int	heredoc_data(t_env *env, t_token **head, t_parce *newnode)
 	return (0);
 }
 
-int	cmd_data(t_env *env, t_token *head, t_parce *newnode)
+int	cmd_data(t_env *env, t_token *head, t_parce *newnode, int *x)
 {
 	static int i;
-	
+	if (*x == 1)
+	{
+		*x = 0;
+		i = 0;
+	}
 	if (valid_word(head) == 1)
 	{
 		newnode->cmd[i] = ft_strdup(head->value);
+		
 		newnode->cmd[i + 1] = NULL;
 		i++;
 	}
