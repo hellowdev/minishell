@@ -1,9 +1,12 @@
 #include "../minishell.h"
 
-int count_cmd(t_token *head, t_parce *newnode)
+int count_cmd(t_token *head, t_parce *newnode, t_env *env)
 {
 	int i;
+	t_token *tmp;
+
 	i = 0;
+	tmp = head;
 	while (head && head->type != PIPE)
 	{
 		if (head->type != WORD && head->next)
@@ -12,15 +15,21 @@ int count_cmd(t_token *head, t_parce *newnode)
 			i++;
 		head = head->next;
 	}
-	newnode->cmd = malloc((i + 1) * sizeof(char *));
-
-	return (i);
+	if (i)
+	{
+		newnode->cmd = malloc((i + 1) * sizeof(char *));
+		if(get_cmd(tmp, i, newnode, env) == 1)
+			return (1);
+	}
+	return (0);
 }
 
-int count_infiles(t_token *head, t_parce *newnode)
+int count_infiles(t_token *head, t_parce *newnode, t_env *env)
 {
 	int i;
+	t_token *tmp;
 
+	tmp = head;
 	i = 0;
 	while (head && head->type != PIPE)
 	{
@@ -28,15 +37,20 @@ int count_infiles(t_token *head, t_parce *newnode)
 			i++;
 		head = head->next;
 	}
-	newnode->infiles = malloc((i + 1) * sizeof(char *));
-	// function get data inside
-	return(i);
+	if (i)
+	{
+		newnode->infiles = malloc((i + 1) * sizeof(char *));
+		if(get_infile(tmp, i, newnode, env))
+			return (1);
+	}
+	return(0);
 }
 
-int count_outfiles(t_token *head, t_parce *newnode)
+int count_outfiles(t_token *head, t_parce *newnode, t_env *env)
 {
 	int i;
-
+	t_token *tmp;
+	tmp = head;
 	i = 0;
 	while (head && head->type != PIPE)
 	{
@@ -44,15 +58,21 @@ int count_outfiles(t_token *head, t_parce *newnode)
 			i++;
 		head = head->next;
 	}
-	(newnode)->outfiles = malloc((i + 1) * sizeof(char *));
-	(newnode)->append = malloc(i * sizeof(bool));
-	return(i);
+	if (i)
+	{
+		(newnode)->outfiles = malloc((i + 1) * sizeof(char *));
+		(newnode)->append = malloc(i * sizeof(bool));
+		if(get_outfile(tmp, i, newnode, env))
+			return (1);
+	}
+	return(0);
 }
 
-int count_heredoc(t_token *head, t_parce *newnode)
+int count_heredoc(t_token *head, t_parce *newnode, t_env *env)
 {
 	int i;
-
+	t_token *tmp;
+	tmp = head;
 	i = 0;
 	while (head && head->type != PIPE)
 	{
@@ -60,7 +80,11 @@ int count_heredoc(t_token *head, t_parce *newnode)
 			i++;
 		head = head->next;
 	}
-	newnode->heredoc = malloc((i + 1) * sizeof(char *));
-	
-	return(i);
+	if (i)
+	{
+		newnode->heredoc = malloc((i + 1) * sizeof(char *));
+		if(get_herdoc(tmp, i, newnode, env))
+			return (1);
+	}
+	return(0);
 }

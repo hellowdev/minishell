@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/24 12:43:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/24 20:04:45 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ void	main_parse(t_env *env, char *s)
 	tokenization(s, &head);
 	if (!head) // empty input SIGV
 		return ;
-	pars_ing(&list, env, head);
 	
+	pars_ing(&list, env, head);
 	// system("leaks -q minishell");
+	// while (list)
+	// {
+		
+	// 	list = list->next;
+	// }
+	
 	
 }
 
-int main( int ac, char **av)
+int main(int ac, char **av)
 {
 	char	*line;
 	t_env	*env;

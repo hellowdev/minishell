@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/24 12:51:40 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/24 16:36:03 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,19 +114,19 @@ int     len_equal(char *s);
 
 // ------------------------ ALLOCATE_DATA ----------------------- //
 
-int     count_cmd(t_token *head, t_parce *newnode);
-int     count_infiles(t_token *head, t_parce *newnode);
-int		count_outfiles(t_token *head, t_parce *newnode);
-int		count_heredoc(t_token *head, t_parce *newnode);
-t_parce	*data_alloc(t_token *head);
+int     count_cmd(t_token *head, t_parce *newnode, t_env *env);
+int     count_infiles(t_token *head, t_parce *newnode, t_env *env);
+int		count_outfiles(t_token *head, t_parce *newnode, t_env *env);
+int		count_heredoc(t_token *head, t_parce *newnode, t_env *env);
+t_parce	*data_alloc(t_token *head, t_env *env);
 
 // ------------------------ PARCE_DATA ----------------------- //
 
 void    update_status(t_env *env);
-int 	cmd_data(t_env *env, t_token *head, t_parce *newnode, int *x);
-int 	infile_data(t_env *env, t_token **head, t_parce *newnode, int *x);
-int 	outfile_data(t_env *env, t_token **head, t_parce *newnode, int *x);
-int 	heredoc_data(t_env *env, t_token **head, t_parce *newnode, int *x);
+int     get_infile(t_token *head, int i, t_parce *newnode, t_env *env);
+int     get_cmd(t_token *head, int i, t_parce *newnode, t_env *env);
+int     get_outfile(t_token *head, int i, t_parce *newnode, t_env *env);
+int     get_herdoc(t_token *head, int i, t_parce *newnode, t_env *env);
 void    pars_ing(t_parce **lst, t_env *env, t_token *head);
 int		valid_word(t_token *head);
 void	parse_add_back(t_parce **lst, t_parce *new);

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 16:50:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 18:28:11 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/24 19:25:31 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,6 @@ int	valid_word(t_token *head)
 	}
     return (1);
 }
+//	all variable in env
+// 	[$HOME] ---> name: HOME | value: user/..
+// output = 
