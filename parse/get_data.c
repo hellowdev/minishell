@@ -11,9 +11,7 @@ int	infile_data(t_env *env, t_token **head, t_parce *newnode, int *x)
 	if ((*head)->next && (*head)->type == RED_IN \
 	&& valid_word((*head)->next) == 1)
 	{
-	printf("[%d]\n", i);
 		newnode->infiles[i] = ft_strdup((*head)->next->value);
-		// printf("inf > [%s]\n", newnode->infiles[i]);
 		newnode->infiles[i + 1] = NULL;
 		(*head) = (*head)->next;
 		i++;
@@ -76,11 +74,11 @@ int	cmd_data(t_env *env, t_token *head, t_parce *newnode, int *x)
 	{
 		*x = 0;
 		i = 0;
+		printf("[i : %d]\n", i);
 	}
 	if (valid_word(head) == 1)
 	{
 		newnode->cmd[i] = ft_strdup(head->value);
-		
 		newnode->cmd[i + 1] = NULL;
 		i++;
 	}

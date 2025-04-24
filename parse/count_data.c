@@ -1,36 +1,8 @@
 #include "../minishell.h"
 
-// int	count_cmd(t_token *head)
-// {
-// 	int		i;
-// 	int		j;
-// 	t_token	*tmp;
-
-// 	tmp = head;
-// 	i = 0;
-// 	j = 0;
-// 	while (head && head->type != PIPE)
-// 	{
-// 		if ((head->type == RED_IN )\
-// 		|| (head->type == RED_OUT )\
-// 		|| (head->type == APPEND ))
-// 			i++;
-// 		head =  head->next;	
-// 	}
-// 	while (tmp && tmp->type != PIPE)
-// 	{
-// 		if (tmp->type == WORD)
-// 			j++;
-// 		tmp = tmp->next;
-// 	}
-// 	printf("%d\n", j - i + 1);
-// 	return (j - i + 1);
-// }
-
-int count_cmd(t_token *head)
+int count_cmd(t_token *head, t_parce *newnode)
 {
 	int i;
-
 	i = 0;
 	while (head && head->type != PIPE)
 	{
@@ -40,10 +12,12 @@ int count_cmd(t_token *head)
 			i++;
 		head = head->next;
 	}
+	newnode->cmd = malloc((i + 1) * sizeof(char *));
+
 	return (i);
 }
 
-int count_infiles(t_token *head)
+int count_infiles(t_token *head, t_parce *newnode)
 {
 	int i;
 
@@ -53,11 +27,13 @@ int count_infiles(t_token *head)
 		if (head->type == RED_IN)
 			i++;
 		head = head->next;
-	}    
+	}
+	newnode->infiles = malloc((i + 1) * sizeof(char *));
+	// function get data inside
 	return(i);
 }
 
-int count_outfiles(t_token *head)
+int count_outfiles(t_token *head, t_parce *newnode)
 {
 	int i;
 
@@ -67,11 +43,13 @@ int count_outfiles(t_token *head)
 		if (head->type == RED_OUT || head->type == APPEND)
 			i++;
 		head = head->next;
-	}    
+	}
+	(newnode)->outfiles = malloc((i + 1) * sizeof(char *));
+	(newnode)->append = malloc(i * sizeof(bool));
 	return(i);
 }
 
-int count_heredoc(t_token *head)
+int count_heredoc(t_token *head, t_parce *newnode)
 {
 	int i;
 
@@ -81,6 +59,8 @@ int count_heredoc(t_token *head)
 		if (head->type == HEREDOC)
 			i++;
 		head = head->next;
-	}    
+	}
+	newnode->heredoc = malloc((i + 1) * sizeof(char *));
+	
 	return(i);
 }

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 22:45:25 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/24 12:51:40 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_parce
 	struct s_parce *next;
 }	t_parce;
 
+
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
@@ -113,10 +114,10 @@ int     len_equal(char *s);
 
 // ------------------------ ALLOCATE_DATA ----------------------- //
 
-int     count_cmd(t_token *head);
-int     count_infiles(t_token *head);
-int		count_outfiles(t_token *head);
-int		count_heredoc(t_token *head);
+int     count_cmd(t_token *head, t_parce *newnode);
+int     count_infiles(t_token *head, t_parce *newnode);
+int		count_outfiles(t_token *head, t_parce *newnode);
+int		count_heredoc(t_token *head, t_parce *newnode);
 t_parce	*data_alloc(t_token *head);
 
 // ------------------------ PARCE_DATA ----------------------- //

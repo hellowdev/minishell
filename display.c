@@ -12,6 +12,8 @@ void	display_env(t_env *list)
 
 void	disp_ar(char **str)
 {
+	if (!str)
+		return ;
 	int i = 0;
 	while (str[i])
 		printf("%s\n", str[i++]);
