@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/24 16:36:03 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/24 20:38:56 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,6 @@ void	parse_add_back(t_parce **lst, t_parce *new);
 
 void	ft_lstclear(t_token *lst);
 void	doubfree(char **s);
+void	free_doublst(t_parce *head);
+void	free_env(t_env *head);
 # endif

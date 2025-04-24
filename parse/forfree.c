@@ -16,6 +16,26 @@ void	ft_lstclear(t_token *lst)
         lst = tmp;
     }
 }
+void	free_doublst(t_parce *head)
+{
+	if (!head)
+		return ;
+
+    t_parce *tmp;
+	tmp = head;
+    
+    while (tmp)
+    {
+        tmp = tmp->next;
+		free(head->append);
+		doubfree(head->cmd);
+		doubfree(head->infiles);
+		doubfree(head->outfiles);
+		doubfree(head->heredoc);
+		free(head);
+        head = tmp;
+    }
+}
 void	doubfree(char **s)
 {
 	int i;
@@ -28,20 +48,20 @@ void	doubfree(char **s)
 	}
 	free(s);
 }
-// void	free_doublst(t_parce *head)
-// {
-// 	if (!head)
-// 		return ;
+void	free_env(t_env *head)
+{
+	 if (!head)
+		return ;
 
-//     t_parce *tmp;
-// 	tmp = head;
+    t_env *tmp;
+	tmp = head;
     
-//     while (tmp)
-//     {
-//         tmp = tmp->next;
-// 		free(head.);
-// 		doubfree(head);
-// 		free(lst);
-//         lst = tmp;
-//     }
-// }
+    while (tmp)
+    {
+        tmp = tmp->next;
+		free(head->name_env);
+		free(head->value_env);
+		free(head);
+        head = tmp;
+    }
+}

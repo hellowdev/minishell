@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/24 20:04:45 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/24 20:16:59 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	main_parse(t_env *env, char *s)
 		return ;
 	
 	pars_ing(&list, env, head);
-	// system("leaks -q minishell");
+	
 	// while (list)
 	// {
 		
@@ -49,4 +49,5 @@ int main(int ac, char **av)
 			free(line);
 		}
 	}
+	system("leaks -q minishell");
 }

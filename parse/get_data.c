@@ -16,7 +16,7 @@ int get_infile(t_token *head, int i, t_parce *newnode, t_env *env)
 		}
 		else if ((!head->next || valid_word(head->next) != 1) \
 		&& head->type == RED_IN)
-			return (update_status(env), 1/*free_all(newnode)*/);
+			return (update_status(env), 1);
 		head = head->next;
 	}
 	newnode->infiles[c] = NULL;
