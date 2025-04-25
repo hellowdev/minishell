@@ -38,7 +38,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -lreadline -lncurses $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -lncurses
 
 %.o : %.c minishell.h
 	$(CC) $(CFLAGS) -c $< -o $@

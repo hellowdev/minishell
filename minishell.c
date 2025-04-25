@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/24 20:16:59 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:44:37 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	main_parse(t_env *env, char *s)
 	tokenization(s, &head);
 	if (!head) // empty input SIGV
 		return ;
-	
 	pars_ing(&list, env, head);
 	
 	// while (list)
