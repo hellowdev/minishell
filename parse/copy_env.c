@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/18 15:21:19 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/04/25 11:07:23 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	copy_env(t_env **head)
 	t_env	*new;
 	char	*name;
 	char	*value;
-
+	
 	i = 0;
 	while (environ[i])
 	{

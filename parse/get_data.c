@@ -4,8 +4,7 @@ int get_infile(t_token *head, int i, t_parce *newnode, t_env *env)
 {
     int c;
 	c = 0;
-	i = 0;
-	while (head && head->type != PIPE)
+	while (head && head->type != PIPE && c < i)
 	{
 		if (head->next && head->type == RED_IN \
 		&& valid_word(head->next) == 1)
@@ -28,8 +27,7 @@ int	get_cmd(t_token *head, int i, t_parce *newnode, t_env *env)
 	int c;
 
 	c = 0;
-	i = 0;
-	while (head && head->type != PIPE)
+	while (head && head->type != PIPE && c < i)
 	{
 		if (head->type != WORD && head->next)
 			head = head->next;
@@ -52,8 +50,7 @@ int	get_outfile(t_token *head, int i, t_parce *newnode, t_env *env)
 	int c;
 
 	c = 0;
-	i = 0;
-	while (head && head->type != PIPE)
+	while (head && head->type != PIPE && c < i)
 	{
 		if (head->next && (head->type == RED_OUT \
 		|| head->type == APPEND) && valid_word(head->next) == 1)
@@ -80,8 +77,7 @@ int	get_herdoc(t_token *head, int i, t_parce *newnode, t_env *env)
 	int c;
 
 	c = 0;
-	i = 0;
-	while (head && head->type != PIPE)
+	while (head && head->type != PIPE && c < i)
 	{
 		if (head->next && head->type == HEREDOC && valid_word(head->next) == 1)
 		{

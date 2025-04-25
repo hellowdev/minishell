@@ -3,13 +3,16 @@
 void	ft_lstclear(t_token *lst)
 {
     if (!lst)
+	{
 		return ;
+	}
 
     t_token *tmp;
 	tmp = lst;
     
     while (tmp)
     {
+		printf("here\n");
         tmp = tmp->next;
 		free(lst->value);
 		free(lst);
@@ -23,7 +26,7 @@ void	free_doublst(t_parce *head)
 
     t_parce *tmp;
 	tmp = head;
-    
+	
     while (tmp)
     {
         tmp = tmp->next;
@@ -39,6 +42,8 @@ void	free_doublst(t_parce *head)
 void	doubfree(char **s)
 {
 	int i;
+	if (!s)
+		return ;	
 
 	i = 0;
 	while (s[i])
