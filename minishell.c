@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/25 10:44:37 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:57:14 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ int main(int ac, char **av)
 			free(line);
 		}
 	}
-	system("leaks -q minishell");
+	// system("leaks -q minishell");
 }
