@@ -40,7 +40,7 @@ int count_infiles(t_token *head, t_parce *newnode, t_env *env)
 	if (i)
 	{
 		newnode->infiles = malloc((i + 1) * sizeof(char *));
-		if(get_infile(tmp, i, newnode, env))
+		if (get_infile(tmp, i, newnode, env))
 			return (1);
 	}
 	return(0);

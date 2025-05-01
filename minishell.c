@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/25 11:41:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/01 10:11:57 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	main_parse(t_env *env, char *s)
 	if (!head) // empty input SIGV
 		return ;
 	pars_ing(&list, env, head);
-	
+	ft_lstclear(head);
 	
 }
 
@@ -40,7 +40,7 @@ int main(int ac, char **av)
 		{
 			add_history(line);
 			main_parse(env, line);
-			free(line);
+			free(line); // PIPE LEAKS
 		}
 	}
 	system("leaks -q minishell");
