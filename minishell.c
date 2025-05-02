@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/01 10:11:57 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 12:33:53 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	main_parse(t_env *env, char *s)
 	list = NULL;
 	head = NULL;
 	tokenization(s, &head);
-	if (!head) // empty input SIGV
+	if (!head)
 		return ;
 	pars_ing(&list, env, head);
 	ft_lstclear(head);

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/30 21:11:08 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 12:43:57 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,13 @@ typedef struct s_parce
 	struct s_parce *next;
 }	t_parce;
 
-
+typedef struct s_word
+{
+    char    *strdb;
+    char    *strsg;
+    char    *str;
+    int     i;
+}   t_word;
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
@@ -78,12 +84,12 @@ void	*ft_calloc(size_t count, size_t size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_isspace(int c);
 char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 t_token *ft_lstlast(t_token *lst);
 void    ft_lstadd_back(t_token **lst, t_token *new);
-t_token *ft_lstnew(void *content);
+t_token *ft_lstnew(void *content, t_type type);
 int     ft_strcmp(char *s1, char *s2);
 
 // ------------------------ TOKENIZATION ----------------------- //
@@ -93,17 +99,17 @@ int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
 int		here_doc(t_token **token);
 int		infile_heredoc(char *s, t_token **head);
-int		words(char *s, t_token **head);
-int		is_spcharc(char c);
 int		skip_space(char *s);
 int		outfile_append(char *s, t_token **head);
 int		append(t_token **token);
 int		handle_pipe(char *s, t_token **head);
-int		ft_lenspace(char *s);
+int     join_word(char *s, t_token **head);
 int		check_words(char *s, t_token **head);
-int		doub_qt(char *s);
-int     sing_qt(char *s);
+int		doub_qt(char *s, t_word *data);
+int     sing_qt(char *s, t_word *data);
+int     spec_char(char c);
 void	tokenization(char *s, t_token **head);
+int     check_chac(char *s, t_word *data);
 
 // ------------------------ COPY_ENV ----------------------- //
 
@@ -129,6 +135,7 @@ int     get_outfile(t_token *head, int i, t_parce *newnode, t_env *env);
 int     get_herdoc(t_token *head, int i, t_parce *newnode, t_env *env);
 void    pars_ing(t_parce **lst, t_env *env, t_token *head);
 int		valid_word(t_token *head);
+int		is_spcharc(char c);
 void	parse_add_back(t_parce **lst, t_parce *new);
 
 // ------------------------ free_data ----------------------- //

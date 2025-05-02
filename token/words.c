@@ -6,68 +6,64 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 21:20:27 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 12:46:02 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	doub_qt(char *s)
-{
-	int i;
-
-	i = 1; // i = 0 ??
-	while (s[i] && s[i] != 34)
-	{
-		i++;
-	}
-	return (i);
-}
-
-int	sing_qt(char *s)
-{
-	int i;
-
-	i = 1; // i = 0 ??
-	while (s[i] && s[i] != 39)
-		i++;
-	return (i);
-}
-
-int	check_words(char *s, t_token **head)
+int	doub_qt(char *s, t_word *data)
 {
 	int i;
 	i = 0;
-
-	if (s[i] && !ft_isspace(s[i]) && s[i] != '<' && s[i] != '>' && s[i] != '|')
-			i += words(&s[i], head);
+	if (s[i] == 34)
+	{
+		i = 1;
+		while (s[i] && s[i] != 34)
+			i++;
+		if (i > 1)
+		{
+			data->strdb = ft_substr(s, 1, i - 1);
+			return (i + 1);
+		}
+	}
+	data->strdb = NULL;
 	return (i);
 }
 
-int	ft_lenspace(char *s)
+int	sing_qt(char *s, t_word *data)
 {
 	int i;
+
 	i = 0;
-	
-	while (s[i] && ft_isspace(s[i]) == 0 \
-	&& s[i] != '<' && s[i] != '>' && s[i] != '|')
+	if (s[i] == 39)
 	{
-		if (s[i] == 34)
-			i += doub_qt(&s[i]);
-		else if (s[i] == 39)
-			i += sing_qt(&s[i]);
-		i++;
+		i = 1;
+		while (s[i] && s[i] != 39)
+			i++;
+		if (i > 1)
+		{
+			data->strsg = ft_substr(s, 1, i - 1);
+			return (i + 1);
+		}
 	}
+	data->strsg = NULL;
 	return (i);
 }
-int words(char *s, t_token **token)
+
+int	check_chac(char *s, t_word *data)
 {
-	t_token *new;
-	int ret;
-	
-	ret = ft_lenspace(s);
-	new = ft_lstnew(ft_substr(s, 0, ret));
-	new->type = WORD;
-	ft_lstadd_back(token, new);
-	return (ret); 
+	int i;
+
+	i = 0;
+	while (s[i] && s[i] != 34 && s[i] != 39 && !spec_char(s[i]))
+		i++;
+	if (i)
+	{
+		data->str = ft_substr(s, 0, i);
+		return (i);
+	}
+	free(data->str);
+	data->str = NULL;
+	return (i);
 }

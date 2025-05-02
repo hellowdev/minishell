@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 13:08:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 11:34:19 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	outfile_append(char *s, t_token **head)
 int	red_outfile(t_token **token)
 {
     t_token *new;
-	new = ft_lstnew(ft_strdup(">"));
-	new->type = RED_OUT;
+	new = ft_lstnew(ft_strdup(">"), RED_OUT);
 	ft_lstadd_back(token, new);
 	return (1);
 }
@@ -35,8 +34,7 @@ int	red_outfile(t_token **token)
 int	append(t_token **token)
 {
 	t_token *new;
-	new = ft_lstnew(ft_strdup(">>"));
-	new->type = APPEND;
+	new = ft_lstnew(ft_strdup(">>"), APPEND);
 	ft_lstadd_back(token, new);
 	return (2);
 }

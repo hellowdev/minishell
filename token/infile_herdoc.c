@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:03 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 13:08:13 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 11:33:51 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	infile_heredoc(char *s, t_token **head)
 int	red_infile(t_token **token)
 {	
 	t_token *new;
-	new = ft_lstnew(ft_strdup("<"));
-	new->type = RED_IN;
+	new = ft_lstnew(ft_strdup("<"), RED_IN);
 	ft_lstadd_back(token, new);
 	return (1);
 }
@@ -35,12 +34,9 @@ int	red_infile(t_token **token)
 int here_doc(t_token **token)
 {
 	t_token *new;
-	new = ft_lstnew(ft_strdup("<<"));
-	
-	new->type = HEREDOC;
+	new = ft_lstnew(ft_strdup("<<"), HEREDOC);	
 	ft_lstadd_back(token, new);
 	return (2);
-
 }
 
 

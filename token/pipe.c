@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:14 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/23 12:17:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 11:34:29 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	handle_pipe(char *s, t_token **head)
 	t_token *new;
 	if (s[0] == '|')
 	{	
-		new = ft_lstnew(ft_strdup("|"));
-		new->type = PIPE;
+		new = ft_lstnew(ft_strdup("|"), PIPE);
 		ft_lstadd_back(head, new);
 		return (1);
 	}

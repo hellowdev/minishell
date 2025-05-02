@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 16:50:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/24 19:25:31 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 11:37:54 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,40 @@ int is_spcharc(char c)
 	return (0);
 }
 
+int	double_qt(char *s)
+{
+	int i;
+
+	i = 1;
+	while (s[i] && s[i] != 34)
+		i++;
+	return (i);
+}
+
+int	single_qt(char *s)
+{
+	int i;
+
+	i = 1;
+	while (s[i] && s[i] != 39)
+		i++;
+	return (i);
+}
+
 int	valid_word(t_token *head)
 {
 	int i;
 	i = 0;
+	t_token *tmp;
+	tmp = head;
 	if (head->type != WORD)
 		return (0);
 	while (head->value[i])
 	{
-		// printf(">> word\n");
 		if (head->value[i] == 34)
-			i += doub_qt(&head->value[i]);
+			i += double_qt(&head->value[i]);
 		else if (head->value[i] == 39)
-			i += sing_qt(&head->value[i]);
+			i += single_qt(&head->value[i]);
 		if (is_spcharc(head->value[i]) != 0)
 			return (0);
 		i++;

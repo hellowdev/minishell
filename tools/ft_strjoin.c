@@ -6,13 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:41:33 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/04/14 22:48:48 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/02 12:43:46 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	t;
@@ -37,5 +37,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[t])
 		p[i++] = s2[t++];
 	p[i] = '\0';
+	free(s1);
 	return (p);
 }
