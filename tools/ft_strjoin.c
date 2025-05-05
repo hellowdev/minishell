@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:41:33 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/02 12:43:46 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/04 16:40:56 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 		return (ft_strdup(s2));
 	if (!s2)
-		return (ft_strdup(s1));
+		return (s1);
 	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
 	if (!p)
-		return (NULL);
+		return (free(s1), NULL);
 	while (s1[i])
 	{
 		p[i] = s1[i];

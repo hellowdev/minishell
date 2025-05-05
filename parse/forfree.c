@@ -1,5 +1,10 @@
 #include "../minishell.h"
 
+void	free_null(char **s)
+{
+	free(*s);
+	*s = NULL;
+}
 void	ft_lstclear(t_token *lst)
 {
     if (!lst)
@@ -43,7 +48,6 @@ void	doubfree(char **s)
 		return ;
 
 	i = 0;
-	// printf("%p\n", s);
 	while (s[i])
 	{
 		free(s[i]);

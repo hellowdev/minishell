@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/02 12:43:57 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/05 10:49:15 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ typedef struct s_parce
 
 typedef struct s_word
 {
-    char    *strdb;
-    char    *strsg;
-    char    *str;
+    char    *p;
     int     i;
 }   t_word;
 // --------------------------- DISPLAY ----------------------- //
@@ -103,13 +101,13 @@ int		skip_space(char *s);
 int		outfile_append(char *s, t_token **head);
 int		append(t_token **token);
 int		handle_pipe(char *s, t_token **head);
-int     join_word(char *s, t_token **head);
+int     join_word(char *s, t_word *data);
 int		check_words(char *s, t_token **head);
-int		doub_qt(char *s, t_word *data);
-int     sing_qt(char *s, t_word *data);
+int		doub_qt(char *s, char **str);
+int     sing_qt(char *s, char **str);
+int     check_chac(char *s, char **str);
 int     spec_char(char c);
 void	tokenization(char *s, t_token **head);
-int     check_chac(char *s, t_word *data);
 
 // ------------------------ COPY_ENV ----------------------- //
 
@@ -139,7 +137,7 @@ int		is_spcharc(char c);
 void	parse_add_back(t_parce **lst, t_parce *new);
 
 // ------------------------ free_data ----------------------- //
-
+void	free_null(char **s);
 void	ft_lstclear(t_token *lst);
 void	doubfree(char **s);
 void	free_doublst(t_parce *head);

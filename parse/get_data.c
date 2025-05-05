@@ -11,7 +11,7 @@ int get_infile(t_token *head, int i, t_parce *newnode, t_env *env)
 		&& valid_word(head->next) == 1)
 		{
 			newnode->infiles[c] = ft_strdup(head->next->value);
-			// printf("[infile: %s]\n", newnode->infiles[c]);
+			printf("[infile: %s]\n", newnode->infiles[c]);
 			c++;
 		}
 		else if ((!head->next || valid_word(head->next) != 1) \

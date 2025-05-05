@@ -24,38 +24,40 @@ int spec_char(char c)
 	return (1);
 }
 
-int	join_word(char *s, t_token **head)
+int	join_word(char *s, t_word *data)
 {
-	char *p;
-	t_word	data;
-	data.str = NULL;
-	data.strsg = NULL;
-	data.strdb = NULL;
-	t_token *new;
-	int i;
+	char *str;
 
-	i = 0;
-	p = NULL;
-	while (s[i] && !spec_char(s[i]))
+	str = NULL;
+	while (s[data->i] && !spec_char(s[data->i]))
 	{
-		i += check_chac(&s[i], &data);
-		p = ft_strjoin(p, data.str);
-		i += doub_qt(&s[i], &data);
-		p = ft_strjoin(p, data.strdb);
-		i += sing_qt(&s[i], &data);
-		p = ft_strjoin(p, data.strsg);
+		data->i += check_chac(&s[data->i], &str);
+		data->p = ft_strjoin(data->p, str);
+		free_null(&str);
+		data->i += doub_qt(&s[data->i], &str);
+		data->p = ft_strjoin(data->p, str);
+		free_null(&str);
+		data->i += sing_qt(&s[data->i], &str);
+		data->p = ft_strjoin(data->p, str);
+		free_null(&str);
 	}
-	new = ft_lstnew(p, WORD);
-	ft_lstadd_back(head, new);
-	return (i);
+	return (data->i);
 }
 
 int	check_words(char *s, t_token **head)
 {
 	int i;
-
+	t_word data;
+	t_token *new;
+	data.p = NULL;
+	data.i = 0;
 	i = 0;
 	if (s[i] && !ft_isspace(s[i]) && s[i] != '<' && s[i] != '>' && s[i] != '|')
-			i += join_word(&s[i], head);
+			i += join_word(&s[i], &data);
+	if (data.p)
+	{
+		new = ft_lstnew(data.p, WORD);
+		ft_lstadd_back(head, new);
+	}
 	return (i);
 }
