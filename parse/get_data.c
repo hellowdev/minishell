@@ -1,20 +1,19 @@
 #include "../minishell.h"
 
-int get_infile(t_token *head, int i, t_parce *newnode, t_env *env)
+int get_infile(t_token *head, t_parce *newnode, t_env *env)
 {
     int c;
 	c = 0;
-	i = 0;
 	while (head && head->type != PIPE)
 	{
 		if (head->next && head->type == RED_IN \
-		&& valid_word(head->next) == 1)
+		&& head->next->type == WORD)
 		{
 			newnode->infiles[c] = ft_strdup(head->next->value);
 			printf("[infile: %s]\n", newnode->infiles[c]);
 			c++;
 		}
-		else if ((!head->next || valid_word(head->next) != 1) \
+		else if ((!head->next || head->next->type != WORD) \
 		&& head->type == RED_IN)
 		{
 			newnode->infiles[c] = NULL;
@@ -26,38 +25,15 @@ int get_infile(t_token *head, int i, t_parce *newnode, t_env *env)
 	return (0);
 }
 
-int	get_cmd(t_token *head, int i, t_parce *newnode, t_env *env)
-{
-	int c;
-	i = 0;
-	c = 0;
-	while (head && head->type != PIPE)
-	{
-		if (head->type != WORD && head->next)
-			head = head->next;
-		else if (head->type == WORD && valid_word(head) != 1)
-			return (newnode->cmd[c] = NULL, update_status(env), 1);
-		else if (head->type == WORD && valid_word(head) == 1)
-		{
-			newnode->cmd[c] = ft_strdup(head->value);
-			printf("[cmd: %s]\n", newnode->cmd[c]);
-			c++;
-		}
-		head = head->next;
-	}
-	newnode->cmd[c] = NULL;
-	return (0);
-}
 
-int	get_outfile(t_token *head, int i, t_parce *newnode, t_env *env)
+int	get_outfile(t_token *head, t_parce *newnode, t_env *env)
 {
 	int c;
-	i = 0;
 	c = 0;
 	while (head && head->type != PIPE)
 	{
 		if (head->next && (head->type == RED_OUT \
-		|| head->type == APPEND) && valid_word(head->next) == 1)
+		|| head->type == APPEND) && head->next->type == WORD)
 		{
 			newnode->outfiles[c] = ft_strdup(head->next->value);
 			printf("[outfile: %s]\n", newnode->outfiles[c]);
@@ -67,8 +43,8 @@ int	get_outfile(t_token *head, int i, t_parce *newnode, t_env *env)
 				newnode->append[c] = true;
 			c++;
 		}
-		else if ((!head->next || valid_word(head->next) != 1) \
-		&& (head->type == APPEND || head->type == RED_OUT))
+		else if ((head->type == APPEND || head->type == RED_OUT) \
+		&& (!head->next || head->next->type != WORD))
 			return (newnode->outfiles[c] = NULL ,update_status(env), 1);
 		head = head->next;
 	}
@@ -76,23 +52,43 @@ int	get_outfile(t_token *head, int i, t_parce *newnode, t_env *env)
 	return (0);
 }
 
-int	get_herdoc(t_token *head, int i, t_parce *newnode, t_env *env)
+int	get_herdoc(t_token *head, t_parce *newnode, t_env *env)
 {
 	int c;
-	i = 0;
 	c = 0;
 	while (head && head->type != PIPE)
 	{
-		if (head->next && head->type == HEREDOC && valid_word(head->next) == 1)
+		if (head->next && head->type == HEREDOC && head->next->type == WORD)
 		{
 			newnode->heredoc[c] = ft_strdup(head->next->value);
 			printf("[heredoc: %s]\n", newnode->heredoc[c]);
 			c++;
 		}
-		else if ((!head->next || valid_word(head->next) != 1) && head->type == HEREDOC)
+		else if (head->type == HEREDOC && (!head->next || head->next->type != WORD))
 			return (newnode->heredoc[c] = NULL, update_status(env), 1);
 		head = head->next;
 	}
 	newnode->heredoc[c] = NULL;
+	return (0);
+}
+
+int	get_cmd(t_token *head, t_parce *newnode, t_env *env)
+{
+	int c;
+	c = 0;
+	(void)env;
+	while (head && head->type != PIPE)
+	{
+		if (head->type != WORD && head->next)
+			head = head->next;
+		else if (head->type == WORD)
+		{
+			newnode->cmd[c] = ft_strdup(head->value);
+			printf("[cmd: %s]\n", newnode->cmd[c]);
+			c++;
+		}
+		head = head->next;
+	}
+	newnode->cmd[c] = NULL;
 	return (0);
 }

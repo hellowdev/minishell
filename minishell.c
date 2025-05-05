@@ -6,11 +6,53 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/05 10:51:45 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:20:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	valid_word(char *s)
+{
+	int i;
+
+	i = 0;	
+	while (s[i])
+	{
+		if (s[i] == 34)
+			i += double_qt(&s[i]);
+		else if (s[i] == 39)
+			i += single_qt(&s[i]);
+		if (is_spcharc(s[i]) != 0)
+			return (-1);
+		i++;
+	}
+    return (1);
+}
+
+int calc_qout(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == 34)
+		{
+			i += double_qt(&s[i]);
+			if (!s[i])
+				return (-1);
+		}
+		else if (s[i] == 39)
+		{
+			i += single_qt(&s[i]);
+			if (!s[i])
+				return (-1);
+		}
+		i++;
+	}
+	return (1);
+}
 
 void	main_parse(t_env *env, char *s)
 {
@@ -19,12 +61,12 @@ void	main_parse(t_env *env, char *s)
 
 	list = NULL;
 	head = NULL;
-	
+	if (calc_qout(s) == -1 || valid_word(s) == -1)
+		return (update_status(env));
 	tokenization(s, &head);
 	if (!head)
 		return ;
 	pars_ing(&list, env, head);
-	
 	ft_lstclear(head);
 	
 }

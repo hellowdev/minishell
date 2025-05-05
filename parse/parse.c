@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/04 16:54:09 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:33:38 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	after_pipe(t_token *head, t_env *env, t_parce **lst)
 		if (head->type == PIPE && head->next && head->next->type != PIPE)
 		{
 			head = head->next;
+			if (head->type == PIPE)
+				return (free_doublst(*lst), update_status(env));
 			newnode = data_alloc(head, env);
 			if (!newnode)
 				return (free_doublst(*lst));

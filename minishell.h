@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/05 10:49:15 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:35:07 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,16 @@ t_parce	*data_alloc(t_token *head, t_env *env);
 // ------------------------ PARCE_DATA ----------------------- //
 
 void    update_status(t_env *env);
-int     get_infile(t_token *head, int i, t_parce *newnode, t_env *env);
-int     get_cmd(t_token *head, int i, t_parce *newnode, t_env *env);
-int     get_outfile(t_token *head, int i, t_parce *newnode, t_env *env);
-int     get_herdoc(t_token *head, int i, t_parce *newnode, t_env *env);
+int     get_infile(t_token *head, t_parce *newnode, t_env *env);
+int     get_cmd(t_token *head, t_parce *newnode, t_env *env);
+int     get_outfile(t_token *head, t_parce *newnode, t_env *env);
+int     get_herdoc(t_token *head, t_parce *newnode, t_env *env);
 void    pars_ing(t_parce **lst, t_env *env, t_token *head);
-int		valid_word(t_token *head);
+int     valid_word(char *s);
 int		is_spcharc(char c);
 void	parse_add_back(t_parce **lst, t_parce *new);
+int     double_qt(char *s);
+int     single_qt(char *s);
 
 // ------------------------ free_data ----------------------- //
 void	free_null(char **s);
