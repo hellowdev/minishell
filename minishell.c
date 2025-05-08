@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/08 16:15:33 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/08 20:10:02 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	main_parse(int *status, char *s, t_env *env)
 		return ;
 	pars_ing(&list, status, head, env);
 	
-	// expand_status(list, s);
 	ft_lstclear(head);
 	
 }
@@ -85,13 +84,10 @@ int main(int ac, char **av)
 	if (ac == 1)
 	{
 		copy_env(&env);
-		
-		// pause();
 		while ((line = readline("minishell$ ")))
 		{
 			add_history(line);
 			main_parse(&status, line, env);
-			// printf("stt: %d\n", status);
 			free(line); //
 		}
 	}

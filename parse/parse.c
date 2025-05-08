@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/08 10:19:47 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/08 19:58:24 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_parce	*data_alloc(t_token *head, int *status, t_env *env)
 {
 	t_parce *newnode;
 		
-	newnode = malloc(sizeof(t_parce)); // alloc  all node
+	newnode = malloc(sizeof(t_parce));
 	if (!newnode)
         return NULL;
 	newnode->next = NULL;
@@ -25,7 +25,7 @@ t_parce	*data_alloc(t_token *head, int *status, t_env *env)
 	newnode->outfiles = NULL;
 	newnode->heredoc = NULL;
 	newnode->append = NULL;
-	if (count_cmd(head, newnode, env) == 1)
+	if (count_cmd(head, newnode, status, env) == 1)
 		return (free_doublst(newnode), NULL);
 	if (count_outfiles(head, newnode, status, env) == 1)
 		return (free_doublst(newnode), NULL);

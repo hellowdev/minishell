@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/08 18:55:11 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/08 20:46:19 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	disp_ar(char **str);
 
 // --------------------------- TOOLS ----------------------- //
 
-int	ft_isdigit(int c);
-int	ft_isalpha(int c);
+int		ft_isdigit(int c);
+int		ft_isalpha(int c);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -93,6 +93,7 @@ t_token *ft_lstlast(t_token *lst);
 void    ft_lstadd_back(t_token **lst, t_token *new);
 t_token *ft_lstnew(void *content, t_type type);
 int     ft_strcmp(char *s1, char *s2);
+char	*ft_itoa(int n);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
@@ -124,7 +125,7 @@ int     len_equal(char *s);
 
 // ------------------------ ALLOCATE_DATA ----------------------- //
 
-int     count_cmd(t_token *head, t_parce *newnode, t_env *env);
+int     count_cmd(t_token *head, t_parce *newnode, int *status,t_env *env);
 int     count_infiles(t_token *head, t_parce *newnode, int *status, t_env *env);
 int		count_outfiles(t_token *head, t_parce *newnode, int *status, t_env *env);
 int		count_heredoc(t_token *head, t_parce *newnode, int *status);
@@ -133,7 +134,7 @@ t_parce	*data_alloc(t_token *head, int *status, t_env *env);
 // ------------------------ PARCE_DATA ----------------------- //
 
 int     get_infile(t_token *head, t_parce *newnode, int *status, t_env *env);
-int     get_cmd(t_token *head, t_parce *newnode, t_env *env);
+int     get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env);
 int     get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env);
 int     get_herdoc(t_token *head, t_parce *newnode, int *status);
 void    pars_ing(t_parce **lst, int *status, t_token *head, t_env *env);
@@ -146,9 +147,9 @@ int     single_qt(char *s);
 // ------------------------ expansion ----------------------- //
 int		strlen_dol(char *s);
 void    update_status(int *status);
-char	*expand_status(char *head, t_env *env, bool checker);
+char	*expand_status(char *head, t_env *env, bool checker, int status);
 int		not_exp(char *s, char **value);
-int		expand(char *s, char **value, t_env *env);
+int		expand(char *s, char **value, t_env *env, int status);
 int		simple_word(char *s, char **value);
 int		check_dol_sp(char *s);
 int		special_char(char c);

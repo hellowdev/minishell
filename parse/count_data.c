@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int count_cmd(t_token *head, t_parce *newnode, t_env *env)
+int count_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 {
 	int i;
 	t_token *tmp;
@@ -18,7 +18,7 @@ int count_cmd(t_token *head, t_parce *newnode, t_env *env)
 	if (i)
 	{
 		newnode->cmd = malloc((i + 1) * sizeof(char *));
-		if(get_cmd(tmp, newnode, env) == 1)
+		if(get_cmd(tmp, newnode, status, env) == 1)
 			return (1);
 	}
 	return (0);

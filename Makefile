@@ -20,6 +20,7 @@ SRC = 	minishell.c \
 		tools/ft_substr.c \
 		tools/ft_lstlast.c \
 		tools/ft_strcmp.c \
+		tools/ft_itoa.c \
 		tools/ft_lstadd_back.c \
 		parse/parse.c\
 		parse/words.c\
