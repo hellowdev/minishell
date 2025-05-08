@@ -1,0 +1,138 @@
+#include "../minishell.h"
+
+int strlen_dol(char *s)
+{
+	int i;
+
+	i = 1; // i = 0 -> i = 1; to begin after '$'
+	while (s[i])
+	{
+		if (s[i] == '$' || s[i] == 34 || s[i] == 39)
+			return (i);
+		i++;
+	}
+	return (i);	
+}
+
+int	not_exp(char *s, char **value)
+{
+	int i;
+	int len;
+	char *notexp;
+
+	len = 0;
+	i = 0;
+	if (s[i] == '$' && special_char(s[i + 1]) == 1)
+	{
+		len = strlen_dol(&s[i]);
+		notexp = ft_substr(s ,i ,len);
+	    *value = ft_strjoin(*value, notexp);
+		free_null(&notexp);
+	}
+	return (len);
+}
+int expand(char *s, char **value, t_env *env)
+{
+	int i;
+	int  checker; 
+	char *name;
+	char *retenv;
+
+	checker = 0;
+	i = 0;
+	if (s[i] == '$' && special_char(s[i + 1]) == 0)
+	{
+		checker = check_dol_sp(&s[i]);
+	    name = ft_substr(s ,i + 1 ,checker - 1);
+		retenv = env_searsh(env, name);
+	    *value = ft_strjoin(*value, retenv);
+	    free_null(&name);
+		free_null(&retenv);
+	}
+	return (checker);
+}
+
+int	simple_word(char *s, char **value)
+{
+	int i;
+	int len;
+	char *word;
+
+	i = 0;
+	len = 0;
+	if (s[i] != '$' && s[i] != 34 && s[i] != 39)
+	{
+		len = strlen_dol(&s[i]);
+		word = ft_substr(s ,i ,len);
+		*value = ft_strjoin(*value, word);
+		free_null(&word);
+	}
+	return (len);
+}
+
+char	*expand_status(char *str, t_env *env, bool checker)
+{
+	int j;
+	char *value;
+
+	value = NULL;
+	j = 0;
+	while (str[j])
+	{
+		if (checker == false)
+			j += sing_qt(&str[j], &value);
+		j += doub_qt(&str[j], &value, &checker);
+		j += not_exp(&str[j], &value);
+		j += expand(&str[j], &value, env);
+		if (str[j] == 39 && checker == true)
+		{
+			value = ft_strjoin(value, "'");
+			j++;
+		}
+		j += simple_word(&str[j], &value);
+		if (str[j] == '$' && (str[j + 1] == '$' || !str[j + 1]))
+		{
+			value = ft_strjoin(value, "$");
+			j++;
+		}
+	}
+	return (value);
+}
+
+// void	exp_and()
+// {
+	// char *all = NULL;
+	// if (s[i] == '$' && s[i + 1] == special_char)
+	// {
+	//     int len = strlen_dol(&s[i]);
+	//     char *notexp = ft_substr(s ,i ,len);
+	//     all = ft_strjoin(all, notexp)
+	//     free(notexp);
+	//     i += len;
+	// }
+	// else if (s[i] == '$' && s[i + 1] != special_char)
+	// {
+	//     if (s[i + 1] == '$')
+	//     {
+	//         *str = ft_strdup("$");
+	//         return(1);
+	//     }
+	//     int  checker = check_dol_sp(&s[i]);
+	//     char *expand = substr(s ,i ,checker);
+	//     // searsh f env(expand, env);
+	//     // return char *value of expanded var
+	//     all = join(all, expand);
+	//     free(expand);
+	//     expand = NULL;
+	//     i += checker;
+	// }
+	// else if (s[i] != '$')
+	// {
+	//     int len = strlen_dol(&s[i]);
+	//     char *word = substr(s ,i ,len);
+	//     all = join(all, word);
+	//     free(word);
+	//     word = NULL;
+	//     i += len;
+	// }
+// }

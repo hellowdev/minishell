@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/05 13:20:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:15:33 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	valid_word(char *s)
 {
 	int i;
-
-	i = 0;	
+	i = 0;
+	
 	while (s[i])
 	{
 		if (s[i] == 34)
@@ -54,7 +54,7 @@ int calc_qout(char *s)
 	return (1);
 }
 
-void	main_parse(t_env *env, char *s)
+void	main_parse(int *status, char *s, t_env *env)
 {
 	t_token *head;
 	t_parce *list;
@@ -62,11 +62,13 @@ void	main_parse(t_env *env, char *s)
 	list = NULL;
 	head = NULL;
 	if (calc_qout(s) == -1 || valid_word(s) == -1)
-		return (update_status(env));
-	tokenization(s, &head);
+		return (update_status(status));
+	tokenization(s, &head); //
 	if (!head)
 		return ;
-	pars_ing(&list, env, head);
+	pars_ing(&list, status, head, env);
+	
+	// expand_status(list, s);
 	ft_lstclear(head);
 	
 }
@@ -75,17 +77,21 @@ int main(int ac, char **av)
 {
 	char	*line;
 	t_env	*env;
+	int		status;
+
+	status = 0;
 	env = NULL;
 	(void )av;
 	if (ac == 1)
 	{
 		copy_env(&env);
+		
+		// pause();
 		while ((line = readline("minishell$ ")))
 		{
 			add_history(line);
-			main_parse(env, line);
-			// "$VAR" --> not splited and $VAR --> split with space 
-			// handle || syntax err
+			main_parse(&status, line, env);
+			// printf("stt: %d\n", status);
 			free(line); //
 		}
 	}

@@ -6,14 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/05 13:33:38 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/08 10:19:47 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-t_parce	*data_alloc(t_token *head, t_env *env)
+t_parce	*data_alloc(t_token *head, int *status, t_env *env)
 {
 	t_parce *newnode;
 		
@@ -28,15 +27,16 @@ t_parce	*data_alloc(t_token *head, t_env *env)
 	newnode->append = NULL;
 	if (count_cmd(head, newnode, env) == 1)
 		return (free_doublst(newnode), NULL);
-	if (count_outfiles(head, newnode, env) == 1)
+	if (count_outfiles(head, newnode, status, env) == 1)
 		return (free_doublst(newnode), NULL);
-	if (count_infiles(head, newnode, env) == 1)
+	if (count_infiles(head, newnode, status, env) == 1)
 		return (free_doublst(newnode), NULL);
-	if (count_heredoc(head, newnode, env) == 1)
+	if (count_heredoc(head, newnode, status) == 1)
 		return (free_doublst(newnode), NULL);
 	return (newnode);
 }
-void	after_pipe(t_token *head, t_env *env, t_parce **lst)
+
+void	after_pipe(t_token *head, int *status, t_parce **lst, t_env *env)
 {
 	t_parce *newnode;
 
@@ -46,30 +46,30 @@ void	after_pipe(t_token *head, t_env *env, t_parce **lst)
 		{
 			head = head->next;
 			if (head->type == PIPE)
-				return (free_doublst(*lst), update_status(env));
-			newnode = data_alloc(head, env);
+				return (free_doublst(*lst), update_status(status));
+			newnode = data_alloc(head, status, env);
 			if (!newnode)
 				return (free_doublst(*lst));
 			parse_add_back(lst, newnode);
 		}
 		else if (head->type == PIPE && !head->next)
-			return (free_doublst(*lst), update_status(env));
+			return (free_doublst(*lst), update_status(status));
 		head = head->next;
 	}
 }
 
 
-void	pars_ing(t_parce **lst, t_env *env, t_token *head)
+void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 {
 	t_parce *newnode;
 	t_token *tmp;
 
 	tmp = head;
 	if (head->type == PIPE)
-		return (update_status(env));
-	newnode = data_alloc(head, env);
+		return (update_status(status));
+	newnode = data_alloc(head, status, env);
 	if (!newnode)
 		return ;
 	parse_add_back(lst, newnode);
-	after_pipe(head, env, lst);
+	after_pipe(head, status, lst, env);
 }

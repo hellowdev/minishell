@@ -10,6 +10,8 @@ SRC = 	minishell.c \
 		tools/ft_bzero.c \
 		tools/ft_calloc.c \
 		tools/ft_memcpy.c \
+		tools/ft_isdigit.c \
+		tools/ft_isalpha.c \
 		tools/ft_strdup.c \
 		tools/ft_strjoin.c \
 		tools/ft_strlen.c \
@@ -20,7 +22,7 @@ SRC = 	minishell.c \
 		tools/ft_strcmp.c \
 		tools/ft_lstadd_back.c \
 		parse/parse.c\
-		token/words.c\
+		parse/words.c\
 		token/tokenz.c\
 		token/pipe.c\
 		token/outfile_append.c \
@@ -30,7 +32,9 @@ SRC = 	minishell.c \
 		parse/get_data.c\
 		parse/forfree.c\
 		parse/count_data.c\
-		parse/update_status.c\
+		expand_status/expand.c\
+		expand_status/utils_words.c\
+		expand_status/update_status.c\
 
 
 OBJ = $(SRC:.c=.o)

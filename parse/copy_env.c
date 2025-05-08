@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/01 11:12:31 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:50:13 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void	copy_env(t_env **head)
 		env_add_back(head, new);
 		i++;
 	}
-	new = lstnew_env(ft_strdup("status"), ft_strdup("0"));
-	env_add_back(head, new);
+	
 }
