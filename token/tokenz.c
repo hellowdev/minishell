@@ -23,7 +23,7 @@ int	doub_quote(char *s)
 {
 	int i;
 
-	i = 1; // i = 0 ??
+	i = 1;
 	while (s[i] && s[i] != 34)
 	{
 		i++;
@@ -35,7 +35,7 @@ int	sing_quote(char *s)
 {
 	int i;
 
-	i = 1; // i = 0 ??
+	i = 1;
 	while (s[i] && s[i] != 39)
 		i++;
 	return (i);

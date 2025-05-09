@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/08 20:46:19 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/09 11:37:23 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_token
 {
 	char	*value;
 	t_type	type;
-	int		pos_qt;
 	struct s_token *next;
 }   t_token;
 
@@ -138,7 +137,7 @@ int     get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env);
 int     get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env);
 int     get_herdoc(t_token *head, t_parce *newnode, int *status);
 void    pars_ing(t_parce **lst, int *status, t_token *head, t_env *env);
-int     valid_word(char *s);
+int     valid_word(char *s, int *status);
 int		is_spcharc(char c);
 void	parse_add_back(t_parce **lst, t_parce *new);
 int     double_qt(char *s);
@@ -146,7 +145,7 @@ int     single_qt(char *s);
 
 // ------------------------ expansion ----------------------- //
 int		strlen_dol(char *s);
-void    update_status(int *status);
+void    update_status(int *status, char *s);
 char	*expand_status(char *head, t_env *env, bool checker, int status);
 int		not_exp(char *s, char **value);
 int		expand(char *s, char **value, t_env *env, int status);

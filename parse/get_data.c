@@ -20,7 +20,7 @@ int get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		&& head->type == RED_IN)
 		{
 			newnode->infiles[c] = NULL;
-			return (update_status(status), 1);
+			return (update_status(status, "<"), 1);
 		}
 		head = head->next;
 	}
@@ -47,7 +47,7 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		}
 		else if ((head->type == APPEND || head->type == RED_OUT) \
 		&& (!head->next || head->next->type != WORD))
-			return (newnode->outfiles[c] = NULL ,update_status(status), 1);
+			return (newnode->outfiles[c] = NULL ,update_status(status, ">"), 1);
 		head = head->next;
 	}
 	newnode->outfiles[c] = NULL;
@@ -67,7 +67,7 @@ int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 			c++;
 		}
 		else if (head->type == HEREDOC && (!head->next || head->next->type != WORD))
-			return (newnode->heredoc[c] = NULL, update_status(status), 1);
+			return (newnode->heredoc[c] = NULL, update_status(status, "<<"), 1);
 		head = head->next;
 	}
 	newnode->heredoc[c] = NULL;

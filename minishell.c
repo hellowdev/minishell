@@ -6,13 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/08 20:10:02 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/09 11:35:37 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	valid_word(char *s)
+int	valid_word(char *s, int *status)
 {
 	int i;
 	i = 0;
@@ -24,13 +24,13 @@ int	valid_word(char *s)
 		else if (s[i] == 39)
 			i += single_qt(&s[i]);
 		if (is_spcharc(s[i]) != 0)
-			return (-1);
+			return (update_status(status, "&, (, ), #, ;"), -1);
 		i++;
 	}
     return (1);
 }
 
-int calc_qout(char *s)
+int calc_qout(char *s, int *status)
 {
 	int i;
 
@@ -40,14 +40,14 @@ int calc_qout(char *s)
 		if (s[i] == 34)
 		{
 			i += double_qt(&s[i]);
-			if (!s[i])
-				return (-1);
+			if (!s[i])// s[i] = '\0'
+				return (update_status(status, "\""), -1);
 		}
 		else if (s[i] == 39)
 		{
 			i += single_qt(&s[i]);
 			if (!s[i])
-				return (-1);
+				return (update_status(status, "'"), -1);
 		}
 		i++;
 	}
@@ -61,8 +61,8 @@ void	main_parse(int *status, char *s, t_env *env)
 
 	list = NULL;
 	head = NULL;
-	if (calc_qout(s) == -1 || valid_word(s) == -1)
-		return (update_status(status));
+	if (calc_qout(s, status) == -1 || valid_word(s, status) == -1)
+		return ;
 	tokenization(s, &head); //
 	if (!head)
 		return ;

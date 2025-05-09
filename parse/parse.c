@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/08 19:58:24 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/09 11:19:43 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	after_pipe(t_token *head, int *status, t_parce **lst, t_env *env)
 		{
 			head = head->next;
 			if (head->type == PIPE)
-				return (free_doublst(*lst), update_status(status));
+				return (free_doublst(*lst), update_status(status, "|"));
 			newnode = data_alloc(head, status, env);
 			if (!newnode)
 				return (free_doublst(*lst));
 			parse_add_back(lst, newnode);
 		}
 		else if (head->type == PIPE && !head->next)
-			return (free_doublst(*lst), update_status(status));
+			return (free_doublst(*lst), update_status(status, "|"));
 		head = head->next;
 	}
 }
@@ -66,7 +66,7 @@ void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 
 	tmp = head;
 	if (head->type == PIPE)
-		return (update_status(status));
+		return (update_status(status, "|"));
 	newnode = data_alloc(head, status, env);
 	if (!newnode)
 		return ;
