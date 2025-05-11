@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/09 11:37:23 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/11 16:40:02 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ void    ft_lstadd_back(t_token **lst, t_token *new);
 t_token *ft_lstnew(void *content, t_type type);
 int     ft_strcmp(char *s1, char *s2);
 char	*ft_itoa(int n);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char	*ft_slash_join(char const *s1, char const *s2);
+char	**ft_split(char const *s, char c);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
@@ -153,11 +156,22 @@ int		simple_word(char *s, char **value);
 int		check_dol_sp(char *s);
 int		special_char(char c);
 char	*env_searsh(t_env *env, char *name);
-
 // ------------------------ free_data ----------------------- //
 void	free_null(char **s);
 void	ft_lstclear(t_token *lst);
 void	doubfree(char **s);
-void	free_doublst(t_parce *head);
+void	free_doublst(t_parce **head);
 void	free_env(t_env *head);
+
+void	execute(t_parce *data, t_env *env, int *status);
+
+char	**split_path(char *env);
+char	**wich_path(char **env);
+char	*valid_path(char **env, char *cmd);
+
+void	one_child(t_parce *data, t_env *env);
+void	first_child(t_parce *data, t_env *env);
+void	listofchild(t_parce **data, t_env *env, int *status);
+void	last_child(t_parce *data, t_env *env);
+
 # endif

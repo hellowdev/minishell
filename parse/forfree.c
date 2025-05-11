@@ -21,25 +21,26 @@ void	ft_lstclear(t_token *lst)
         lst = tmp;
     }
 }
-void	free_doublst(t_parce *head)
+void	free_doublst(t_parce **head)
 {
-	if (!head)
+	if (!(*head))
 		return ;
 
     t_parce *tmp;
-	tmp = head;
+	tmp = (*head);
 	
     while (tmp)
     {
         tmp = tmp->next;	
-		free(head->append);
-		doubfree(head->cmd);
-		doubfree(head->infiles);
-		doubfree(head->outfiles);
-		doubfree(head->heredoc);
-		free(head);
-        head = tmp;
+		free((*head)->append);
+		doubfree((*head)->cmd);
+		doubfree((*head)->infiles);
+		doubfree((*head)->outfiles);
+		doubfree((*head)->heredoc);
+		free((*head));
+        (*head) = tmp;
     }
+	*head = NULL;
 }
 void	doubfree(char **s)
 {

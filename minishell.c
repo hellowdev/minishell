@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/09 11:35:37 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/11 13:46:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ void	main_parse(int *status, char *s, t_env *env)
 	if (!head)
 		return ;
 	pars_ing(&list, status, head, env);
-	
 	ft_lstclear(head);
+	if (list)
+		execute(list, env, status);
 	
 }
 
