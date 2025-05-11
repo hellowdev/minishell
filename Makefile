@@ -36,6 +36,7 @@ SRC = 	minishell.c \
 		expand_status/expand.c\
 		expand_status/utils_words.c\
 		expand_status/update_status.c\
+		execution/execute.c\
 
 
 OBJ = $(SRC:.c=.o)

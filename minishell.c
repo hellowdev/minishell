@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/09 11:35:37 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/10 16:50:57 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int calc_qout(char *s, int *status)
 	return (1);
 }
 
-void	main_parse(int *status, char *s, t_env *env)
+t_parce	*main_parse(int *status, char *s, t_env *env)
 {
 	t_token *head;
 	t_parce *list;
@@ -62,14 +62,13 @@ void	main_parse(int *status, char *s, t_env *env)
 	list = NULL;
 	head = NULL;
 	if (calc_qout(s, status) == -1 || valid_word(s, status) == -1)
-		return ;
+		return (NULL);
 	tokenization(s, &head); //
 	if (!head)
-		return ;
+		return (NULL);
 	pars_ing(&list, status, head, env);
-	
 	ft_lstclear(head);
-	
+	return (list);
 }
 
 int main(int ac, char **av)
@@ -77,6 +76,7 @@ int main(int ac, char **av)
 	char	*line;
 	t_env	*env;
 	int		status;
+	t_parce *lst;
 
 	status = 0;
 	env = NULL;
@@ -87,7 +87,8 @@ int main(int ac, char **av)
 		while ((line = readline("minishell$ ")))
 		{
 			add_history(line);
-			main_parse(&status, line, env);
+			lst = main_parse(&status, line, env);
+			execute(lst, env, &status);
 			free(line); //
 		}
 	}

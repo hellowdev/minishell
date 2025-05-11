@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/09 11:37:23 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/10 20:28:43 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <dirent.h>         // opendir, readdir, closedir
 # include <termios.h>        // tcsetattr, tcgetattr
 # include <sys/ioctl.h>      // ioctl
-# include <term.h>           // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+# include <term.h>     	     // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <readline/readline.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>   // add_history, rl_clear_history
 # include <stdbool.h>
@@ -96,7 +96,7 @@ char	*ft_itoa(int n);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
-void	main_parse(int *status, char *s, t_env *env);
+t_parce	*main_parse(int *status, char *s, t_env *env);
 int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
 int		here_doc(t_token **token);
@@ -160,4 +160,7 @@ void	ft_lstclear(t_token *lst);
 void	doubfree(char **s);
 void	free_doublst(t_parce *head);
 void	free_env(t_env *head);
+
+
+void    execute(t_parce *list, t_env *env, int *status);
 # endif
