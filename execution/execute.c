@@ -21,19 +21,21 @@ char	**get_path(char **env)
 	return (NULL);
 }
 
-// void    f_child(t_parce *list, t_env *env)
-// {
-//     char **path;
+void    f_child(t_parce *list, t_env *env)
+{
+    char **path;
+    int infd;
 
-//     path = get_path(environ);
-//     if (list->cmd)
-//         get_cmnd(list->cmd[0], path);
-//     if (list->infiles)
-        
-//     if (list->outfiles)
-//         // if (list->append)
-//     if (list->heredoc)
-// }
+    path = get_path(environ);
+    if (list->cmd)
+        get_cmnd(list->cmd[0], path);
+    if (list->infiles)
+        infd = get_in_fd(list->infiles);
+    if (list->outfiles)
+        // out_fd =
+        // if (list->append)
+    if (list->heredoc)
+}
 
 void    execute(t_parce *list, t_env *env, int *status)
 {

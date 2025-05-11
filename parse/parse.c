@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/09 11:19:43 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/11 13:53:55 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 		return (update_status(status, "|"));
 	newnode = data_alloc(head, status, env);
 	if (!newnode)
+	{
+		lst = NULL;
 		return ;
+	}
 	parse_add_back(lst, newnode);
 	after_pipe(head, status, lst, env);
 }
