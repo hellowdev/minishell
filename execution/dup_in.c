@@ -1,55 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dup_out.c                                          :+:      :+:    :+:   */
+/*   dup_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 19:57:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 20:23:43 by ychedmi          ###   ########.fr       */
+/*   Created: 2025/05/13 12:37:17 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/13 12:37:18 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_outfile(char **outfile, bool *append)
+int	check_infile(char **infile)
 {
 	int i;
+	int cnt;
 	int fd;
 
 	i = 0;
-	while (outfile[i])
+	cnt = count_fd(infile);
+	while (infile[i])
 	{
-		fd = open(outfile[i], O_CREAT | O_WRONLY, 0644); // change here was RDONLY
-		if (append[i] == false)
-			fd = open(outfile[i], O_CREAT | O_WRONLY | O_TRUNC, 0644); // change here was RDONLY
-		if (access(outfile[i], W_OK) != 0)
-			return (redire_err(outfile[i], ": Permission denied"));
+		fd = open(infile[i], O_RDONLY);
+		if (access(infile[i], F_OK) != 0)
+			return (redire_err(infile[i], ": No such file or directory"));
+		if (access(infile[i], R_OK) != 0)
+			return (redire_err(infile[i], ": Permission denied"));
 		if (fd < 0)
 		{
 			perror("minishell");
 			write(2, "\n", 1);
 			return (-1);
 		}
-		if (i < count_fd(outfile)) // close all fd - 1
+		if (i < cnt) // close all fd - 1
 			close(fd);
 		i++;
 	}
 	return (fd);
 }
 
-int	dup_outfile(char **outfile, bool *append)
+int	dup_infile(char **infile)
 {
 	int fd;
 
-	if (outfile)
+	if (infile)
 	{
-		fd = check_outfile(outfile, append);
+		fd = check_infile(infile);
 		if (fd < 0)
 			return (-1);
-		printf("outfile\n");
-		dup2(fd, 1);
+		dup2(fd, 0);
 		close(fd);
 	}
-	return (1);
+	return (1); // khliha hna
 }

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 20:23:18 by ychedmi          ###   ########.fr       */
+/*   Created: 2025/05/13 13:40:57 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/13 13:42:03 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	execute_cmd(t_parce *data)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char *path;
-	
-	if (data->cmd)
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
 	{
-		path = valid_path(environ, data->cmd[0]);
-		if (!path)
-			return (redire_err(data->cmd[0], ": command not found"), -1); // free here or free all in child?
-		execve(path, data->cmd, environ);
-		// printf("exec\n");
-		// exit(0);
+		write(fd, &s[i], 1);
+		i++;
 	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/11 16:40:02 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/13 16:50:56 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	*ft_itoa(int n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_slash_join(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
+void	ft_putstr_fd(char *s, int fd);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
@@ -162,16 +163,23 @@ void	ft_lstclear(t_token *lst);
 void	doubfree(char **s);
 void	free_doublst(t_parce **head);
 void	free_env(t_env *head);
-
-void	execute(t_parce *data, t_env *env, int *status);
-
+// ------------------------ PATH_CMD ----------------------- //
 char	**split_path(char *env);
 char	**wich_path(char **env);
 char	*valid_path(char **env, char *cmd);
-
-void	one_child(t_parce *data, t_env *env);
-void	first_child(t_parce *data, t_env *env);
-void	listofchild(t_parce **data, t_env *env, int *status);
-void	last_child(t_parce *data, t_env *env);
+// ------------------------ EXECUTION_FUNCTIONS ----------------------- //
+void	execute(t_parce *data, t_env *env, int *status);
+void	one_child(t_parce *data, t_env *env, int *pipefd, int *status);
+void	first_child(t_parce *data, t_env *env, int *pipefd, int *status);
+void	listofchild(t_parce **data, t_env *env, int *pipefd, int *status);
+void	last_child(t_parce *data, t_env *env, int *pipefd, int *status);
+int		i_child(t_parce *data, int *pipefd, int check);
+int		check_infile(char **infile);
+int		dup_infile(char **infile);
+int		check_outfile(char **outfile, bool *append);
+int		dup_outfile(char **outfile, bool *append);
+int		count_fd(char **fds);
+int		execute_cmd(t_parce *data);
+int		redire_err(char *file, char *err);
 
 # endif
