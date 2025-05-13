@@ -13,7 +13,7 @@ int get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
 			
 			newnode->infiles[c] = expand_status(head->next->value, env, false, *status);
 			// newnode->infiles[c] = ft_strdup(head->next->value);
-			// printf("[infile: %s]\n", newnode->infiles[c]);
+			printf("[infile: %s]\n", newnode->infiles[c]);
 			c++;
 		}
 		else if ((!head->next || head->next->type != WORD) \
@@ -38,7 +38,7 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		|| head->type == APPEND) && head->next->type == WORD)
 		{
 			newnode->outfiles[c] = expand_status(head->next->value, env, false, *status);
-			// printf("[outfile: %s]\n", newnode->outfiles[c]);
+			printf("[outfile: %s]\n", newnode->outfiles[c]);
 			if (head->type == RED_OUT)
 				newnode->append[c] = false;
 			else if (head->type == APPEND)
@@ -63,7 +63,7 @@ int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 		if (head->next && head->type == HEREDOC && head->next->type == WORD)
 		{
 			newnode->heredoc[c] = ft_strdup(head->next->value); // skip doubqt -- skip sng
-			// printf("[heredoc: %s]\n", newnode->heredoc[c]);
+			printf("[heredoc: %s]\n", newnode->heredoc[c]);
 			c++;
 		}
 		else if (head->type == HEREDOC && (!head->next || head->next->type != WORD))
@@ -86,7 +86,7 @@ int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 		else if (head->type == WORD)
 		{
 			newnode->cmd[c] = expand_status(head->value, env, false, *status);
-			// printf("[cmd: %s]\n", newnode->cmd[c]);
+			printf("[cmd: %s]\n", newnode->cmd[c]);
 			c++;
 		}
 		head = head->next;

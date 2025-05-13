@@ -6,113 +6,94 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 18:51:13 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/11 17:44:03 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	i_child(t_parce *data, int *pipefd, int check)
+void	i_child(t_parce *data)
 {
+	int j;
+
+	j = 0;
 	
-	// -------- INFILE --------- //
-	if (dup_infile(data->infiles) == -1) // if (infile)
-		return (close(pipefd[0]), close(pipefd[1]), 1);
-	else if (!data->infiles && check == 0) // if not infile and not the first one
-		dup2(pipefd[0], 0);
-	// -------- OUTFILE --------- //
-	if(dup_outfile(data->outfiles, data->append) == -1) // if (outfile)
-		return (close(pipefd[0]), close(pipefd[1]), 1);
-	else if (!data->outfiles && data->next) // if not outfile and next node 
-		dup2(pipefd[1], 1);
-	// -------- CMD --------- //
-	close(pipefd[1]);
-	close(pipefd[0]);
-	if (execute_cmd(data) == -1)
-		return (127);
-		// return (close(pipefd[0]), close(pipefd[1]), 127);
-	// if (data->heredoc)
-	return (0);
+	if (data->infiles)
+	
+		// dup infile
+	if (data->outfiles)
+		// dup outfile
+		if (data->append)
+	if (data->cmd)
+		// execute the cmd
+	if (data->heredoc)
+	
 }
 
-void	one_child(t_parce *data, t_env *env, int *pipefd, int *status)
+void	one_child(t_parce *data, t_env *env)
 {
 	(void)env;
-	(void)data;
-	int track;
 	int i_fork;
-
-	track = 0;
+	// char *splited_path;
 	i_fork = fork();
 	if (i_fork == 0)
 	{
-		track = i_child(data, pipefd, 1);
-		// free
+		i_child(data);
+		// splited_path = valid_path(environ, data->cmd[0]);
+		// printf("> %s\n", splited_path);	
 		printf("one in list\n");
-		exit(track);
+		exit(1);
 	}
-	// waitpid(i_fork, status, 0);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	wait(status);
-	*status = WEXITSTATUS(*status);
 }
 
-void	first_child(t_parce *data, t_env *env, int *pipefd, int *status)
+void	first_child(t_parce *data, t_env *env)
 {
 	(void)env;
 	int i_fork;
-	int track;
-
-	track = 0;
+	char *splited_path;
 	i_fork = fork();
 	if (i_fork == 0)
 	{
-		track = i_child(data, pipefd, 1);
-		// printf("first in list\n");
-		exit(track);
+		splited_path = valid_path(environ, data->cmd[0]);
+		printf("> %s\n", splited_path);
+		// i_child();
+		printf("first in list\n");
+		exit(1);
 	}
-	// waitpid(i_fork, status, 0);
-	wait(status);
 }
 
-void	listofchild(t_parce **data, t_env *env, int *pipefd, int *status)
+void	listofchild(t_parce **data, t_env *env, int *status)
 {
 	(void)env;
 	int i_fork;
-	int track;
-
-	track = 0;
+	char *splited_path;
 	while ((*data)->next)
 	{
-		
-		printf("list in while\n");
 		i_fork = fork();
 		if (i_fork == 0)
 		{
-			track = i_child(*data, pipefd, 0);
+			splited_path = valid_path(environ, (*data)->cmd[0]);
+			printf("> %s\n", splited_path);
+			// i_child();
+			printf("list in while\n");
 		}
-		wait(status); // *status updated in the last_child func
+		wait(status);
 		(*data) = (*data)->next;
 	}
 }
 
-void	last_child(t_parce *data, t_env *env, int *pipefd, int *status)
+void	last_child(t_parce *data, t_env *env)
 {
 	(void)env;
 	int i_fork;
-	int track;
-
-	track = 0;
+	char *splited_path;
 	i_fork = fork();
 	if (i_fork == 0)
 	{	
-		track = i_child(data, pipefd, 0);
+		splited_path = valid_path(environ, data->cmd[0]);
+		printf("> %s\n", splited_path);	
+		// i_child();
 		printf("last in list\n");
-		exit(track);
+		exit(1);
 	}
-	waitpid(i_fork, status, 0);
-	// close(pipefd[0]);
-	// close(pipefd[1]);
-	*status = WEXITSTATUS(*status);
 }
