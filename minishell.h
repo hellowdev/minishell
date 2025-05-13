@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 16:50:56 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/13 20:29:25 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <dirent.h>         // opendir, readdir, closedir
 # include <termios.h>        // tcsetattr, tcgetattr
 # include <sys/ioctl.h>      // ioctl
-# include <term.h>           // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+# include <term.h>     	     // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <readline/readline.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>   // add_history, rl_clear_history
 # include <stdbool.h>
@@ -100,7 +100,7 @@ void	ft_putstr_fd(char *s, int fd);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
-void	main_parse(int *status, char *s, t_env *env);
+t_parce	*main_parse(int *status, char *s, t_env *env);
 int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
 int		here_doc(t_token **token);

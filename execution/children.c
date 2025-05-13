@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 18:51:13 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/13 20:35:38 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	last_child(t_parce *data, t_env *env, int *pipefd, int *status)
 		printf("last in list\n");
 		exit(track);
 	}
+	close(pipefd[0]);
+	close(pipefd[1]);
 	waitpid(i_fork, status, 0);
-	// close(pipefd[0]);
-	// close(pipefd[1]);
 	*status = WEXITSTATUS(*status);
 }

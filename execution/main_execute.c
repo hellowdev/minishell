@@ -17,7 +17,7 @@ void	execute(t_parce *data, t_env *env, int *status)
 	}
 	listofchild(&data, env, pipefd, status); // THE LIST OF NODE SEPARATE BY PIPE
 	last_child(data, env, pipefd, status); // THE LAST NODE
-	close(pipefd[1]);
-	close(pipefd[0]);
+	// close(pipefd[1]);
+	// close(pipefd[0]);
 	return ;
 }
