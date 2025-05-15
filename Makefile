@@ -25,6 +25,7 @@ SRC = 	minishell.c \
 		tools/ft_strnstr.c \
 		tools/ft_lstadd_back.c \
 		tools/ft_putstr_fd.c\
+		tools/ft_lstsize.c\
 		parse/parse.c\
 		parse/words.c\
 		token/tokenz.c\

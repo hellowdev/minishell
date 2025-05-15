@@ -1,14 +1,5 @@
 #include "../minishell.h"
 
-void	fd_closer(int fd, int *pipefd)
-{
-	close(fd);
-	if (pipefd)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
-}
 
 int	i_child(t_parce *data, int tmp, int *pipefd, int check)
 {
@@ -31,23 +22,23 @@ int	i_child(t_parce *data, int tmp, int *pipefd, int check)
 	return (0);
 }
 
-
 void	execute(t_parce *data, t_env *env, int *status)
-{	
-	int pipefd[2];
+{
 	int newfd;
-	pipe(pipefd);
+	t_child	pack;
+	pipe(pack.pipefd);
+	pack.env = env;
+	pack.status = status;
 	if (data->next == NULL) // one NODE
-	{
-		one_child(data, env, pipefd, status);		
-		return ;
-	}
+		return (one_child(data, env, pack.pipefd, status));
 	else // FIRST NODE IN THE LIST
 	{
-		first_child(data, env, pipefd, status);
+		pack.ids = malloc(ft_lstsize(data) * sizeof(int));
+		first_child(data, &pack);
 		data = data->next;
 	}
-	newfd = listofchild(&data, env, pipefd, status); // THE LIST OF NODE SEPARATE BY PIPE
-	last_child(data, env, newfd, status); // THE LAST NODE
+	newfd = listofchild(&data, &pack); // THE LIST OF NODE SEPARATE BY PIPE
+	last_child(data, newfd, &pack); // THE LAST NODE
+	wait_proc(&pack);
 	return ;
 }

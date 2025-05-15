@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/15 11:58:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:43:52 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,15 @@ typedef struct s_word
 	int     i;
 }   t_word;
 
+typedef struct s_child
+{
+	t_env	*env;
+	int		*status;
+	int		pipefd[2];
+	int		newpipe[2];
+	int		*ids;
+	int		i;
+}   t_child;
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
@@ -97,6 +106,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_slash_join(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
+int		ft_lstsize(t_parce *lst);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
@@ -170,9 +180,9 @@ char	*valid_path(char **env, char *cmd);
 // ------------------------ EXECUTION_FUNCTIONS ----------------------- //
 void	execute(t_parce *data, t_env *env, int *status);
 void	one_child(t_parce *data, t_env *env, int *pipefd, int *status);
-void	first_child(t_parce *data, t_env *env, int *pipefd, int *status);
-int		listofchild(t_parce **data, t_env *env, int *pipefd, int *status);
-void	last_child(t_parce *data, t_env *env, int oldtmp, int *status);
+void	first_child(t_parce *data, t_child *pack);
+int		listofchild(t_parce **data, t_child *pack);
+void	last_child(t_parce *data, int oldtmp, t_child *pack);
 int		i_child(t_parce *data, int tmp, int *pipefd, int check);
 int		check_infile(char **infile);
 int		dup_infile(char **infile);
@@ -181,5 +191,7 @@ int		dup_outfile(char **outfile, bool *append);
 int		count_fd(char **fds);
 int		execute_cmd(t_parce *data);
 int		redire_err(char *file, char *err);
+void	fd_closer(int fd, int *pipefd);
+void	wait_proc(t_child *pack);
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/15 14:55:11 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:16:43 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,68 +34,59 @@ void	one_child(t_parce *data, t_env *env, int *pipefd, int *status)
 	*status = WEXITSTATUS(*status);
 }
 
-void	first_child(t_parce *data, t_env *env, int *pipefd, int *status)
+void	first_child(t_parce *data, t_child *pack)
 {
-	(void)env;
-	int i_fork;
+	// int i_fork;
 	int track;
 
 	track = 0;
-	i_fork = fork();
-	if (i_fork == 0)
+	pack->ids[0] = fork();
+	if (pack->ids[0] == 0)
 	{
-		track = i_child(data, pipefd[0], pipefd, 1);
-		// printf("first in list\n");
+		track = i_child(data, pack->pipefd[0], pack->pipefd, 1);
 		exit(track);
 	}
-	close(pipefd[1]);
-	// close(pipefd[0]);
-	wait(status);
+	close(pack->pipefd[1]);
+	// wait(pack->status);
 }
 
-int	listofchild(t_parce **data, t_env *env, int *pipefd, int *status)
+int	listofchild(t_parce **data, t_child *pack)
 {
-	(void)env;
-	int i_fork;
 	int track;
 	int oldtmp;
-	int newpipe[2];
-	
-	oldtmp = pipefd[0];
+
+	oldtmp = pack->pipefd[0];
 	track = 0;
+	pack->i = 1;
 	while ((*data)->next)
 	{
-		pipe(newpipe);
-		i_fork = fork();
-		if (i_fork == 0)
+		pipe(pack->newpipe);
+		pack->ids[pack->i] = fork();
+		if (pack->ids[pack->i] == 0)
 		{
-			track = i_child(*data, oldtmp, newpipe, 0);
+			track = i_child(*data, oldtmp, pack->newpipe, 0);
 			exit(track);
 		}
-		wait(status); // *status updated in the last_child func
-		close(newpipe[1]);
+		pack->i++;
+		close(pack->newpipe[1]);
 		close(oldtmp);
-		oldtmp = newpipe[0];
+		oldtmp = pack->newpipe[0];
 		(*data) = (*data)->next;
 	}
 	return (oldtmp);
 }
 
-void	last_child(t_parce *data, t_env *env, int oldtmp, int *status)
+void	last_child(t_parce *data, int oldtmp, t_child *pack)
 {
-	(void)env;
-	int i_fork;
 	int track;
 
 	track = 0;
-	i_fork = fork();
-	if (i_fork == 0)
+	pack->ids[pack->i] = fork();
+	if (pack->ids[pack->i] == 0)
 	{	
 		track = i_child(data, oldtmp, NULL, 0);
 		// printf("last in list\n");
 		exit(track);
 	}
-	wait(status);
 	close(oldtmp);
-	*status = WEXITSTATUS(*status);
 }

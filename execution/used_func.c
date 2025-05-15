@@ -6,11 +6,29 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 14:38:06 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:43:14 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	fd_closer(int fd, int *pipefd)
+{
+	close(fd);
+	if (pipefd)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
+}
+
+void	wait_proc(t_child *pack)
+{
+	int i = 0;
+	while (i <= pack->i)
+		waitpid(pack->ids[i++], pack->status, 0);
+	*pack->status = WEXITSTATUS(*pack->status);
+}
 
 char	**split_path(char *env)
 {
