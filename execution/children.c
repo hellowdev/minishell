@@ -6,34 +6,12 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 20:35:38 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/15 14:55:11 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	i_child(t_parce *data, int *pipefd, int check)
-{
-	
-	// -------- INFILE --------- //
-	if (dup_infile(data->infiles) == -1) // if (infile)
-		return (close(pipefd[0]), close(pipefd[1]), 1);
-	else if (!data->infiles && check == 0) // if not infile and not the first one
-		dup2(pipefd[0], 0);
-	// -------- OUTFILE --------- //
-	if(dup_outfile(data->outfiles, data->append) == -1) // if (outfile)
-		return (close(pipefd[0]), close(pipefd[1]), 1);
-	else if (!data->outfiles && data->next) // if not outfile and next node 
-		dup2(pipefd[1], 1);
-	// -------- CMD --------- //
-	close(pipefd[1]);
-	close(pipefd[0]);
-	if (execute_cmd(data) == -1)
-		return (127);
-		// return (close(pipefd[0]), close(pipefd[1]), 127);
-	// if (data->heredoc)
-	return (0);
-}
 
 void	one_child(t_parce *data, t_env *env, int *pipefd, int *status)
 {
@@ -46,15 +24,13 @@ void	one_child(t_parce *data, t_env *env, int *pipefd, int *status)
 	i_fork = fork();
 	if (i_fork == 0)
 	{
-		track = i_child(data, pipefd, 1);
+		track = i_child(data, pipefd[0], pipefd, 1);
 		// free
-		printf("one in list\n");
 		exit(track);
 	}
-	// waitpid(i_fork, status, 0);
+	wait(status);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	wait(status);
 	*status = WEXITSTATUS(*status);
 }
 
@@ -68,36 +44,44 @@ void	first_child(t_parce *data, t_env *env, int *pipefd, int *status)
 	i_fork = fork();
 	if (i_fork == 0)
 	{
-		track = i_child(data, pipefd, 1);
+		track = i_child(data, pipefd[0], pipefd, 1);
 		// printf("first in list\n");
 		exit(track);
 	}
-	// waitpid(i_fork, status, 0);
+	close(pipefd[1]);
+	// close(pipefd[0]);
 	wait(status);
 }
 
-void	listofchild(t_parce **data, t_env *env, int *pipefd, int *status)
+int	listofchild(t_parce **data, t_env *env, int *pipefd, int *status)
 {
 	(void)env;
 	int i_fork;
 	int track;
-
+	int oldtmp;
+	int newpipe[2];
+	
+	oldtmp = pipefd[0];
 	track = 0;
 	while ((*data)->next)
 	{
-		
-		printf("list in while\n");
+		pipe(newpipe);
 		i_fork = fork();
 		if (i_fork == 0)
 		{
-			track = i_child(*data, pipefd, 0);
+			track = i_child(*data, oldtmp, newpipe, 0);
+			exit(track);
 		}
 		wait(status); // *status updated in the last_child func
+		close(newpipe[1]);
+		close(oldtmp);
+		oldtmp = newpipe[0];
 		(*data) = (*data)->next;
 	}
+	return (oldtmp);
 }
 
-void	last_child(t_parce *data, t_env *env, int *pipefd, int *status)
+void	last_child(t_parce *data, t_env *env, int oldtmp, int *status)
 {
 	(void)env;
 	int i_fork;
@@ -107,12 +91,11 @@ void	last_child(t_parce *data, t_env *env, int *pipefd, int *status)
 	i_fork = fork();
 	if (i_fork == 0)
 	{	
-		track = i_child(data, pipefd, 0);
-		printf("last in list\n");
+		track = i_child(data, oldtmp, NULL, 0);
+		// printf("last in list\n");
 		exit(track);
 	}
-	close(pipefd[0]);
-	close(pipefd[1]);
-	waitpid(i_fork, status, 0);
+	wait(status);
+	close(oldtmp);
 	*status = WEXITSTATUS(*status);
 }

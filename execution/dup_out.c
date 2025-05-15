@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 19:57:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 20:23:43 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:46:26 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	check_outfile(char **outfile, bool *append)
 	i = 0;
 	while (outfile[i])
 	{
-		fd = open(outfile[i], O_CREAT | O_WRONLY, 0644); // change here was RDONLY
+		fd = open(outfile[i], O_CREAT | O_WRONLY | O_APPEND, 0644); // change here was RDONLY
+		printf("append %d\n", append[i]);
 		if (append[i] == false)
 			fd = open(outfile[i], O_CREAT | O_WRONLY | O_TRUNC, 0644); // change here was RDONLY
 		if (access(outfile[i], W_OK) != 0)
@@ -47,7 +48,6 @@ int	dup_outfile(char **outfile, bool *append)
 		fd = check_outfile(outfile, append);
 		if (fd < 0)
 			return (-1);
-		printf("outfile\n");
 		dup2(fd, 1);
 		close(fd);
 	}

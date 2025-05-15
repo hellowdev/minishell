@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 20:29:25 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:58:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,9 @@ char	*valid_path(char **env, char *cmd);
 void	execute(t_parce *data, t_env *env, int *status);
 void	one_child(t_parce *data, t_env *env, int *pipefd, int *status);
 void	first_child(t_parce *data, t_env *env, int *pipefd, int *status);
-void	listofchild(t_parce **data, t_env *env, int *pipefd, int *status);
-void	last_child(t_parce *data, t_env *env, int *pipefd, int *status);
-int		i_child(t_parce *data, int *pipefd, int check);
+int		listofchild(t_parce **data, t_env *env, int *pipefd, int *status);
+void	last_child(t_parce *data, t_env *env, int oldtmp, int *status);
+int		i_child(t_parce *data, int tmp, int *pipefd, int check);
 int		check_infile(char **infile);
 int		dup_infile(char **infile);
 int		check_outfile(char **outfile, bool *append);
