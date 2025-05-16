@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/15 20:43:14 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/15 21:02:25 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	fd_closer(int fd, int *pipefd)
 
 void	wait_proc(t_child *pack)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	while (i <= pack->i)
 		waitpid(pack->ids[i++], pack->status, 0);
 	*pack->status = WEXITSTATUS(*pack->status);

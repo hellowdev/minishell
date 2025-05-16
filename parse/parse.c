@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 20:31:07 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:11:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 	t_parce *newnode;
 	t_token *tmp;
 
+	
 	tmp = head;
 	if (head->type == PIPE)
 		return (update_status(status, "|"));
