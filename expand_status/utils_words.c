@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_words.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/17 12:59:22 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/17 12:59:23 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	special_char(char c)
@@ -14,7 +26,7 @@ int	check_dol_sp(char *s)
 	i = 1;
 	while (s[i])
 	{
-		if (s[i] == '$' || special_char(s[i]) == 1 || s[i] == 34)
+		if (s[i] == '$' || special_char(s[i]) == 1 || s[i] == 34) // no need to check 34 ?
 			return (i);
 		i++;
 	}

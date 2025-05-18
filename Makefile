@@ -26,6 +26,8 @@ SRC = 	minishell.c \
 		tools/ft_lstadd_back.c \
 		tools/ft_putstr_fd.c\
 		tools/ft_lstsize.c\
+		tools/get_next_line.c\
+		tools/get_next_line_utils.c\
 		parse/parse.c\
 		parse/words.c\
 		token/tokenz.c\
@@ -37,6 +39,7 @@ SRC = 	minishell.c \
 		parse/get_data.c\
 		parse/forfree.c\
 		parse/count_data.c\
+		parse/deljoin.c\
 		expand_status/expand.c\
 		expand_status/utils_words.c\
 		expand_status/update_status.c\
@@ -46,6 +49,8 @@ SRC = 	minishell.c \
 		execution/dup_out.c\
 		execution/exec_cmd.c\
 		execution/used_func.c\
+		execution/here_doc.c\
+		tst.c
 
 OBJ = $(SRC:.c=.o)
 

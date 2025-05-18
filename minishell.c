@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/13 20:32:46 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/17 12:36:50 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ t_parce	*main_parse(int *status, char *s, t_env *env)
 		return (NULL);
 	pars_ing(&list, status, head, env);
 	ft_lstclear(head);
-	if (list)
-		execute(list, env, status);
 	
 	return (list);
 }
@@ -91,8 +89,9 @@ int main(int ac, char **av)
 		{
 			add_history(line);
 			lst = main_parse(&status, line, env);
-			// execute(lst, env, &status);
-			free(line); //
+			if (lst)
+				execute(lst, env, &status);
+			free(line);
 		}
 	}
 	system("leaks -q minishell");

@@ -6,19 +6,35 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/16 13:11:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:20:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+bool	check_input(t_token *list)
+{
+	bool	checker;
+
+	while (list)
+	{
+		if (list->type == HEREDOC)
+			checker = true;
+		else if (list->type == RED_IN)
+			checker = false;
+		list = list->next;
+	}
+	return (checker);	
+}
+
 t_parce	*data_alloc(t_token *head, int *status, t_env *env)
 {
 	t_parce *newnode;
-		
+
 	newnode = malloc(sizeof(t_parce));
 	if (!newnode)
         return NULL;
+	newnode->input = check_input(head);
 	newnode->next = NULL;
 	newnode->cmd = NULL;
 	newnode->infiles = NULL;
@@ -67,7 +83,6 @@ void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 	t_parce *newnode;
 	t_token *tmp;
 
-	
 	tmp = head;
 	if (head->type == PIPE)
 		return (update_status(status, "|"));
@@ -77,7 +92,6 @@ void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 		*lst = NULL;
 		return ;
 	}
-		
 	parse_add_back(lst, newnode);
 	after_pipe(head, status, lst, env);
 }

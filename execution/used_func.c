@@ -6,11 +6,25 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/15 21:02:25 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:56:54 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int ft_strcm_doc(char *s1, char *s2)
+{
+	int i = 0;
+
+	while((s1[i] == s2[i]) && s1[i] && s2[i] && s1[i] != '\n')
+		i++;
+	if (s1[i] == '\n')
+	{
+		i++;
+		return (s1[i] - s2[i - 1]);
+	}
+	return (s1[i] - s2[i]);
+}
 
 void	fd_closer(int fd, int *pipefd)
 {

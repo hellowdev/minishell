@@ -1,42 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 17:41:33 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/16 16:32:10 by ychedmi          ###   ########.fr       */
+/*   Created: 2024/12/19 15:43:31 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/17 12:37:25 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*join(char *str1, char *str2)
 {
-	size_t	i;
-	size_t	t;
+	int		i;
 	char	*p;
+	int		n;
 
+	n = 0;
 	i = 0;
-	t = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (s1);
-	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
+	if (!str1)
+		return (takeme(str2));
+	if (!str2)
+		return (takeme(str1));
+	p = malloc(ft_strlen(str2) + ft_strlen(str1) + 1);
 	if (!p)
-		return (free(s1), NULL);
-	while (s1[i])
+		return (free(str1), NULL);
+	while (str1[i])
 	{
-		p[i] = s1[i];
+		p[i] = str1[i];
 		i++;
 	}
-	while (s2[t])
-		p[i++] = s2[t++];
+	while (str2[n])
+		p[i++] = str2[n++];
 	p[i] = '\0';
-	free(s1);
+	free(str1);
 	return (p);
 }
+
+int	new_line(char *buff)
+{
+	int	i;
+
+	i = 0;
+	if (!buff)
+		return (0);
+	while (buff[i])
+	{
+		if (buff[i] == '\n')
+			return (i + 1);
+		i++;
+	}
+	return (-1);
+}
+

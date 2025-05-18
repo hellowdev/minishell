@@ -57,13 +57,15 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 {
 	int c;
+
 	c = 0;
 	while (head && head->type != PIPE)
 	{
 		if (head->next && head->type == HEREDOC && head->next->type == WORD)
 		{
-			newnode->heredoc[c] = ft_strdup(head->next->value); // skip doubqt -- skip sng
+			newnode->heredoc[c] = deljoin(head->next->value, &newnode->check_qt); // skip doubqt -- skip sng
 			// printf("[heredoc: %s]\n", newnode->heredoc[c]);
+			// printf("[check %d]\n", newnode->check_qt);
 			c++;
 		}
 		else if (head->type == HEREDOC && (!head->next || head->next->type != WORD))
