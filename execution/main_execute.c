@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/18 18:49:33 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/18 20:01:13 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 {
 	// -------- HEREDOC --------- //
-	// if (dup_heredoc(data->heredoc, data->input, data->check_qt, pack) == -1)
-	// 	return (fd_closer(oldpipe, pipefd), 1);
 	if (dup_heredoc(data->heredoc, data->input, pack->i) == -1)
 		return (fd_closer(oldpipe, pipefd), 1);
 	// -------- INFILE --------- //
@@ -56,5 +54,6 @@ void	execute(t_parce *data, t_env *env, int *status)
 	newfd = listofchild(&data, &pack); // THE LIST OF NODE SEPARATE BY PIPE
 	last_child(data, newfd, &pack); // THE LAST NODE
 	wait_proc(&pack);
+	free(pack.ids);
 	return ;
 }

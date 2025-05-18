@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tst.c                                              :+:      :+:    :+:   */
+/*   creat_tmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/18 19:31:16 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/18 20:15:56 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int strlen_herdoc(char *s)
-{
-	int i;
-
-	i = 1;
-	while (s[i])
-	{
-		if (s[i] == '$')
-			return (i);
-		i++;
-	}
-	return (i);	
-}
+#include "../minishell.h"
 
 int	doc_word(char *s, char **value)
 {
@@ -73,9 +59,8 @@ char	*file_name(int index)
 	char	*str;
 
 	str = ft_itoa(index);
-	ret = NULL;	
 	ret = ft_strjoin(ft_strdup("/tmp/"), str);
-	free(str);
+	free_null(&str);
 	return (ret);
 }
 
@@ -120,83 +105,3 @@ void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock)
 	free_null(&file);
 }
 
-void	one_doc(t_parce *data, t_expand *stock)
-{
-	int		i_fork;
-
-	i_fork = fork();
-	if (i_fork == 0)
-	{
-		creat_file(data->heredoc, data->check_qt, 0, stock);
-		exit(0);
-	}
-	wait(NULL);
-}
-
-void	first_doc(t_parce *data, t_expand *stock)
-{
-	int	i_fork;
-	
-	i_fork = fork();
-	if (i_fork == 0)
-	{
-		creat_file(data->heredoc, data->check_qt, 0, stock);		
-		exit(0);
-	}
-	wait(NULL);
-}
-
-int	listofdoc(t_parce **data, t_expand *stock)
-{
-	int i_fork;
-	int i;
-
-	i = 1;
-	while ((*data)->next)
-	{
-		
-		i_fork = fork();
-		if (i_fork == 0)
-		{
-			creat_file((*data)->heredoc, (*data)->check_qt, i, stock);
-			exit(0);
-		}
-		wait(NULL);
-		i++;
-		(*data) = (*data)->next;
-	}
-	return (i);
-}
-
-void	last_doc(t_parce *data, int *i, t_expand *stock)
-{
-	int i_fork;
-	
-	i_fork = fork();
-	if (i_fork == 0)
-	{	
-		creat_file(data->heredoc, data->check_qt, *i, stock);	
-		exit(0);
-	}
-	wait(NULL);
-}
-
-void	heredoc(t_parce *data, t_env *env, int status)
-{
-	int i;
-	t_expand stock;
-
-	stock.env = env;
-	stock.status = status;
-	if (data->next == NULL) // one NODE
-		return (one_doc(data, &stock));
-	else // FIRST NODE IN THE LIST
-	{
-		first_doc(data, &stock);
-		data = data->next;
-	}
-	// THE LIST OF NODE SEPARATE BY PIPE
-	i = listofdoc(&data, &stock);
-	// THE LAST NODE
-	last_doc(data, &i, &stock);
-}

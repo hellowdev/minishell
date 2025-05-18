@@ -50,7 +50,8 @@ SRC = 	minishell.c \
 		execution/exec_cmd.c\
 		execution/used_func.c\
 		execution/here_doc.c\
-		tst.c
+		execution/creat_tmp.c\
+		execution/dup_heredoc.c\
 
 OBJ = $(SRC:.c=.o)
 

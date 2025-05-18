@@ -6,11 +6,25 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/18 18:56:54 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:34:33 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int strlen_herdoc(char *s)
+{
+	int i;
+
+	i = 1;
+	while (s[i])
+	{
+		if (s[i] == '$')
+			return (i);
+		i++;
+	}
+	return (i);	
+}
 
 int ft_strcm_doc(char *s1, char *s2)
 {
