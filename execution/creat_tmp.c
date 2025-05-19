@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/18 20:15:56 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:35:38 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	get_lineee(char *heredoc, int fd, bool quoted, t_expand *stock)
 	line = NULL;
 	while (1)
 	{
+		write(1, "> ", 2);
 		line = get_next_line(0);
 		if (!line || ft_strcm_doc(line, heredoc) == 0)
 			break ;

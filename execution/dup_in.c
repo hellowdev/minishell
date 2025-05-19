@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:37:17 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/17 20:54:13 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:33:37 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ int	dup_infile(char **infile, bool last_inf)
 			dup2(fd, 0);
 		close(fd);
 	}
-	return (1); // khliha hna
+	return (1);
 }

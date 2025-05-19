@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 19:57:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/15 12:46:26 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:30:08 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	check_outfile(char **outfile, bool *append)
 	while (outfile[i])
 	{
 		fd = open(outfile[i], O_CREAT | O_WRONLY | O_APPEND, 0644); // change here was RDONLY
-		printf("append %d\n", append[i]);
 		if (append[i] == false)
 			fd = open(outfile[i], O_CREAT | O_WRONLY | O_TRUNC, 0644); // change here was RDONLY
 		if (access(outfile[i], W_OK) != 0)

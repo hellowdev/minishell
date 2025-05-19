@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/16 13:20:41 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:19:35 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	check_input(t_token *list)
 {
 	bool	checker;
 
-	while (list)
+	while (list && list->type != PIPE)
 	{
 		if (list->type == HEREDOC)
 			checker = true;
