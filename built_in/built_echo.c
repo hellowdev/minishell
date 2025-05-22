@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   built_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 17:41:33 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 16:38:52 by ychedmi          ###   ########.fr       */
+/*   Created: 2025/05/21 21:05:28 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/22 11:40:12 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+int	double_len(char **cmd)
 {
-	size_t	i;
-	size_t	t;
-	char	*p;
+	int i;
 
 	i = 0;
-	t = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (s1);
-	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!p)
-		return ( NULL);
-	while (s1[i])
+	if (!cmd)
+		return (0);
+	while (cmd[i])
+		i++;
+	return (i);
+}
+
+void	echo_cmd(char **cmd)
+{
+	int i;
+
+	i = 1;
+	if (cmd[1] && ft_strcmp(cmd[1], "-n") == 0)
+		i = 2;
+	while (cmd[i])
 	{
-		p[i] = s1[i];
+		write(1, cmd[i], ft_strlen(cmd[i]));
+		if (double_len(cmd) > 2 && double_len(cmd) != i + 1)
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
-	while (s2[t])
-		p[i++] = s2[t++];
-	p[i] = '\0';
-	free(s1);
-	return (p);
+	if (cmd[1] && ft_strcmp(cmd[1], "-n") == 0)
+		return ;
+	ft_putstr_fd("\n", 1);
 }

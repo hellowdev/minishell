@@ -89,6 +89,8 @@ int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 		{
 			newnode->cmd[c] = expand_status(head->value, env, false, *status);
 			// printf("[cmd: %s]\n", newnode->cmd[c]);
+			// printf("[head.value: %s]\n", head->value);
+			// printf("num of cmd> %d\n", c);
 			c++;
 		}
 		head = head->next;

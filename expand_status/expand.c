@@ -4,7 +4,7 @@ int strlen_dol(char *s)
 {
 	int i;
 
-	i = 1;
+	i = 0;
 	while (s[i])
 	{
 		if (s[i] == '$' || s[i] == 34 || s[i] == 39)
@@ -24,8 +24,9 @@ int	not_exp(char *s, char **value)
 	i = 0;
 	if (s[i] == '$' && special_char(s[i + 1]) == 1 && s[i + 1] != '?')
 	{
+		i++;
 		len = strlen_dol(&s[i]);
-		notexp = ft_substr(s ,i ,len);
+		len++;		notexp = ft_substr(s ,0 ,len);
 	    *value = ft_strjoin(*value, notexp);
 		free_null(&notexp);
 	}

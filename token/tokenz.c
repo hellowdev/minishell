@@ -25,9 +25,7 @@ int	doub_quote(char *s)
 
 	i = 1;
 	while (s[i] && s[i] != 34)
-	{
 		i++;
-	}
 	return (i);
 }
 

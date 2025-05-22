@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:32:57 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/19 10:52:59 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 18:01:18 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	listofdoc(t_parce **data, t_expand *stock)
 	i = 1;
 	while ((*data)->next)
 	{
-		
 		i_fork = fork();
 		if (i_fork == 0)
 		{

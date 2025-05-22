@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/18 19:39:11 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 19:12:20 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ typedef struct s_token
 	struct s_token *next;
 }   t_token;
 
+ 
 typedef struct s_env
 {
 	char	*name_env;
 	char	*value_env;
 	struct s_env *next;
 }	t_env;
+
 
 typedef struct s_parce
 {
@@ -86,7 +88,7 @@ typedef struct s_expand
 
 typedef struct s_child
 {
-	t_env	*env;
+	t_env	**env;
 	int		*status;
 	int		check;
 	int		pipefd[2];
@@ -94,6 +96,7 @@ typedef struct s_child
 	int		*ids;
 	int		i;
 }   t_child;
+
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
@@ -126,6 +129,8 @@ char	*ft_slash_join(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_lstsize(t_parce *lst);
+int		ft_atoi(const char *str);
+int		ft_sizeenv(t_env *lst);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
@@ -198,7 +203,7 @@ char	**split_path(char *env);
 char	**wich_path(char **env);
 char	*valid_path(char **env, char *cmd);
 // ------------------------ EXECUTION_FUNCTIONS ----------------------- //
-void	execute(t_parce *data, t_env *env, int *status);
+void	execute(t_parce *data, t_env **env, int *status);
 void	one_child(t_parce *data, t_child *pack);
 void	first_child(t_parce *data, t_child *pack);
 int		listofchild(t_parce **data, t_child *pack);
@@ -209,7 +214,7 @@ int		dup_infile(char **infile, bool check);
 int		check_outfile(char **outfile, bool *append);
 int		dup_outfile(char **outfile, bool *append);
 int		count_fd(char **fds);
-int		execute_cmd(t_parce *data);
+int		execute_cmd(t_parce *data, t_env *testenv);
 int		redire_err(char *file, char *err);
 void	fd_closer(int fd, int *pipefd);
 void	wait_proc(t_child *pack);
@@ -221,4 +226,13 @@ char	*file_name(int index);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
 void	heredoc(t_parce *data, t_env *env, int status);
 int		strlen_herdoc(char *s);
+
+// ------------------------ BUILTIN_CMD ----------------------- //
+int		built_in(char **cmd, t_env **env, int status);
+void	env_cmd(t_env *env);
+int		match_cmd(char *user_cmd, char *matcha);
+void	cd_cmd(char **cmd, t_env **env);
+void	pwd_cmd(char **cmd);
+void	echo_cmd(char **cmd);
+
 # endif

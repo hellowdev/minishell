@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/08 16:11:08 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 10:46:34 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,7 @@ int	doub_qt(char *s, char **str, bool *checker)
 		else
 			*checker = true;
         return (1);
-		// while (s[i] && s[i] != 34)
-			// i++;
-		// if (i > 1)
-		// {
-		// 	*str = ft_substr(s, 1, i - 1);
-		// 	return (i + 1);
-		// }
 	}
-	// free_null(str);
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/19 13:32:37 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:23:31 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,13 @@ t_parce	*main_parse(int *status, char *s, t_env *env)
 		return (NULL);
 	pars_ing(&list, status, head, env);
 	ft_lstclear(head);
-	
 	return (list);
 }
-void	signalHandler(int x)
-{
-	if (x == 2)
-		write(1, "\nminishell$ ", 12);
-}
+// void	signalHandler(int x)
+// {
+// 	if (x == 2)
+// 		write(1, "\nminishell$ ", 12);
+// }
 
 int main(int ac, char **av)
 {
@@ -87,18 +86,20 @@ int main(int ac, char **av)
 	status = 0;
 	env = NULL;
 	(void )av;
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 	if (ac == 1)
 	{
 		copy_env(&env);
 		while ((line = readline("minishell$ ")))
 		{
+			if (ft_strcmp(line, "exit") == 0)
+				return (free(line), free_env(env), free_doublst(&lst), status); // free line tparce 
 			add_history(line);
 			lst = main_parse(&status, line, env);
 			if (lst)
-				execute(lst, env, &status);
+				execute(lst, &env, &status);
 			free(line);
 		}
 	}
-	
 }
+ 

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/19 13:35:28 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 17:59:05 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,22 @@ int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 		dup2(pipefd[1], 1);
 	// -------- CMD --------- //
 	fd_closer(oldpipe, pipefd);
-	if (execute_cmd(data) == -1)
+	// if cmd builtin -> execute with built_in_func and exit();
+	if (built_in(data->cmd, pack->env, *pack->status) == 1)
+		exit (0);
+	if (execute_cmd(data, *pack->env) == -1)
 		return (127);
 	return (0);
 }
 
-void	execute(t_parce *data, t_env *env, int *status)
+void	execute(t_parce *data, t_env **env, int *status)
 {
 	int newfd;
 	t_child	pack;
 
-	heredoc(data, env, *status);
+	
+	// if only one builtin command --> execute builtin without forking
+	heredoc(data, *env, *status);
 	pack.env = env;
 	pack.status = status;
 	pipe(pack.pipefd);

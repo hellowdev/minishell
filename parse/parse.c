@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/19 11:19:35 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 10:25:19 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ void	after_pipe(t_token *head, int *status, t_parce **lst, t_env *env)
 			parse_add_back(lst, newnode);
 		}
 		else if (head->type == PIPE && !head->next)
-		{
-			
 			return (free_doublst(lst), update_status(status, "|"));
-		}
 		head = head->next;
 	}
 }

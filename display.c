@@ -16,7 +16,10 @@ void	disp_ar(char **str)
 		return ;
 	int i = 0;
 	while (str[i])
-		printf("%s\n", str[i++]);
+	{
+		printf("[%s]\n", str[i++]);
+
+	}
 }
 
 

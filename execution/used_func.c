@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/19 10:52:08 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:02:23 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,39 @@ char	**wich_path(char **env)
 	int		t;
 	char	**mypath;
 
+	(void)env;
 	t = 0;
 	mypath = NULL;
-	while (env[t])
-	{
-		if (ft_strnstr(env[t], "PATH", 5))
-		{
-			mypath = split_path(env[t]);
-			if (!mypath)
-				return (NULL);
-			break ;
-		}
-		t++;
-	}
+	char *path;
+	path = getenv("PATH");
+	mypath = ft_split(path, ':');
+	// mypath = split_path(env[t]);
+	// if (!mypath)
+	// 			return (NULL);
+	// while (env[t])
+	// {
+	// 	if (ft_strnstr(env[t], "PATH", 5))
+	// 	{
+	// 		
+	// 		break ;
+	// 	}
+	// 	t++;
+	// }
 	return (mypath);
+}
+
+int	is_slash(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	*valid_path(char **env, char *cmd)
@@ -102,11 +121,15 @@ char	*valid_path(char **env, char *cmd)
 	int		i;
 
 	i = 0;
+	if (is_slash(cmd) == 1 && access(cmd, F_OK) != 0)
+		return (redire_err(cmd, ": No such file or directory"), NULL);
+	if (is_slash(cmd) == 1 && access(cmd, X_OK) != 0)
+		return (redire_err(cmd, ": Permission denied"), NULL);
+	if (is_slash(cmd) == 1 && access(cmd, F_OK & X_OK) == 0)
+		return (ft_strdup(cmd));
 	p = wich_path(env);
 	if (!p)
-		return (NULL);
-	if (access(cmd, F_OK & X_OK) == 0)
-		return (doubfree(p), ft_strdup(cmd));
+		return (redire_err(cmd, ": No such file or directory"), doubfree(p), NULL);
 	while (p[i])
 	{
 		path = ft_slash_join(p[i], cmd);
@@ -117,8 +140,7 @@ char	*valid_path(char **env, char *cmd)
 		free(path);
 		i++;
 	}
-	doubfree(p);
-	return (NULL);
+	return (redire_err(cmd, ": command not found"), doubfree(p), NULL);
 }
 
 int	count_fd(char **fds)
@@ -136,6 +158,7 @@ int	redire_err(char *file, char *err)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(file, 2);
 	ft_putstr_fd(err, 2);
-	write(2, "\n", 1);
+	if (err)
+		write(2, "\n", 1);
 	return (-1);
 }

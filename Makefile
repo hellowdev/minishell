@@ -21,6 +21,7 @@ SRC = 	minishell.c \
 		tools/ft_lstlast.c \
 		tools/ft_strcmp.c \
 		tools/ft_itoa.c \
+		tools/ft_atoi.c \
 		tools/ft_slash_join.c\
 		tools/ft_strnstr.c \
 		tools/ft_lstadd_back.c \
@@ -52,6 +53,10 @@ SRC = 	minishell.c \
 		execution/here_doc.c\
 		execution/creat_tmp.c\
 		execution/dup_heredoc.c\
+		built_in/built_env.c\
+		built_in/built_cd.c\
+		built_in/built_pwd.c\
+		built_in/built_echo.c\
 
 OBJ = $(SRC:.c=.o)
 

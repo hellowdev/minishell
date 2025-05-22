@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 17:41:33 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 16:38:52 by ychedmi          ###   ########.fr       */
+/*   Created: 2025/05/21 14:28:55 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/21 17:52:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+void	pwd_cmd(char **cmd)
 {
-	size_t	i;
-	size_t	t;
-	char	*p;
-
-	i = 0;
-	t = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (s1);
-	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!p)
-		return ( NULL);
-	while (s1[i])
-	{
-		p[i] = s1[i];
-		i++;
-	}
-	while (s2[t])
-		p[i++] = s2[t++];
-	p[i] = '\0';
-	free(s1);
-	return (p);
+	char	*ret;
+	
+	ret = getcwd(NULL, 0);
+	if (!ret)
+		return (redire_err(cmd[0], NULL), perror(" "));
+	write(1, ret, ft_strlen(ret));
+	write(1, "\n", 1);
 }
