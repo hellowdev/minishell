@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 16:02:23 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/22 21:48:37 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ char	**split_path(char *env)
 	return (p);
 }
 
-char	**wich_path(char **env)
+char	**wich_path(t_env *env)
 {
 	int		t;
 	char	**mypath;
 
-	(void)env;
+	// (void)env;
 	t = 0;
 	mypath = NULL;
 	char *path;
-	path = getenv("PATH");
+	path = env_searsh(env, "PATH");
 	mypath = ft_split(path, ':');
 	// mypath = split_path(env[t]);
 	// if (!mypath)
@@ -114,7 +114,7 @@ int	is_slash(char *s)
 	return (0);
 }
 
-char	*valid_path(char **env, char *cmd)
+char	*valid_path(t_env *env, char *cmd)
 {
 	char	**p;
 	char	*path;

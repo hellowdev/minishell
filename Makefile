@@ -57,6 +57,8 @@ SRC = 	minishell.c \
 		built_in/built_cd.c\
 		built_in/built_pwd.c\
 		built_in/built_echo.c\
+		built_in/built_unset.c\
+		built_in/built_export.c\
 
 OBJ = $(SRC:.c=.o)
 

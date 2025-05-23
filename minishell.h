@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 19:12:20 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 12:17:26 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,8 @@ void	free_doublst(t_parce **head);
 void	free_env(t_env *head);
 // ------------------------ PATH_CMD ----------------------- //
 char	**split_path(char *env);
-char	**wich_path(char **env);
-char	*valid_path(char **env, char *cmd);
+char	**wich_path(t_env *env);
+char	*valid_path(t_env *env, char *cmd);
 // ------------------------ EXECUTION_FUNCTIONS ----------------------- //
 void	execute(t_parce *data, t_env **env, int *status);
 void	one_child(t_parce *data, t_child *pack);
@@ -234,5 +234,8 @@ int		match_cmd(char *user_cmd, char *matcha);
 void	cd_cmd(char **cmd, t_env **env);
 void	pwd_cmd(char **cmd);
 void	echo_cmd(char **cmd);
+void	unset_cmd(char **cmd, t_env **env);
+void	export_cmd(char **cmd, t_env **env);
+int		valid_idf(char *s);
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/21 21:02:44 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 13:00:05 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	cd_cmd(char **cmd, t_env **env)
 	} // change dir
 	else if (!cmd[1])
 	{
-		ret = getenv("HOME");
+		ret = env_searsh(*env, "HOME");
 		if (!ret)
-			return (ft_putstr_fd("minishell: HOME not set\n", 2));
+			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2));
 		updt_oldpwd(env, cwd);
 		updt_pwd(ft_strdup(ret), env);
 		if (chdir(ret) < 0)
-			return (redire_err(cmd[1], NULL), perror(" "));
+			return (redire_err(ret, NULL), perror(" "));
 	}
 	
 }
