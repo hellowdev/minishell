@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:08:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 13:01:23 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 21:37:19 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	valid_idf_exp(char *s)
 	int i;
 
 	i = 0;
+	if (s[i] == '=')
+		return (1);
 	while (s[i] && s[i] != '=')
 	{
 		if (!ft_isalpha(s[i]) && s[i] != '_' && (i == 0 || !ft_isdigit(s[i])))
@@ -76,9 +78,14 @@ void	export_cmd(char **cmd, t_env **env)
 	i = 1;
 	while (cmd[i])
 	{
-		if (valid_idf_exp(cmd[i]) == 1)
-			redire_err(cmd[i], ": not a valid identifier");
-		add_env(env, cmd[i]);
+		if (valid_idf_exp(cmd[i]) == 1 || !*cmd[i])
+		{
+			write(2, "minishell: export: `", 20);
+			write(2, cmd[i], ft_strlen(cmd[i]));
+			write(2, "': not a valid identifier\n", 26);
+		}
+		else
+			add_env(env, cmd[i]);
 		i++;
 	}
 }

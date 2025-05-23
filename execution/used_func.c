@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 21:48:37 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 18:51:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ char	*valid_path(t_env *env, char *cmd)
 		path = ft_slash_join(p[i], cmd);
 		if (!path)
 			return (doubfree(p), NULL);
-		if (access(path, F_OK & X_OK) == 0)
+		if (access(path, F_OK | X_OK) == 0)
 			return (doubfree(p), path);
 		free(path);
 		i++;

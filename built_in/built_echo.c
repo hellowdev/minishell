@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:05:28 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 11:40:12 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 21:05:52 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,30 @@ int	double_len(char **cmd)
 		i++;
 	return (i);
 }
+size_t	len_n(char *cmd)
+{
+	int i;
+
+	i = 0;
+	if (cmd[0] == '-')
+		i++;
+	while (cmd[i] && cmd[0] == '-' && cmd[i] == 110)
+		i++;
+	return (i);
+}
 
 void	echo_cmd(char **cmd)
 {
 	int i;
+	int j;
 
+	j = 0;
 	i = 1;
-	if (cmd[1] && ft_strcmp(cmd[1], "-n") == 0)
-		i = 2;
+	while (cmd[i] && len_n(cmd[i]) == ft_strlen(cmd[i]))
+	{
+		j++;
+		i++;
+	}
 	while (cmd[i])
 	{
 		write(1, cmd[i], ft_strlen(cmd[i]));
@@ -38,7 +54,7 @@ void	echo_cmd(char **cmd)
 			ft_putstr_fd(" ", 1);
 		i++;
 	}
-	if (cmd[1] && ft_strcmp(cmd[1], "-n") == 0)
+	if (j > 0)
 		return ;
 	ft_putstr_fd("\n", 1);
 }

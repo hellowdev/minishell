@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 12:17:26 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 22:13:51 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,10 +228,10 @@ void	heredoc(t_parce *data, t_env *env, int status);
 int		strlen_herdoc(char *s);
 
 // ------------------------ BUILTIN_CMD ----------------------- //
-int		built_in(char **cmd, t_env **env, int status);
+int		built_in(char **cmd, t_env **env, int *status);
 void	env_cmd(t_env *env);
 int		match_cmd(char *user_cmd, char *matcha);
-void	cd_cmd(char **cmd, t_env **env);
+void	cd_cmd(char **cmd, t_env **env, int *status);
 void	pwd_cmd(char **cmd);
 void	echo_cmd(char **cmd);
 void	unset_cmd(char **cmd, t_env **env);

@@ -22,7 +22,7 @@ int	not_exp(char *s, char **value)
 
 	len = 0;
 	i = 0;
-	if (s[i] == '$' && special_char(s[i + 1]) == 1 && s[i + 1] != '?')
+	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 1 && s[i + 1] != '?')
 	{
 		i++;
 		len = strlen_dol(&s[i]);
@@ -41,7 +41,7 @@ int expand(char *s, char **value, t_env *env, int status)
 
 	checker = 0;
 	i = 0;
-	if (s[i] == '$' && special_char(s[i + 1]) == 0)
+	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 0)
 	{
 		checker = check_dol_sp(&s[i]);
 	    name = ft_substr(s, i + 1, checker - 1);
@@ -50,7 +50,7 @@ int expand(char *s, char **value, t_env *env, int status)
 	    free_null(&name);
 		free_null(&retenv);
 	}
-	else if (s[i] == '$' && s[i + 1] == '?')
+	else if (s[i] && s[i] == '$' && s[i + 1] == '?')
 	{
 		name = ft_itoa(status);
 		*value = ft_strjoin(*value, name);
@@ -68,7 +68,7 @@ int	simple_word(char *s, char **value)
 
 	i = 0;
 	len = 0;
-	if (s[i] != '$' && s[i] != 34 && s[i] != 39)
+	if (s[i] && s[i] != '$' && s[i] != 34 && s[i] != 39)
 	{
 		len = strlen_dol(&s[i]);
 		word = ft_substr(s ,i ,len);

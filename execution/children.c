@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/20 16:16:42 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 22:13:42 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 void	one_child(t_parce *data, t_child *pack)
 {
-	// nidro builtin bla manforkiw
-	if (built_in(data->cmd, pack->env, *pack->status) == 1)
+	if (built_in(data->cmd, pack->env, pack->status) == 1)
 		return ;
 	int track;
 	int i_fork;

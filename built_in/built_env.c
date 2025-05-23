@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 12:17:57 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 21:43:11 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	env_cmd(t_env *env)
 	}
 }
 
-int	built_in(char **cmd, t_env **env, int status)
+int	built_in(char **cmd, t_env **env, int *status)
 {
 	(void)status;
 	if (!cmd)
@@ -47,7 +47,7 @@ int	built_in(char **cmd, t_env **env, int status)
 	if (match_cmd(cmd[0], "env")) // "cmd" only not path of cmd mean is a builtin cmd
 		return (env_cmd(*env), 1);
 	if (match_cmd(cmd[0], "cd"))
-		return (cd_cmd(cmd, env), 1);
+		return (cd_cmd(cmd, env, status), 1);
 	if (match_cmd(cmd[0], "echo"))
 		return (echo_cmd(cmd), 1);
 	if (ft_strcmp(cmd[0], "export") == 0)

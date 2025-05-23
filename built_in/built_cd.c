@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 13:00:05 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 22:55:13 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,23 @@ void	updt_pwd(char *dir, t_env **env)
 	}
 }
 
-void	cd_cmd(char **cmd, t_env **env)
+void	cd_option(t_env **env, char *cwd , int *status)
+{
+	char *ret;
+
+	ret = NULL;
+	
+		ret = env_searsh(*env, "OLDPWD");
+		if (!ret)
+			return (*status = 1, ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2));
+		updt_oldpwd(env, cwd);
+		updt_pwd(ft_strdup(ret), env);
+		printf("%s\n", ret);
+		if (chdir(ret) < 0)
+			return (*status = 1, redire_err(ret, NULL), perror(" "));
+}
+
+void	cd_cmd(char **cmd, t_env **env, int *status)
 {
 	char	*ret;
 	char	*cwd;
@@ -57,22 +73,23 @@ void	cd_cmd(char **cmd, t_env **env)
 	cwd = getcwd(NULL, 0);
 	if (cmd[1])
 	{
+		if (ft_strcmp(cmd[1], "-") == 0)
+			return (cd_option(env, cwd, status));
 		if (chdir(cmd[1]) == 0) // change directory
 			updt_oldpwd(env, cwd);
 		else
-			return (redire_err(cmd[1], NULL), perror(" "));
-		ret = getcwd(NULL, 0); // actual directory 
+			return (*status = 1, redire_err(cmd[1], NULL), perror(" "));
+		ret = getcwd(NULL, 0); // actual directory
 		updt_pwd(ret, env);
 	} // change dir
 	else if (!cmd[1])
 	{
 		ret = env_searsh(*env, "HOME");
 		if (!ret)
-			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2));
+			return (*status = 1, ft_putstr_fd("minishell: cd: HOME not set\n", 2));
 		updt_oldpwd(env, cwd);
 		updt_pwd(ft_strdup(ret), env);
 		if (chdir(ret) < 0)
-			return (redire_err(ret, NULL), perror(" "));
+			return (*status = 1, redire_err(ret, NULL), perror(" "));
 	}
-	
 }

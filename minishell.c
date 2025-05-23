@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 16:23:31 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/23 17:54:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,17 @@ t_parce	*main_parse(int *status, char *s, t_env *env)
 // 	if (x == 2)
 // 		write(1, "\nminishell$ ", 12);
 // }
-
+void	f()
+{
+	system("leaks -q minishell");
+}
 int main(int ac, char **av)
 {
 	char	*line;
 	t_env	*env;
 	int		status;
 	t_parce *lst;
-
+	// atexit(f);
 	status = 0;
 	env = NULL;
 	(void )av;
@@ -98,8 +101,11 @@ int main(int ac, char **av)
 			lst = main_parse(&status, line, env);
 			if (lst)
 				execute(lst, &env, &status);
+			free_doublst(&lst);
 			free(line);
+			
 		}
+		free_env(env);
 	}
 }
  
