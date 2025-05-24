@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 13:47:45 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 10:20:38 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,17 @@ void	get_lineee(char *heredoc, int fd, bool quoted, t_expand *stock)
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock)
 {
 	char	*file;
-	char	*line;
 	int	i;
 	int	fd;
 
 	i = 0;
 	file = NULL;
-	line = NULL;
 	file = file_name(index);
 	while (heredoc[i])
 	{
 		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0777);
 		if (fd < 0)
-			return ;
+			return (free_null(&file));
 		get_lineee(heredoc[i], fd, quoted, stock);
 		close(fd);
 		i++;

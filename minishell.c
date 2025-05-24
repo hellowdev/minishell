@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 17:54:41 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 12:22:46 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int main(int ac, char **av)
 	t_env	*env;
 	int		status;
 	t_parce *lst;
-	// atexit(f);
+	atexit(f);
 	status = 0;
 	env = NULL;
 	(void )av;
@@ -96,14 +96,13 @@ int main(int ac, char **av)
 		while ((line = readline("minishell$ ")))
 		{
 			if (ft_strcmp(line, "exit") == 0)
-				return (free(line), free_env(env), free_doublst(&lst), status); // free line tparce 
+				return (free(line), free_env(env), free_doublst(&lst), status); // free line tparce
 			add_history(line);
 			lst = main_parse(&status, line, env);
 			if (lst)
 				execute(lst, &env, &status);
 			free_doublst(&lst);
-			free(line);
-			
+			free_null(&line);
 		}
 		free_env(env);
 	}

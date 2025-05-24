@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 21:49:03 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 12:31:13 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**double_env(t_env *env)
 
 	i = 0;
 	ret = malloc((ft_sizeenv(env) + 1) * sizeof(char *));
+	if (!ret)
+		return (NULL);
 	while (env)
 	{
 		ret[i] = ft_strjoin(ft_strdup(env->name_env), ft_strdup("="));

@@ -26,7 +26,8 @@ int	not_exp(char *s, char **value)
 	{
 		i++;
 		len = strlen_dol(&s[i]);
-		len++;		notexp = ft_substr(s ,0 ,len);
+		len++;
+		notexp = ft_substr(s ,0 ,len);
 	    *value = ft_strjoin(*value, notexp);
 		free_null(&notexp);
 	}

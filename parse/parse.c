@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 10:25:19 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 11:17:21 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ t_parce	*data_alloc(t_token *head, int *status, t_env *env)
 	newnode->outfiles = NULL;
 	newnode->heredoc = NULL;
 	newnode->append = NULL;
-	if (count_cmd(head, newnode, status, env) == 1)
-		return (free_doublst(&newnode), NULL);
+	count_cmd(head, newnode, status, env);
 	if (count_outfiles(head, newnode, status, env) == 1)
 		return (free_doublst(&newnode), NULL);
 	if (count_infiles(head, newnode, status, env) == 1)
@@ -86,7 +85,7 @@ void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 	newnode = data_alloc(head, status, env);
 	if (!newnode)
 	{
-		*lst = NULL;
+		*lst = NULL;// for not execute in this list
 		return ;
 	}
 	parse_add_back(lst, newnode);

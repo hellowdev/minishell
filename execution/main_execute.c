@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 22:14:20 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 12:17:49 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ void	execute(t_parce *data, t_env **env, int *status)
 {
 	int newfd;
 	t_child	pack;
+	t_parce *tmp;
 
-	
-	// if only one builtin command --> execute builtin without forking
+	tmp = data;
 	heredoc(data, *env, *status);
 	pack.env = env;
 	pack.status = status;
 	pipe(pack.pipefd);
 	if (data->next == NULL) // one NODE
-		return (one_child(data, &pack));
+		return (del_file(tmp), one_child(data, &pack));
 	else // FIRST NODE IN THE LIST
 	{
 		pack.ids = malloc(ft_lstsize(data) * sizeof(int));
@@ -58,7 +58,5 @@ void	execute(t_parce *data, t_env **env, int *status)
 	}
 	newfd = listofchild(&data, &pack); // THE LIST OF NODE SEPARATE BY PIPE
 	last_child(data, newfd, &pack); // THE LAST NODE
-	wait_proc(&pack);
-	free(pack.ids);
-	return ;
+	return (wait_proc(&pack), free(pack.ids), del_file(tmp));
 }

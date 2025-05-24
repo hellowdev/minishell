@@ -14,12 +14,11 @@ int count_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 		else if (head->type == WORD)
 			i++;
 		head = head->next;
-	}
+	}// count how many cmds between pipes
 	if (i)
 	{
 		newnode->cmd = malloc((i + 1) * sizeof(char *));
-		if(get_cmd(tmp, newnode, status, env) == 1)
-			return (1);
+		get_cmd(tmp, newnode, status, env);
 	}
 	return (0);
 }
@@ -36,7 +35,7 @@ int count_infiles(t_token *head, t_parce *newnode, int *status, t_env *env)
 		if (head->type == RED_IN)
 			i++;
 		head = head->next;
-	}
+	}// count how many infiles between pipes
 	if (i)
 	{
 		newnode->infiles = malloc((i + 1) * sizeof(char *));
@@ -57,7 +56,7 @@ int count_outfiles(t_token *head, t_parce *newnode, int *status, t_env *env)
 		if (head->type == RED_OUT || head->type == APPEND)
 			i++;
 		head = head->next;
-	}
+	}// count how many outfiles between pipes
 	if (i)
 	{
 		(newnode)->outfiles = malloc((i + 1) * sizeof(char *));
@@ -83,7 +82,7 @@ int count_heredoc(t_token *head, t_parce *newnode, int *status)
 	if (i)
 	{
 		newnode->heredoc = malloc((i + 1) * sizeof(char *));
-		if(get_herdoc(tmp, newnode, status))
+		if (get_herdoc(tmp, newnode, status))
 			return (1);
 	}
 	return(0);

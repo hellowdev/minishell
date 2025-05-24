@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 22:13:51 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 12:16:55 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ char	*file_name(int index);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
 void	heredoc(t_parce *data, t_env *env, int status);
 int		strlen_herdoc(char *s);
+void	del_file(t_parce *nodes);
 
 // ------------------------ BUILTIN_CMD ----------------------- //
 int		built_in(char **cmd, t_env **env, int *status);

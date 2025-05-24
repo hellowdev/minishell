@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:41:19 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/19 11:28:58 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 10:29:06 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int	dup_heredoc(char **heredoc, bool input, int index)
 		close(fd);
 		free_null(&file);
 	}
+	// else
+		
 	return (1);
 }
