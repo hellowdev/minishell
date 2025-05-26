@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:32:57 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/24 12:21:14 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 12:55:10 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	del_file(t_parce *nodes)
 {
-	int i;
 	int cnt;
 	char *delfile;
 
 	cnt = 0;
-	i = 0;
 	while (nodes)
 	{
 		if (nodes->heredoc)

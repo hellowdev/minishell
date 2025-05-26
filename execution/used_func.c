@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 18:51:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/24 12:54:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,12 @@ char	**split_path(char *env)
 
 char	**wich_path(t_env *env)
 {
-	int		t;
 	char	**mypath;
 
-	// (void)env;
-	t = 0;
 	mypath = NULL;
 	char *path;
 	path = env_searsh(env, "PATH");
 	mypath = ft_split(path, ':');
-	// mypath = split_path(env[t]);
-	// if (!mypath)
-	// 			return (NULL);
-	// while (env[t])
-	// {
-	// 	if (ft_strnstr(env[t], "PATH", 5))
-	// 	{
-	// 		
-	// 		break ;
-	// 	}
-	// 	t++;
-	// }
 	return (mypath);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/24 12:16:55 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:40:18 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 # include <termios.h>        // tcsetattr, tcgetattr
 # include <sys/ioctl.h>      // ioctl
 # include <term.h>     	     // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-# include <readline/readline.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
+# include "readline/readline.h"  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
+# include "ncurses/ncurses.h"  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>   // add_history, rl_clear_history
 # include <stdbool.h>
 
@@ -100,7 +101,7 @@ typedef struct s_child
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
-
+void    si_gn();
 // --------------------------- TOOLS ----------------------- //
 char	*get_next_line(int fd);
 char	*join(char *str1, char *str2);
@@ -239,4 +240,6 @@ void	unset_cmd(char **cmd, t_env **env);
 void	export_cmd(char **cmd, t_env **env);
 int		valid_idf(char *s);
 
+void	handle_signals(int sig);
+void	handle_child(int sig);
 # endif

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/24 12:22:46 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:38:44 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,45 @@ t_parce	*main_parse(int *status, char *s, t_env *env)
 }
 // void	signalHandler(int x)
 // {
-// 	if (x == 2)
-// 		write(1, "\nminishell$ ", 12);
+//     (void)x;
+	
 // }
-void	f()
-{
-	system("leaks -q minishell");
-}
+// void	f()
+// {
+// 	system("leaks -q minishell");
+// }
+// int	check_eof(char *input)
+// {
+// 	int i = 0;
+// 	if (input[i] == EOF)
+// 		return 1;
+	
+// }
+
 int main(int ac, char **av)
 {
 	char	*line;
 	t_env	*env;
 	int		status;
 	t_parce *lst;
-	atexit(f);
+
+	signal(SIGINT, handle_signals);
+	signal(SIGQUIT, SIG_IGN);
+	rl_catch_signals = 0;
 	status = 0;
 	env = NULL;
-	(void )av;
-	// signal(SIGQUIT, SIG_IGN);
+	(void)av;
 	if (ac == 1)
 	{
 		copy_env(&env);
-		while ((line = readline("minishell$ ")))
+		while (1)
 		{
+			line = readline("minishell$ \0");
+			if (!line)
+			{
+				printf("exit\n");
+				exit(0);
+			}
 			if (ft_strcmp(line, "exit") == 0)
 				return (free(line), free_env(env), free_doublst(&lst), status); // free line tparce
 			add_history(line);

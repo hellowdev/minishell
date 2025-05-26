@@ -6,12 +6,11 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 22:13:42 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:22:28 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 void	one_child(t_parce *data, t_child *pack)
 {

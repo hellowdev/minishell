@@ -6,11 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/24 12:17:49 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:25:21 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+
 
 int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 {
@@ -32,6 +34,8 @@ int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 	// if cmd builtin -> execute with built_in_func and exit();
 	if (built_in(data->cmd, pack->env, pack->status) == 1)
 		exit(*pack->status);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (execute_cmd(data, *pack->env) == -1)
 		return (127);
 	return (0);

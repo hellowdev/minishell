@@ -1,6 +1,12 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror 
+# CFLAGS = -Wall -Wextra -Werror 
+
+# MINIFLAGS = -lreadline
+NCURSES = $(shell brew --prefix ncurses)
+READLINE = $(shell brew --prefix readline)
+CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include -I$(NCURSES)/include
+MINIFLAGS =  -lreadline -lncurses -L$(READLINE)/lib -g -Wl,-no_pie -L$(NCURSES)/lib
 
 NAME = minishell
 
@@ -59,16 +65,17 @@ SRC = 	minishell.c \
 		built_in/built_echo.c\
 		built_in/built_unset.c\
 		built_in/built_export.c\
+		signals.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -lncurses
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)  $(MINIFLAGS) -lreadline -lncurses
 
 %.o : %.c minishell.h
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS)  -c $< -o $@
 
 clean:
 	@rm -rf $(OBJ)
