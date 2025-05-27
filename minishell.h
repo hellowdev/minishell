@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/26 20:40:18 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/27 20:20:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@
 # include <termios.h>        // tcsetattr, tcgetattr
 # include <sys/ioctl.h>      // ioctl
 # include <term.h>     	     // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-# include "readline/readline.h"  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
-# include "ncurses/ncurses.h"  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
+# include <readline/readline.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
+# include <ncurses.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>   // add_history, rl_clear_history
 # include <stdbool.h>
 
+extern int leveling;
 extern char **environ;
 
 typedef enum s_type
@@ -101,7 +102,6 @@ typedef struct s_child
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
-void    si_gn();
 // --------------------------- TOOLS ----------------------- //
 char	*get_next_line(int fd);
 char	*join(char *str1, char *str2);
@@ -230,7 +230,7 @@ int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
 
 // ------------------------ BUILTIN_CMD ----------------------- //
-int		built_in(char **cmd, t_env **env, int *status);
+int		built_in(t_parce *data, t_env **env, int *status);
 void	env_cmd(t_env *env);
 int		match_cmd(char *user_cmd, char *matcha);
 void	cd_cmd(char **cmd, t_env **env, int *status);
@@ -241,5 +241,6 @@ void	export_cmd(char **cmd, t_env **env);
 int		valid_idf(char *s);
 
 void	handle_signals(int sig);
-void	handle_child(int sig);
+void	signalss(t_env *env);
+void	set_lvl(t_env **env);
 # endif

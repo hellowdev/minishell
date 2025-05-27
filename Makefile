@@ -3,10 +3,10 @@ CC = cc
 # CFLAGS = -Wall -Wextra -Werror 
 
 # MINIFLAGS = -lreadline
-NCURSES = $(shell brew --prefix ncurses)
+# NCURSES = $(shell brew --prefix ncurses)
 READLINE = $(shell brew --prefix readline)
-CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include -I$(NCURSES)/include
-MINIFLAGS =  -lreadline -lncurses -L$(READLINE)/lib -g -Wl,-no_pie -L$(NCURSES)/lib
+CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include
+MINIFLAGS =  -lreadline -lncurses -L$(READLINE)/lib -g -Wl,-no_pie
 
 NAME = minishell
 

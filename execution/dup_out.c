@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 19:57:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/19 11:30:08 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/27 19:55:51 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	check_outfile(char **outfile, bool *append)
 	{
 		fd = open(outfile[i], O_CREAT | O_WRONLY | O_APPEND, 0644); // change here was RDONLY
 		if (append[i] == false)
+		{
+			close(fd);
 			fd = open(outfile[i], O_CREAT | O_WRONLY | O_TRUNC, 0644); // change here was RDONLY
+		}
 		if (access(outfile[i], W_OK) != 0)
 			return (redire_err(outfile[i], ": Permission denied"));
 		if (fd < 0)
@@ -45,6 +48,7 @@ int	dup_outfile(char **outfile, bool *append)
 	if (outfile)
 	{
 		fd = check_outfile(outfile, append);
+		
 		if (fd < 0)
 			return (-1);
 		dup2(fd, 1);
