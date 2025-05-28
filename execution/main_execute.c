@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/27 19:39:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/28 21:37:27 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 {
+	signal(SIGQUIT, SIG_DFL);
 	// -------- HEREDOC --------- //
 	if (dup_heredoc(data->heredoc, data->input, pack->i) == -1)
 		return (fd_closer(oldpipe, pipefd), 1);
@@ -44,18 +45,18 @@ void	execute(t_parce *data, t_env **env, int *status)
 	t_parce *tmp;
 
 	tmp = data;
-	heredoc(data, *env, *status);
+	heredoc(data, *env, status);
+	signal(SIGINT, handle_signals);
 	pack.env = env;
 	pack.status = status;
 	pipe(pack.pipefd);
 	if (data->next == NULL) // one NODE
-		return (del_file(tmp), one_child(data, &pack));
-	else // FIRST NODE IN THE LIST
-	{
-		pack.ids = malloc(ft_lstsize(data) * sizeof(int));
-		first_child(data, &pack);
-		data = data->next;
-	}
+		return (one_child(data, &pack));
+
+	pack.ids = malloc(ft_lstsize(data) * sizeof(int));
+	first_child(data, &pack);
+	data = data->next;
+
 	newfd = listofchild(&data, &pack); // THE LIST OF NODE SEPARATE BY PIPE
 	last_child(data, newfd, &pack); // THE LAST NODE
 	return (wait_proc(&pack), free(pack.ids), del_file(tmp));

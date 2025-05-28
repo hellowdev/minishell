@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/24 12:54:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/28 21:51:22 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,15 @@ void	wait_proc(t_child *pack)
 
 	i = 0;
 	while (i <= pack->i)
+	{
+		signal(SIGINT, SIG_IGN); // bach nbdlo akhir signal d parent
 		waitpid(pack->ids[i++], pack->status, 0);
-	*pack->status = WEXITSTATUS(*pack->status);
+	}
+	if (WIFSIGNALED(*pack->status))
+		*pack->status = WTERMSIG(*pack->status) + 128;
+	else
+		*pack->status = WEXITSTATUS(*pack->status);
+	signal(SIGINT, handle_signals); 
 }
 
 char	**split_path(char *env)

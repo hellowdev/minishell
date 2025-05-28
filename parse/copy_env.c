@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/27 20:17:52 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/28 10:19:26 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,5 @@ void	copy_env(t_env **env)
 		}
 		i++;
 	}
-	set_lvl(env);
 }
 
-
-void	set_lvl(t_env **env)
-{
-	char	*hold;
-	t_env	*new;
-	t_env 	*tmp;
-
-	tmp = *env;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name_env, "@#.@123") == 0)
-		{
-			hold = ft_itoa(ft_atoi(tmp->value_env) + 1);
-			free_null(&tmp->value_env);
-			tmp->value_env = hold;
-			return ;
-		}
-		tmp = tmp->next;
-	}
-	new = lstnew_env(ft_strdup("@#.@123"), ft_strdup("0"));
-	env_add_back(env, new);
-}

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/27 20:20:13 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/28 12:57:08 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ int main(int ac, char **av)
 
 	status = 0;
 	env = NULL;
-	rl_catch_signals = 0;
+	disable_ctrl_echo();
 	if (ac == 1)
 	{
 		copy_env(&env);
-		signalss(env);
+		signalss();
 		while (1)
 		{
 			line = readline("minishell$ ");

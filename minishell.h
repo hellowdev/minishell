@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/27 20:20:41 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/28 21:05:59 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_word
 typedef struct s_expand
 {
 	t_env	*env;
-	int		status;
+	int		*status;
 }   t_expand;
 
 typedef struct s_child
@@ -225,7 +225,7 @@ int		ft_strcm_doc(char *s1, char *s2);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
 char	*file_name(int index);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
-void	heredoc(t_parce *data, t_env *env, int status);
+void	heredoc(t_parce *data, t_env *env, int *status);
 int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
 
@@ -240,7 +240,8 @@ void	unset_cmd(char **cmd, t_env **env);
 void	export_cmd(char **cmd, t_env **env);
 int		valid_idf(char *s);
 
+void	disable_ctrl_echo();
 void	handle_signals(int sig);
-void	signalss(t_env *env);
-void	set_lvl(t_env **env);
+void	handle_doc_sig(int sig);
+void	signalss();
 # endif
