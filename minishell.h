@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 15:28:20 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:42:07 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,14 +144,11 @@ int		skip_space(char *s);
 int		outfile_append(char *s, t_token **head);
 int		append(t_token **token);
 int		handle_pipe(char *s, t_token **head);
-// int     join_word(char *s, t_word *data);
 int		check_words(char *s, t_token **head);
 int		doub_qt(char *s, char **str, bool *checker);
 int		doub_quote(char *s);
 int		sing_quote(char *s);
 int     sing_qt(char *s, char **str);
-// int     check_chac(char *s, char **str);
-// int     spec_char(char c);
 void	tokenization(char *s, t_token **head);
 
 // ------------------------ COPY_ENV ----------------------- //
@@ -243,6 +240,5 @@ int		valid_idf(char *s);
 
 void	disable_ctrl_echo();
 void	handle_signals(int sig);
-void	handle_doc_sig(int sig);
 void	signalss();
 # endif

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:05:28 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 12:22:05 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 20:11:07 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	echo_cmd(char **cmd)
 		j++;
 		i++;
 	}
-	// printf(">> [%s]", cmd[i]);
 	while (cmd[i])
 	{
 		write(1, cmd[i], ft_strlen(cmd[i]));

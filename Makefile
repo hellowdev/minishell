@@ -6,6 +6,7 @@ CC = cc
 # NCURSES = $(shell brew --prefix ncurses)
 READLINE = $(shell brew --prefix readline)
 CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=address -I$(READLINE)/include
 MINIFLAGS =  -lreadline -lncurses -L$(READLINE)/lib -g -Wl,-no_pie
 
 NAME = minishell

@@ -6,19 +6,12 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:33:37 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 17:55:54 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:42:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void	handle_doc_sig(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	exit(0);
-}
 void	handle_signals(int sig)
 {
 	(void)sig;
