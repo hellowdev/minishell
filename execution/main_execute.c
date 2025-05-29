@@ -6,11 +6,32 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 11:44:16 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 17:15:33 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	count_fd(char **fds)
+{
+	int cnt;
+
+	cnt = 0;
+	while (fds[cnt])
+		cnt++;
+	return (cnt - 1);
+}
+
+void	fd_closer(int fd, int *pipefd)
+{
+	if (fd > 0)
+		close(fd);
+	if (pipefd)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
+}
 
 int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 {
@@ -45,19 +66,34 @@ void	execute(t_parce *data, t_env **env, int *status)
 	t_parce *tmp;
 
 	tmp = data;
-	if (heredoc(data, *env, status) == 1)
+	if (heredoc(&data, *env, status) == 1)
 		return (del_file(tmp));
-	// signal(SIGINT, handle_signals);
 	pack.env = env;
 	pack.status = status;
 	if (data->next == NULL) // one NODE
-		return (one_child(data, &pack), del_file(tmp));
+		return (one_child(&data, &pack), del_file(tmp));
 	pipe(pack.pipefd);
 	pack.ids = malloc(ft_lstsize(data) * sizeof(int));
-	first_child(data, &pack);
+	first_child(&data, &pack);
 	data = data->next;
 
 	newfd = listofchild(&data, &pack); // THE LIST OF NODE SEPARATE BY PIPE
-	last_child(data, newfd, &pack); // THE LAST NODE
+	last_child(&data, newfd, &pack); // THE LAST NODE
 	return (wait_proc(&pack), free(pack.ids), del_file(tmp));
+}
+
+void	wait_proc(t_child *pack)
+{
+	int i;
+
+	i = 0;
+	while (i <= pack->i)
+	{
+		signal(SIGINT, SIG_IGN); // bach nbdlo akhir signal d parent
+		waitpid(pack->ids[i++], pack->status, 0);
+	}
+	if (WIFSIGNALED(*pack->status))
+		*pack->status = WTERMSIG(*pack->status) + 128;
+	else
+		*pack->status = WEXITSTATUS(*pack->status);
 }

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:08:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/23 21:37:19 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:28:47 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ void	display_export(t_env *env)
 	while (env)
 	{
 		if (ft_strcmp(env->name_env, "_") != 0)
-			printf("declare -x %s=\"%s\"\n", env->name_env, env->value_env);
+		{
+			if (!env->value_env)
+				printf("declare -x %s\n", env->name_env);
+			else
+				printf("declare -x %s=\"%s\"\n", env->name_env, env->value_env);
+		}
 		if (ft_strcmp(env->name_env, "OLDPWD") == 0)
 			i = 1;
 		env = env->next;
@@ -39,6 +44,8 @@ void	add_env(t_env **env, char *var)
 	tmp = *env;
 	name = ft_substr(var, 0, len_equal(var));
 	value = ft_substr(var, len_equal(var) + 1, ft_strlen(var));
+	if (!*value)
+		free_null(&value);
 	while (tmp)
 	{
 		if (ft_strcmp(name, tmp->name_env) == 0)

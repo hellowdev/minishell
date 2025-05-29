@@ -6,52 +6,18 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 12:39:26 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 15:17:07 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	valid_word(char *s, int *status)
+void disable_ctrl_echo() 
 {
-	int i;
-	i = 0;
-	
-	while (s[i])
-	{
-		if (s[i] == 34)
-			i += double_qt(&s[i]);
-		else if (s[i] == 39)
-			i += single_qt(&s[i]);
-		if (is_spcharc(s[i]) != 0)
-			return (update_status(status, "&, (, ), #, ;"), -1);
-		i++;
-	}
-    return (1);
-}
-
-int calc_qout(char *s, int *status)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == 34)
-		{
-			i += double_qt(&s[i]);
-			if (!s[i])// s[i] = '\0'
-				return (update_status(status, "\""), -1);
-		}
-		else if (s[i] == 39)
-		{
-			i += single_qt(&s[i]);
-			if (!s[i])
-				return (update_status(status, "'"), -1);
-		}
-		i++;
-	}
-	return (1);
+    struct termios tty;
+    tcgetattr(STDIN_FILENO, &tty);
+    tty.c_lflag &= ~ECHOCTL;  // Disable echoing of control characters
+    tcsetattr(STDIN_FILENO, TCSANOW, &tty);
 }
 
 t_parce	*main_parse(int *status, char *s, t_env *env)
@@ -71,37 +37,48 @@ t_parce	*main_parse(int *status, char *s, t_env *env)
 	return (list);
 }
 
-int main(int ac, char **av)
+int	int_while(t_env **env)
 {
 	char	*line;
 	t_parce *lst;
-	t_env	*env;
 	int		status;
-	(void)av;
-
+	
 	status = 0;
+	lst = NULL;
+	while (1)
+	{
+		signalss();
+		line = readline("minishell$ ");
+		if (!line)
+			return (free_env(*env), *env = NULL, free_doublst(&lst), printf("exit\n"), 0);
+		if (ft_strcmp(line, "exit") == 0)
+			return (free(line), free_env(*env), *env = NULL,\
+			free_doublst(&lst), printf("exit\n"), status);
+		if (*line)
+			add_history(line);
+		lst = main_parse(&status, line, *env);
+		if (lst)
+			execute(lst, env, &status);
+		free_doublst(&lst);
+		free_null(&line);
+	}
+	return (0);
+}
+
+int main(int ac, char **av)
+{
+	t_env	*env;
+	(void)av;
+	int ret;
+
+	ret = 0;
 	env = NULL;
 	disable_ctrl_echo();
 	if (ac == 1)
 	{
 		copy_env(&env);
-		while (1)
-		{
-			signalss();
-			line = readline("minishell$ ");
-			if (!line)
-				return (free_env(env), free_doublst(&lst), printf("exit\n"), 0);
-			if (ft_strcmp(line, "exit") == 0)
-				return (free(line), free_env(env), free_doublst(&lst), status); // free line tparce
-			if (*line)
-				add_history(line);
-			lst = main_parse(&status, line, env);
-			if (lst)
-				execute(lst, &env, &status);
-			free_doublst(&lst);
-			free_null(&line);
-		}
+		ret = int_while(&env);
 		free_env(env);
 	}
+	return (ret);
 }
- 

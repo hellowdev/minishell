@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/27 18:30:48 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 15:26:22 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cd_option(t_env **env, char *cwd , int *status)
 		updt_pwd(ft_strdup(ret), env);
 		printf("%s\n", ret);
 		if (chdir(ret) < 0)
-			return (*status = 1, redire_err(ret, NULL), perror(" "));
+			return (*status = 1, redire_err(ret, NULL), perror(" "), free_null(&ret));
 }
 
 void	cd_cmd(char **cmd, t_env **env, int *status)
@@ -74,11 +74,11 @@ void	cd_cmd(char **cmd, t_env **env, int *status)
 	if (cmd[1])
 	{
 		if (ft_strcmp(cmd[1], "-") == 0)
-			return (cd_option(env, cwd, status));
+			return (cd_option(env, cwd, status), free_null(&cwd));
 		if (chdir(cmd[1]) == 0) // change directory
 			updt_oldpwd(env, cwd);
 		else
-			return (*status = 1, redire_err(cmd[1], NULL), perror(" "));
+			return (*status = 1, redire_err(cmd[1], NULL), perror(" "), free_null(&cwd));
 		ret = getcwd(NULL, 0); // actual directory
 		updt_pwd(ret, env);
 	} // change dir
@@ -90,6 +90,6 @@ void	cd_cmd(char **cmd, t_env **env, int *status)
 		updt_oldpwd(env, cwd);
 		updt_pwd(ft_strdup(ret), env);
 		if (chdir(ret) < 0)
-			return (*status = 1, redire_err(ret, NULL), perror(" "));
+			return (*status = 1, redire_err(ret, NULL), perror(" "), free_null(&ret));
 	}
 }

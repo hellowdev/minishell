@@ -6,11 +6,65 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 10:55:25 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 15:21:59 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	is_slash(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	**wich_path(t_env *env)
+{
+	char	**mypath;
+
+	mypath = NULL;
+	char *path;
+	path = env_searsh(env, "PATH");
+	mypath = ft_split(path, ':');
+	return (free_null(&path), mypath);
+}
+
+char	*valid_path(t_env *env, char *cmd)
+{
+	char	**p;
+	char	*path;
+	int		i;
+
+	i = 0;
+	if (is_slash(cmd) == 1 && access(cmd, F_OK) != 0)
+		return (redire_err(cmd, ": No such file or directory"), NULL);
+	if (is_slash(cmd) == 1 && access(cmd, X_OK) != 0)
+		return (redire_err(cmd, ": Permission denied"), NULL);
+	if (is_slash(cmd) == 1 && access(cmd, F_OK & X_OK) == 0)
+		return (ft_strdup(cmd));
+	p = wich_path(env);
+	if (!p)
+		return (redire_err(cmd, ": No such file or directory"), doubfree(p), NULL);
+	while (p[i])
+	{
+		path = ft_slash_join(p[i], cmd);
+		if (!path)
+			return (doubfree(p), NULL);
+		if (access(path, F_OK | X_OK) == 0)
+			return (doubfree(p), path);
+		free(path);
+		i++;
+	}
+	return (redire_err(cmd, ": command not found"), doubfree(p), NULL);
+}
 
 char	**double_env(t_env *env)
 {

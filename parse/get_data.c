@@ -38,7 +38,6 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		|| head->type == APPEND) && head->next->type == WORD)
 		{
 			newnode->outfiles[c] = expand_status(head->next->value, env, false, *status);
-			// printf("[outfile: %s]\n", newnode->outfiles[c]);
 			if (head->type == RED_OUT)
 				newnode->append[c] = false;
 			else if (head->type == APPEND)

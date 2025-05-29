@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 21:34:40 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:26:13 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	env_cmd(t_env *env)
 {
 	while (env)
 	{
-		printf("%s=%s\n", env->name_env, env->value_env);
+		if (env->name_env && env->value_env)
+			printf("%s=%s\n", env->name_env, env->value_env);
 		env = env->next;
 	}
 }
@@ -51,6 +52,9 @@ int	built_in(t_parce *data, t_env **env, int *status)
 		
 	if (match_cmd(data->cmd[0], "cd"))
 		return (cd_cmd(data->cmd, env, status), 1);
+		
+	if (ft_strcmp(data->cmd[0], "exit") == 0)
+		return (1);
 		
 	if (match_cmd(data->cmd[0], "echo"))
 		return (dup_outfile(data->outfiles, data->append), 

@@ -48,14 +48,14 @@ SRC = 	minishell.c \
 		parse/count_data.c\
 		parse/deljoin.c\
 		expand_status/expand.c\
-		expand_status/utils_words.c\
-		expand_status/update_status.c\
+		expand_status/expand_tools.c\
+		expand_status/syntax_error.c\
 		execution/main_execute.c\
 		execution/children.c\
 		execution/dup_in.c\
 		execution/dup_out.c\
 		execution/exec_cmd.c\
-		execution/used_func.c\
+		execution/heredoc_tools.c\
 		execution/here_doc.c\
 		execution/creat_tmp.c\
 		execution/dup_heredoc.c\

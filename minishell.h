@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 11:23:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 15:28:20 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,8 @@ int     single_qt(char *s);
 char	*deljoin(char *s, bool *check_quote);
 
 // ------------------------ expansion ----------------------- //
+int		calc_qout(char *s, int *status);
+int		valid_word(char *s, int *status);
 int		strlen_dol(char *s);
 void    update_status(int *status, char *s);
 char	*expand_status(char *head, t_env *env, bool checker, int status);
@@ -200,15 +202,14 @@ void	doubfree(char **s);
 void	free_doublst(t_parce **head);
 void	free_env(t_env *head);
 // ------------------------ PATH_CMD ----------------------- //
-char	**split_path(char *env);
 char	**wich_path(t_env *env);
 char	*valid_path(t_env *env, char *cmd);
 // ------------------------ EXECUTION_FUNCTIONS ----------------------- //
 void	execute(t_parce *data, t_env **env, int *status);
-void	one_child(t_parce *data, t_child *pack);
-void	first_child(t_parce *data, t_child *pack);
+void	one_child(t_parce **data, t_child *pack);
+void	first_child(t_parce **data, t_child *pack);
 int		listofchild(t_parce **data, t_child *pack);
-void	last_child(t_parce *data, int oldtmp, t_child *pack);
+void	last_child(t_parce **data, int oldtmp, t_child *pack);
 int		i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack);
 int		check_infile(char **infile);
 int		dup_infile(char **infile, bool check);
@@ -225,8 +226,7 @@ int		ft_strcm_doc(char *s1, char *s2);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
 char	*file_name(int index);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
-// void	heredoc(t_parce *data, t_env *env, int *status);
-int		heredoc(t_parce *data, t_env *env, int *status);
+int		heredoc(t_parce **data, t_env *env, int *status);
 int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
 
