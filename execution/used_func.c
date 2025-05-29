@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 21:51:22 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 11:47:10 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int ft_strcm_doc(char *s1, char *s2)
 
 void	fd_closer(int fd, int *pipefd)
 {
-	close(fd);
+	if (fd > 0)
+		close(fd);
 	if (pipefd)
 	{
 		close(pipefd[0]);
@@ -64,7 +65,7 @@ void	wait_proc(t_child *pack)
 		*pack->status = WTERMSIG(*pack->status) + 128;
 	else
 		*pack->status = WEXITSTATUS(*pack->status);
-	signal(SIGINT, handle_signals); 
+	// signal(SIGINT, handle_signals); 
 }
 
 char	**split_path(char *env)

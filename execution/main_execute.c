@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 21:37:27 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 11:44:16 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	execute(t_parce *data, t_env **env, int *status)
 	t_parce *tmp;
 
 	tmp = data;
-	heredoc(data, *env, status);
-	signal(SIGINT, handle_signals);
+	if (heredoc(data, *env, status) == 1)
+		return (del_file(tmp));
+	// signal(SIGINT, handle_signals);
 	pack.env = env;
 	pack.status = status;
-	pipe(pack.pipefd);
 	if (data->next == NULL) // one NODE
-		return (one_child(data, &pack));
-
+		return (one_child(data, &pack), del_file(tmp));
+	pipe(pack.pipefd);
 	pack.ids = malloc(ft_lstsize(data) * sizeof(int));
 	first_child(data, &pack);
 	data = data->next;

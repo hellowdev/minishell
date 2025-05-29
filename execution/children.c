@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 21:34:22 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 12:10:34 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,20 @@ void	one_child(t_parce *data, t_child *pack)
 	int track;
 	int i_fork;
 	if (built_in(data, pack->env, pack->status) == 1)
-	{
-		close(pack->pipefd[0]);
-		close(pack->pipefd[1]);
 		return ;
-	}
 	pack->i = 0;
 	track = 0;
 	i_fork = fork();
 	if (i_fork == 0)
 	{
 		pack->check = 0;
-		track = i_child(data, pack->pipefd[0], pack->pipefd, pack);
+		track = i_child(data, -1, NULL, pack);
 		// free
 		exit(track);
 	}
 	signal(SIGINT, SIG_IGN);
 	wait(pack->status);
-	signal(SIGINT, handle_signals);
-	close(pack->pipefd[0]);
-	close(pack->pipefd[1]);
+	// signal(SIGINT, handle_signals);
 	if (WIFSIGNALED(*pack->status))
 		*pack->status = WTERMSIG(*pack->status) + 128;
 	else
@@ -57,7 +51,6 @@ void	first_child(t_parce *data, t_child *pack)
 		exit(track);
 	}
 	close(pack->pipefd[1]);
-	// wait(pack->status);
 }
 
 int	listofchild(t_parce **data, t_child *pack)

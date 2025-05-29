@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:32:57 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 21:53:55 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 11:36:55 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void disable_ctrl_echo()
     tcsetattr(STDIN_FILENO, TCSANOW, &tty);
 }
 
-void	one_doc(t_parce *data, t_expand *stock)
+int	one_doc(t_parce *data, t_expand *stock)
 {
 	int		i_fork;
 
@@ -48,20 +48,23 @@ void	one_doc(t_parce *data, t_expand *stock)
 		i_fork = fork();
 		if (i_fork == 0)
 		{
-			signal(SIGINT, handle_doc_sig);
+			signal(SIGINT, SIG_DFL);
 			creat_file(data->heredoc, data->check_qt, 0, stock);
 			exit(0);
 		}
 		signal(SIGINT, SIG_IGN);
 		wait(stock->status);
-	// if (WIFSIGNALED(stock->status))
-	// 	*stock->status = WTERMSIG(*stock->status);
-	// else
-	// 	*stock->status = WEXITSTATUS(*stock->status);
+		if (WIFSIGNALED(*stock->status))
+		{
+			// printf("sig value > %d\n", WTERMSIG(*stock->status));
+			printf("sig value > %d\n", *stock->status);
+			return (*stock->status = 1);
+		}
 	}
+	return (*stock->status = 0);
 }
 
-void	listofdoc(t_parce **data, t_expand *stock)
+int	listofdoc(t_parce **data, t_expand *stock)
 {
 	int i_fork;
 	int i;
@@ -81,14 +84,15 @@ void	listofdoc(t_parce **data, t_expand *stock)
 			signal(SIGINT, SIG_IGN);
 			wait(stock->status);
 			if (WIFSIGNALED(*stock->status))
-				return ft_putstr_fd("\n", 1);
+				return (ft_putstr_fd("\n", 1), *stock->status = 1); // *stock->status = 1 in return
 		}
 		i++;
 		(*data) = (*data)->next;
 	}
+	return (*stock->status = 0); // all line
 }
 
-void	heredoc(t_parce *data, t_env *env, int *status)
+int	heredoc(t_parce *data, t_env *env, int *status)
 {
 	t_expand stock;
 
@@ -97,5 +101,5 @@ void	heredoc(t_parce *data, t_env *env, int *status)
 	if (data->next == NULL) // one NODE
 		return (one_doc(data, &stock));
 	else // LIST OF NODE
-		listofdoc(&data, &stock);
+		return (listofdoc(&data, &stock)); // return 
 }

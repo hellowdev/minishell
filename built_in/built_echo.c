@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:05:28 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/27 19:14:04 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 12:22:05 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ size_t	len_n(char *cmd)
 	int i;
 
 	i = 0;
-	if (cmd[0] == '-')
+	if (cmd[0] == '-' && cmd[1] == 110)
 		i++;
 	while (cmd[i] && cmd[0] == '-' && cmd[i] == 110)
 		i++;
@@ -47,6 +47,7 @@ void	echo_cmd(char **cmd)
 		j++;
 		i++;
 	}
+	// printf(">> [%s]", cmd[i]);
 	while (cmd[i])
 	{
 		write(1, cmd[i], ft_strlen(cmd[i]));

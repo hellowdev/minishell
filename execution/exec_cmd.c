@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/27 13:18:42 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 10:55:25 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	execute_cmd(t_parce *data, t_env *testenv)
 			return (doubfree(tenv), -1); // free here or free all in child?
 		execve(path, data->cmd, tenv);
 	}
-	return (0);
+	return (doubfree(tenv), tenv = NULL, 0);
 }

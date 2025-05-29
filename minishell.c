@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 12:57:08 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 12:39:26 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ t_parce	*main_parse(int *status, char *s, t_env *env)
 
 int main(int ac, char **av)
 {
-	// REDIRECTION IN BUILTIN
 	char	*line;
 	t_parce *lst;
 	t_env	*env;
@@ -86,9 +85,9 @@ int main(int ac, char **av)
 	if (ac == 1)
 	{
 		copy_env(&env);
-		signalss();
 		while (1)
 		{
+			signalss();
 			line = readline("minishell$ ");
 			if (!line)
 				return (free_env(env), free_doublst(&lst), printf("exit\n"), 0);
