@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/24 12:52:49 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 09:40:37 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ bool	check_input(t_token *list)
 			checker = false;
 		list = list->next;
 	}
-	return (checker);	
+	return (checker);
 }
 
 t_parce	*data_alloc(t_token *head, int *status, t_env *env)
 {
-	t_parce *newnode;
+	t_parce	*newnode;
 
 	newnode = malloc(sizeof(t_parce));
 	if (!newnode)
-        return NULL;
+		return (NULL);
 	newnode->input = check_input(head);
 	newnode->next = NULL;
 	newnode->cmd = NULL;
@@ -53,7 +53,7 @@ t_parce	*data_alloc(t_token *head, int *status, t_env *env)
 
 void	after_pipe(t_token *head, int *status, t_parce **lst, t_env *env)
 {
-	t_parce *newnode;
+	t_parce	*newnode;
 
 	while (head)
 	{
@@ -73,17 +73,16 @@ void	after_pipe(t_token *head, int *status, t_parce **lst, t_env *env)
 	}
 }
 
-
 void	pars_ing(t_parce **lst, int *status, t_token *head, t_env *env)
 {
-	t_parce *newnode;
+	t_parce	*newnode;
 
 	if (head->type == PIPE)
 		return (update_status(status, "|"));
 	newnode = data_alloc(head, status, env);
 	if (!newnode)
 	{
-		*lst = NULL;// for not execute in this list
+		*lst = NULL;
 		return ;
 	}
 	parse_add_back(lst, newnode);

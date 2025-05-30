@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:32:57 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 18:17:11 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 20:43:42 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int	heredoc(t_parce **data, t_env *env, int *status)
 	stock.status = status;
 	// if (tmp->next == NULL) // one NODE
 	// 	return (one_doc(data, &stock));
+	// else // LIST OF NODE
 	return (listofdoc(data, tmp, &stock)); // return
 }

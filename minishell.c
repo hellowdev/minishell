@@ -6,24 +6,25 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 15:17:07 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/29 21:31:18 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void disable_ctrl_echo() 
+void	disable_ctrl_echo(void)
 {
-    struct termios tty;
-    tcgetattr(STDIN_FILENO, &tty);
-    tty.c_lflag &= ~ECHOCTL;  // Disable echoing of control characters
-    tcsetattr(STDIN_FILENO, TCSANOW, &tty);
+	struct termios		tty;
+
+	tcgetattr(STDIN_FILENO, &tty);
+	tty.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &tty);
 }
 
 t_parce	*main_parse(int *status, char *s, t_env *env)
 {
-	t_token *head;
-	t_parce *list;
+	t_token	*head;
+	t_parce	*list;
 
 	list = NULL;
 	head = NULL;
@@ -40,9 +41,9 @@ t_parce	*main_parse(int *status, char *s, t_env *env)
 int	int_while(t_env **env)
 {
 	char	*line;
-	t_parce *lst;
+	t_parce	*lst;
 	int		status;
-	
+
 	status = 0;
 	lst = NULL;
 	while (1)
@@ -50,9 +51,10 @@ int	int_while(t_env **env)
 		signalss();
 		line = readline("minishell$ ");
 		if (!line)
-			return (free_env(*env), *env = NULL, free_doublst(&lst), printf("exit\n"), 0);
+			return (free_env(*env), *env = NULL, \
+			free_doublst(&lst), printf("exit\n"), 0);
 		if (ft_strcmp(line, "exit") == 0)
-			return (free(line), free_env(*env), *env = NULL,\
+			return (free(line), free_env(*env), *env = NULL, \
 			free_doublst(&lst), printf("exit\n"), status);
 		if (*line)
 			add_history(line);
@@ -65,12 +67,12 @@ int	int_while(t_env **env)
 	return (0);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_env	*env;
-	(void)av;
-	int ret;
+	int		ret;
 
+	(void)av;
 	ret = 0;
 	env = NULL;
 	disable_ctrl_echo();

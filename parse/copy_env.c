@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 10:19:26 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 09:58:09 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 int	len_equal(char *s)
 {
-	int cnt;
+	int	cnt;
 
 	cnt = 0;
 	while (s[cnt] && s[cnt] != '=')
 		cnt++;
 	return (cnt);
 }
+
 void	default_env(t_env **env)
 {
-	int i;
-	char *ret;
+	int		i;
+	char	*ret;
+
 	ret = NULL;
 	i = 0;
 	if (!environ[i])
@@ -32,17 +34,33 @@ void	default_env(t_env **env)
 		ret = getcwd(NULL, 0);
 		env_add_back(env, lstnew_env(ft_strdup("PWD"), ret));
 		env_add_back(env, lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"))); 
-		env_add_back(env, lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env")));
+		env_add_back(env, lstnew_env(ft_strdup("_"), \
+		ft_strdup("/usr/bin/env")));
 	}
 }
+char	*env_value(char *name, int i)
+{
+	char	*value;
+	char	*tmp;
+
+	value = ft_substr(environ[i], \
+	len_equal(environ[i]) + 1, ft_strlen(environ[i]));
+	if (ft_strcmp(name, "SHLVL") == 0)
+	{
+		tmp = ft_itoa(ft_atoi(value) + 1);
+		free_null(&value);
+		value = tmp;
+	}
+	return (value);
+}
+
 void	copy_env(t_env **env)
 {
 	int		i;
 	t_env	*new;
 	char	*name;
 	char	*value;
-	char	*tmp;
-	
+
 	i = 0;
 	default_env(env);
 	while (environ[i])
@@ -52,17 +70,10 @@ void	copy_env(t_env **env)
 			free(name);
 		else
 		{
-			value = ft_substr(environ[i], len_equal(environ[i]) + 1, ft_strlen(environ[i])); // 
-			if (ft_strcmp(name, "SHLVL") == 0)
-			{
-				tmp = ft_itoa(ft_atoi(value) + 1);
-				free_null(&value);
-				value = tmp;
-			}
+			value = env_value(name, i);
 			new = lstnew_env(name, value);
 			env_add_back(env, new);
 		}
 		i++;
 	}
 }
-

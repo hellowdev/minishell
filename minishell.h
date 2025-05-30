@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 18:42:07 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 09:18:16 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
 int		here_doc(t_token **token);
 int		infile_heredoc(char *s, t_token **head);
-int		skip_space(char *s);
 int		outfile_append(char *s, t_token **head);
 int		append(t_token **token);
 int		handle_pipe(char *s, t_token **head);

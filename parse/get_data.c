@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_data.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/30 09:50:06 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
+int	get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
 {
-    int c;
+	int	c;
 
 	c = 0;
 	while (head && head->type != PIPE)
@@ -10,10 +22,8 @@ int get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		if (head->next && head->type == RED_IN \
 		&& head->next->type == WORD)
 		{
-			
-			newnode->infiles[c] = expand_status(head->next->value, env, false, *status);
-			// newnode->infiles[c] = ft_strdup(head->next->value);
-			// printf("[infile: %s]\n", newnode->infiles[c]);
+			newnode->infiles[c] = \
+			expand_status(head->next->value, env, false, *status);
 			c++;
 		}
 		else if ((!head->next || head->next->type != WORD) \
@@ -30,14 +40,16 @@ int get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
 
 int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 {
-	int c;
+	int	c;
+
 	c = 0;
 	while (head && head->type != PIPE)
 	{
 		if (head->next && (head->type == RED_OUT \
 		|| head->type == APPEND) && head->next->type == WORD)
 		{
-			newnode->outfiles[c] = expand_status(head->next->value, env, false, *status);
+			newnode->outfiles[c] = \
+			expand_status(head->next->value, env, false, *status);
 			if (head->type == RED_OUT)
 				newnode->append[c] = false;
 			else if (head->type == APPEND)
@@ -46,7 +58,7 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		}
 		else if ((head->type == APPEND || head->type == RED_OUT) \
 		&& (!head->next || head->next->type != WORD))
-			return (newnode->outfiles[c] = NULL ,update_status(status, ">"), 1);
+			return (newnode->outfiles[c] = NULL, update_status(status, ">"), 1);
 		head = head->next;
 	}
 	newnode->outfiles[c] = NULL;
@@ -55,19 +67,19 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 
 int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (head && head->type != PIPE)
 	{
 		if (head->next && head->type == HEREDOC && head->next->type == WORD)
 		{
-			newnode->heredoc[c] = deljoin(head->next->value, &newnode->check_qt); // skip doubqt -- skip sng
-			// printf("[heredoc: %s]\n", newnode->heredoc[c]);
-			// printf("[check %d]\n", newnode->check_qt);
+			newnode->heredoc[c] = \
+			deljoin(head->next->value, &newnode->check_qt);
 			c++;
 		}
-		else if (head->type == HEREDOC && (!head->next || head->next->type != WORD))
+		else if (head->type == HEREDOC && \
+		(!head->next || head->next->type != WORD))
 			return (newnode->heredoc[c] = NULL, update_status(status, "<<"), 1);
 		head = head->next;
 	}
@@ -77,7 +89,7 @@ int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 
 int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (head && head->type != PIPE)
@@ -87,9 +99,6 @@ int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 		else if (head->type == WORD)
 		{
 			newnode->cmd[c] = expand_status(head->value, env, false, *status);
-			// printf("[cmd: %s]\n", newnode->cmd[c]);
-			// printf("[head.value: %s]\n", head->value);
-			// printf("num of cmd> %d\n", c);
 			c++;
 		}
 		head = head->next;

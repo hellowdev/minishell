@@ -5,8 +5,8 @@ CC = cc
 # MINIFLAGS = -lreadline
 # NCURSES = $(shell brew --prefix ncurses)
 READLINE = $(shell brew --prefix readline)
-CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include
-# CFLAGS = -Wall -Wextra -Werror -fsanitize=address -I$(READLINE)/include
+# CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -I$(READLINE)/include
 MINIFLAGS =  -lreadline -lncurses -L$(READLINE)/lib -g -Wl,-no_pie
 
 NAME = minishell
@@ -36,10 +36,10 @@ SRC = 	minishell.c \
 		tools/ft_lstsize.c\
 		tools/get_next_line.c\
 		tools/get_next_line_utils.c\
-		parse/parse.c\
+		parse/parsing.c\
 		parse/words.c\
-		token/tokenz.c\
-		token/pipe.c\
+		token/main_token.c\
+		token/token_words.c\
 		token/outfile_append.c \
 		token/infile_herdoc.c \
 		parse/copy_env.c\

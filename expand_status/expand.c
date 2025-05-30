@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/30 09:54:50 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int strlen_dol(char *s)
+int	strlen_dol(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -11,14 +23,14 @@ int strlen_dol(char *s)
 			return (i);
 		i++;
 	}
-	return (i);	
+	return (i);
 }
 
 int	not_exp(char *s, char **value)
 {
-	int i;
-	int len;
-	char *notexp;
+	int		i;
+	int		len;
+	char	*notexp;
 
 	len = 0;
 	i = 0;
@@ -27,28 +39,29 @@ int	not_exp(char *s, char **value)
 		i++;
 		len = strlen_dol(&s[i]);
 		len++;
-		notexp = ft_substr(s ,0 ,len);
-	    *value = ft_strjoin(*value, notexp);
+		notexp = ft_substr(s, 0, len);
+		*value = ft_strjoin(*value, notexp);
 		free_null(&notexp);
 	}
 	return (len);
 }
-int expand(char *s, char **value, t_env *env, int status)
+
+int	expand(char *s, char **value, t_env *env, int status)
 {
-	int i;
-	int  checker; 
-	char *name;
-	char *retenv;
+	int		i;
+	int		checker; 
+	char	*name;
+	char	*retenv;
 
 	checker = 0;
 	i = 0;
 	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 0)
 	{
 		checker = check_dol_sp(&s[i]);
-	    name = ft_substr(s, i + 1, checker - 1);
+		name = ft_substr(s, i + 1, checker - 1);
 		retenv = env_searsh(env, name);
-	    *value = ft_strjoin(*value, retenv);
-	    free_null(&name);
+		*value = ft_strjoin(*value, retenv);
+		free_null(&name);
 		free_null(&retenv);
 	}
 	else if (s[i] && s[i] == '$' && s[i + 1] == '?')
@@ -63,16 +76,16 @@ int expand(char *s, char **value, t_env *env, int status)
 
 int	simple_word(char *s, char **value)
 {
-	int i;
-	int len;
-	char *word;
+	int		i;
+	int		len;
+	char	*word;
 
 	i = 0;
 	len = 0;
 	if (s[i] && s[i] != '$' && s[i] != 34 && s[i] != 39)
 	{
 		len = strlen_dol(&s[i]);
-		word = ft_substr(s ,i ,len);
+		word = ft_substr(s, i, len);
 		*value = ft_strjoin(*value, word);
 		free_null(&word);
 	}
@@ -81,8 +94,8 @@ int	simple_word(char *s, char **value)
 
 char	*expand_status(char *str, t_env *env, bool checker, int status)
 {
-	int j;
-	char *value;
+	int		j;
+	char	*value;
 
 	value = NULL;
 	j = 0;
@@ -107,4 +120,3 @@ char	*expand_status(char *str, t_env *env, bool checker, int status)
 	}
 	return (value);
 }
-

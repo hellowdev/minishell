@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:16:06 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 15:17:25 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 09:11:08 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	valid_word(char *s, int *status)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -27,12 +27,12 @@ int	valid_word(char *s, int *status)
 			return (update_status(status, "&, (, ), #, ;"), -1);
 		i++;
 	}
-    return (1);
+	return (1);
 }
 
-int calc_qout(char *s, int *status)
+int	calc_qout(char *s, int *status)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -40,7 +40,7 @@ int calc_qout(char *s, int *status)
 		if (s[i] == 34)
 		{
 			i += double_qt(&s[i]);
-			if (!s[i])// s[i] = '\0'
+			if (!s[i])
 				return (update_status(status, "\""), -1);
 		}
 		else if (s[i] == 39)
@@ -54,10 +54,10 @@ int calc_qout(char *s, int *status)
 	return (1);
 }
 
-void    update_status(int *status, char *s)
+void	update_status(int *status, char *s)
 {
-    write(2, "minishell: syntax error near unexpected token `", 48);
-    write(2, s, ft_strlen(s));
-    write(2, "'\n", 2);
-    *status = 258;
+	write(2, "minishell: syntax error near unexpected token `", 48);
+	write(2, s, ft_strlen(s));
+	write(2, "'\n", 2);
+	*status = 258;
 }
