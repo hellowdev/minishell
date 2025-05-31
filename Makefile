@@ -66,6 +66,7 @@ SRC = 	minishell.c \
 		built_in/built_echo.c\
 		built_in/built_unset.c\
 		built_in/built_export.c\
+		built_in/built_exit.c\
 		signals.c
 
 OBJ = $(SRC:.c=.o)

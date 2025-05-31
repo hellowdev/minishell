@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 20:18:40 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 11:13:22 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	int_while(t_env **env)
 		if (*line)
 			add_history(line);
 		lst = main_parse(&status, line, *env);
+		free_null(&line);
 		if (lst)
 			execute(lst, env, &status);
 		free_doublst(&lst);
-		free_null(&line);
 	}
 	return (0);
 }

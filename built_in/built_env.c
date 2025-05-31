@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 13:22:04 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 11:17:08 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	built_in(t_parce *data, t_env **env, int *status)
 	if (data->cmd[0] && match_cmd(data->cmd[0], "cd"))
 		return (cd_cmd(data->cmd, env, status), 1);
 	if (data->cmd[0] && ft_strcmp(data->cmd[0], "exit") == 0)
-		return (1);
+		return (exit_cmd(data, data->cmd, *env), 1);;
 	if (data->cmd[0] && match_cmd(data->cmd[0], "echo"))
 		return (dup_outfile(data->outfiles, data->append),
 		echo_cmd(data->cmd), dup2(tmp, 1), close(tmp), 1);	

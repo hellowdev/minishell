@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 20:30:13 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 10:14:23 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 		else if (head->type == WORD)
 		{
 			newnode->cmd[c] = expand_status(head->value, env, false, *status);
-			printf("[cmd: %s]\n", newnode->cmd[c]);
+			// printf("[cmd: %s]\n", newnode->cmd[c]);
 			c++;
 		}
 		head = head->next;

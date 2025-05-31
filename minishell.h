@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 20:20:54 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 12:31:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <ncurses.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>   // add_history, rl_clear_history
 # include <stdbool.h>
+#include <limits.h>
 
 extern int		status;
 extern char **environ;
@@ -236,6 +237,8 @@ void	echo_cmd(char **cmd);
 void	unset_cmd(char **cmd, t_env **env);
 void	export_cmd(char **cmd, t_env **env);
 int		valid_idf(char *s);
+void	exit_cmd(t_parce *data, char **cmd, t_env *env);
+
 
 void	disable_ctrl_echo();
 void	handle_signals(int sig);

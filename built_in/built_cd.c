@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 10:27:02 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 12:47:49 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,3 @@ void	cd_cmd(char **cmd, t_env **env, int *status)
 		}
 	}
 }
-
-	// if (cmd[1])
-	// {
-	// 	if (ft_strcmp(cmd[1], "-") == 0)
-	// 		return (cd_option(env, cwd, status)); // double free cuz free cwd !
-	// 	if (chdir(cmd[1]) == 0)
-	// 		updt_oldpwd(env, cwd);
-	// 	else
-	// 		return (*status = 1, redire_err(cmd[1], NULL), perror(" "));
-	// 	ret = getcwd(NULL, 0);
-	// 	updt_pwd(ret, env);
-	// }
-	

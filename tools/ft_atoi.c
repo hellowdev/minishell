@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:56:16 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 13:01:56 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 12:32:09 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_atoi(const char *str)
 	{
 		result = result * 10 + (str[i] - 48);
 		if (result > 9223372036854775807 && sign == -1)
-			return (0);
+			return (-1);
 		if (result > 9223372036854775807 && sign == 1)
 			return (-1);
 		i++;
