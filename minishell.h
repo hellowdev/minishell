@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 09:18:16 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 20:20:54 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # include <readline/history.h>   // add_history, rl_clear_history
 # include <stdbool.h>
 
-extern int leveling;
+extern int		status;
 extern char **environ;
 
 typedef enum s_type
@@ -109,7 +109,6 @@ char	*takeme(char *holder);
 int		new_line(char *buff);
 char	*afternwl(char *str);
 
-
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 void	ft_bzero(void *s, size_t n);
@@ -173,7 +172,7 @@ int     get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env);
 int     get_herdoc(t_token *head, t_parce *newnode, int *status);
 void    pars_ing(t_parce **lst, int *status, t_token *head, t_env *env);
 int     valid_word(char *s, int *status);
-int		is_spcharc(char c);
+int		is_spcharc(int *status, char c);
 void	parse_add_back(t_parce **lst, t_parce *new);
 int     double_qt(char *s);
 int     single_qt(char *s);
@@ -225,6 +224,7 @@ void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
 int		heredoc(t_parce **data, t_env *env, int *status);
 int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
+int		double_len(char **cmd);
 
 // ------------------------ BUILTIN_CMD ----------------------- //
 int		built_in(t_parce *data, t_env **env, int *status);

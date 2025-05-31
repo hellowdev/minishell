@@ -6,11 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 21:31:18 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 20:18:40 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	status = 0;
 
 void	disable_ctrl_echo(void)
 {
@@ -42,13 +44,11 @@ int	int_while(t_env **env)
 {
 	char	*line;
 	t_parce	*lst;
-	int		status;
 
-	status = 0;
 	lst = NULL;
 	while (1)
 	{
-		signalss();
+		signalss(&status);
 		line = readline("minishell$ ");
 		if (!line)
 			return (free_env(*env), *env = NULL, \

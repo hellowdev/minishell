@@ -37,7 +37,6 @@ SRC = 	minishell.c \
 		tools/get_next_line.c\
 		tools/get_next_line_utils.c\
 		parse/parsing.c\
-		parse/words.c\
 		token/main_token.c\
 		token/token_words.c\
 		token/outfile_append.c \
@@ -49,6 +48,7 @@ SRC = 	minishell.c \
 		parse/count_data.c\
 		parse/deljoin.c\
 		expand_status/expand.c\
+		expand_status/qoute_expand.c\
 		expand_status/expand_tools.c\
 		expand_status/syntax_error.c\
 		execution/main_execute.c\

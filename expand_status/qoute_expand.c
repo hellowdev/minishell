@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   words.c                                            :+:      :+:    :+:   */
+/*   qoute_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/22 10:46:34 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 15:25:06 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,28 @@
 
 int	doub_qt(char *s, char **str, bool *checker)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	if (s[i] == 34)
 	{
 		i = 1;
-        if (s[i] == 34 && s[i + 1] != '\0')
+		if (s[i] == 34 && s[i + 1] != '\0')
 			return (2);
-        else if (s[i] == 34 && s[i + 1] == '\0')
+		else if (s[i] == 34 && s[i + 1] == '\0')
 			return (*str = ft_strjoin(*str, ft_strdup("")), 2);
 		if (*checker == true)
 			*checker = false;
 		else
 			*checker = true;
-        return (1);
+		return (1);
 	}
 	return (i);
 }
 
 int	sing_qt(char *s, char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s[i] == 39)
@@ -42,8 +43,8 @@ int	sing_qt(char *s, char **str)
 		i = 1;
 		if (s[i] == 39 && s[i + 1] != '\0')
 			return (2);
-        else if (s[i] == 39 && s[i + 1] == '\0')
-			return (*str = ft_strjoin(*str, ft_strdup("")) , 2);
+		else if (s[i] == 39 && s[i + 1] == '\0')
+			return (*str = ft_strjoin(*str, ft_strdup("")), 2);
 		while (s[i] && s[i] != 39)
 			i++;
 		if (i > 1)
@@ -52,22 +53,5 @@ int	sing_qt(char *s, char **str)
 			return (i + 1);
 		}
 	}
-	// free_null(str);
 	return (i);
 }
-
-// int	check_chac(char *s, char **str)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (s[i] && s[i] != 34 && s[i] != 39 && !spec_char(s[i]))
-// 		i++;
-// 	if (i)
-// 	{
-// 		*str = ft_substr(s, 0, i);
-// 		return (i);
-// 	}
-// 	free_null(str);
-// 	return (i);
-// }

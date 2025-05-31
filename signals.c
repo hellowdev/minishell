@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:33:37 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 09:00:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 20:18:09 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handle_signals(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	status = 1;
 }
 
 void	signalss(void)

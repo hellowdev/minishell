@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 20:16:44 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 13:22:04 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ int	built_in(t_parce *data, t_env **env, int *status)
 	if (!data->cmd)
 		return (0);
 	tmp = dup(1);
-	if (match_cmd(data->cmd[0], "env")) // "cmd" only not path of cmd mean is a builtin cmd
+	if (data->cmd[0] && match_cmd(data->cmd[0], "env")) // "cmd" only not path of cmd mean is a builtin cmd
 		return (dup_outfile(data->outfiles, data->append),
 		env_cmd(*env), dup2(tmp, 1), close(tmp), 1);
-	if (match_cmd(data->cmd[0], "cd"))
+	if (data->cmd[0] && match_cmd(data->cmd[0], "cd"))
 		return (cd_cmd(data->cmd, env, status), 1);
-	if (ft_strcmp(data->cmd[0], "exit") == 0)
+	if (data->cmd[0] && ft_strcmp(data->cmd[0], "exit") == 0)
 		return (1);
-	if (match_cmd(data->cmd[0], "echo"))
+	if (data->cmd[0] && match_cmd(data->cmd[0], "echo"))
 		return (dup_outfile(data->outfiles, data->append),
 		echo_cmd(data->cmd), dup2(tmp, 1), close(tmp), 1);	
-	if (ft_strcmp(data->cmd[0], "export") == 0)
+	if (data->cmd[0] && ft_strcmp(data->cmd[0], "export") == 0)
 		return (dup_outfile(data->outfiles, data->append),
 		export_cmd(data->cmd, env), dup2(tmp, 1), close(tmp), 1);
-	if (ft_strcmp(data->cmd[0], "unset") == 0)
+	if (data->cmd[0] && ft_strcmp(data->cmd[0], "unset") == 0)
 		return (unset_cmd(data->cmd, env), 1);
-	if (match_cmd(data->cmd[0], "pwd"))
+	if (data->cmd[0] && match_cmd(data->cmd[0], "pwd"))
 		return (dup_outfile(data->outfiles, data->append),
 		pwd_cmd(data->cmd), dup2(tmp, 1), close(tmp), 1);
 	return (close(tmp), 0);

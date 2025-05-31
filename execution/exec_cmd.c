@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 20:51:46 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 19:16:25 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,46 @@ char	**wich_path(t_env *env)
 	return (free_null(&path), mypath);
 }
 
-char	*valid_path(t_env *env, char *cmd)
+char	*search_path(char *cmd, t_env *env)
 {
-	char	**p;
-	char	*path;
+	char	**env_path;
+	char	*cmd_path;
 	int		i;
-
+	
 	i = 0;
-	if (is_slash(cmd) == 1 && access(cmd, F_OK) != 0)
-		return (redire_err(cmd, ": No such file or directory"), NULL);
-	if (is_slash(cmd) == 1 && access(cmd, X_OK) != 0)
-		return (redire_err(cmd, ": Permission denied"), NULL);
-	if (is_slash(cmd) == 1 && access(cmd, F_OK & X_OK) == 0)
-		return (ft_strdup(cmd));
-	p = wich_path(env);
-	if (!p)
-		return (redire_err(cmd, ": No such file or directory"), doubfree(p), NULL);
-	while (p[i])
+	env_path = wich_path(env);
+	while (env_path && env_path[i])
 	{
-		path = ft_slash_join(p[i], cmd);
-		if (!path)
-			return (doubfree(p), NULL);
-		if (access(path, F_OK | X_OK) == 0)
-			return (doubfree(p), path);
-		free(path);
+		cmd_path = ft_slash_join(env_path[i], cmd);
+		if (!cmd_path)
+			return (doubfree(env_path), NULL);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+			return (doubfree(env_path), cmd_path);
+		free_null(&cmd_path);
 		i++;
 	}
-	return (redire_err(cmd, ": command not found"), doubfree(p), NULL);
+	if (access(cmd, F_OK) != 0 && env_path)
+		return (redire_err(cmd, ": command not found"), doubfree(env_path), NULL);
+	if (access(cmd, F_OK) != 0 && !env_path)
+		return (redire_err(cmd, ": No such file or directory"), NULL);
+	if (access(cmd, X_OK) != 0)
+		return (redire_err(cmd, ": Permission denied"), NULL);
+	return (ft_strdup(cmd));
+}
+
+char	*valid_path(t_env *env, char *cmd)
+{
+	struct stat info;
+
+	if (!*cmd)
+		return (redire_err(cmd, ": command not found"), NULL);
+	if (is_slash(cmd) && stat(cmd, &info) != 0)
+		return (redire_err(cmd, ": No such file or directory"), NULL);
+	if (S_ISDIR(info.st_mode))
+		return (redire_err(cmd, ": is a directory"), NULL);
+	if (is_slash(cmd) && access(cmd, F_OK & X_OK) == 0)
+		return (ft_strdup(cmd));
+	return (search_path(cmd, env));
 }
 
 char	**double_env(t_env *env)
@@ -88,18 +101,19 @@ char	**double_env(t_env *env)
 
 int	execute_cmd(t_parce *data, t_env *testenv)
 {
-	char *path;
-	
-	char **tenv;
-	tenv = NULL;
+	char	*path;
+	char	**tenv;
+	int		i;
+
 	tenv = double_env(testenv);
-	
-	if (data->cmd)
+	i = 0;
+	if (data->cmd && *data->cmd)
 	{
-		path = valid_path(testenv, data->cmd[0]);
+		path = valid_path(testenv, data->cmd[i]);
 		if (!path)
-			return (doubfree(tenv), -1); // free here or free all in child?
+			return (doubfree(tenv), -1);
 		execve(path, data->cmd, tenv);
+		free_null(&path);
 	}
 	return (doubfree(tenv), tenv = NULL, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:16:06 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 09:11:08 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 12:24:45 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	valid_word(char *s, int *status)
 			i += double_qt(&s[i]);
 		else if (s[i] == 39)
 			i += single_qt(&s[i]);
-		if (is_spcharc(s[i]) != 0)
-			return (update_status(status, "&, (, ), #, ;"), -1);
+		if (is_spcharc(status, s[i]) != 0)
+			return (-1);
 		i++;
 	}
 	return (1);

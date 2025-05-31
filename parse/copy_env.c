@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 09:58:09 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/30 15:21:43 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	default_env(t_env **env)
 		ft_strdup("/usr/bin/env")));
 	}
 }
+
 char	*env_value(char *name, int i)
 {
 	char	*value;

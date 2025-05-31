@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   deljoin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 15:10:01 by ychedmi           #+#    #+#             */
+/*   Updated: 2025/05/30 15:11:06 by ychedmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	check_dblqt(char *s, char **str, bool *check)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	if (s[i] == 34)
 	{
@@ -24,7 +37,7 @@ int	check_dblqt(char *s, char **str, bool *check)
 
 int	check_sgqt(char *s, char **str, bool *check)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s[i] == 39)
@@ -47,7 +60,7 @@ int	check_sgqt(char *s, char **str, bool *check)
 
 int	check_char(char *s, char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] && s[i] != 34 && s[i] != 39)
@@ -63,7 +76,7 @@ int	check_char(char *s, char **str)
 
 char	*deljoin(char *s, bool *check_quote)
 {
-	int	i;
+	int		i;
 	char	*p;
 	char	*str;
 
@@ -82,8 +95,6 @@ char	*deljoin(char *s, bool *check_quote)
 		i += check_sgqt(&s[i], &str, check_quote);
 		p = ft_strjoin(p, str);
 		free_null(&str);
-		i++;
 	}
 	return (p);
 }
-
