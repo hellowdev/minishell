@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   qoute_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:25 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 15:25:06 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 15:44:29 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	doub_qt(char *s, char **str, bool *checker)
+int	doub_qt(char *s, char **str, bool *inside_dq)
 {
 	int	i;
 
@@ -24,10 +24,10 @@ int	doub_qt(char *s, char **str, bool *checker)
 			return (2);
 		else if (s[i] == 34 && s[i + 1] == '\0')
 			return (*str = ft_strjoin(*str, ft_strdup("")), 2);
-		if (*checker == true)
-			*checker = false;
+		if (*inside_dq == true)
+			*inside_dq = false;
 		else
-			*checker = true;
+			*inside_dq = true;
 		return (1);
 	}
 	return (i);

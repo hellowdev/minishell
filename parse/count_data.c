@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:42:48 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 09:45:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 15:03:13 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	count_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 	}
 	if (i)
 	{
-		newnode->cmd = malloc((i + 1) * sizeof(char *));
+		newnode->cmd = malloc(sizeof(char *));
+		newnode->cmd[0] = NULL;
 		get_cmd(tmp, newnode, status, env);
 	}
 	return (0);

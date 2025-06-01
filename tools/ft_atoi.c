@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:56:16 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 12:32:09 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 19:42:16 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *str, int *e)
 {
 	size_t			i;
 	int				sign;
-	unsigned long	result;
+	unsigned long long	result;
 
 	sign = 1;
 	result = 0;
@@ -32,10 +32,10 @@ int	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + (str[i] - 48);
-		if (result > 9223372036854775807 && sign == -1)
-			return (-1);
-		if (result > 9223372036854775807 && sign == 1)
-			return (-1);
+		if (result > LLONG_MAX && sign == 1)
+			*e = -1;
+		if (result > (unsigned long long)LLONG_MAX + 1 && sign == -1)
+			*e = -1;
 		i++;
 	}
 	return ((int)(sign * result));

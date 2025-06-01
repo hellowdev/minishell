@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 12:31:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 19:43:28 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ char	*join(char *str1, char *str2);
 char	*takeme(char *holder);
 int		new_line(char *buff);
 char	*afternwl(char *str);
-
+// --------------------------getnxtline------------------------//
 int		ft_isdigit(int c);
+char	**ft_doubjoin(char **tab1, char **tab2);
 int		ft_isalpha(int c);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
@@ -130,7 +131,7 @@ char	*ft_slash_join(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_lstsize(t_parce *lst);
-int		ft_atoi(const char *str);
+int		ft_atoi(const char *str, int *e);
 int		ft_sizeenv(t_env *lst);
 
 // ------------------------ TOKENIZATION ----------------------- //
@@ -178,6 +179,7 @@ void	parse_add_back(t_parce **lst, t_parce *new);
 int     double_qt(char *s);
 int     single_qt(char *s);
 char	*deljoin(char *s, bool *check_quote);
+char	**word_to_cmd(char *str, t_env *env, bool inside_dq);
 
 // ------------------------ expansion ----------------------- //
 int		calc_qout(char *s, int *status);

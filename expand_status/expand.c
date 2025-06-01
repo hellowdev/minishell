@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 09:54:50 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 15:48:27 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ int	not_exp(char *s, char **value)
 int	expand(char *s, char **value, t_env *env, int status)
 {
 	int		i;
-	int		checker; 
+	int		len; 
 	char	*name;
 	char	*retenv;
 
-	checker = 0;
+	len = 0;
 	i = 0;
 	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 0)
 	{
-		checker = check_dol_sp(&s[i]);
-		name = ft_substr(s, i + 1, checker - 1);
+		len = check_dol_sp(&s[i]);
+		name = ft_substr(s, i + 1, len - 1);
 		retenv = env_searsh(env, name);
 		*value = ft_strjoin(*value, retenv);
 		free_null(&name);
@@ -68,10 +68,10 @@ int	expand(char *s, char **value, t_env *env, int status)
 	{
 		name = ft_itoa(status);
 		*value = ft_strjoin(*value, name);
-		checker = 2;
+		len = 2;
 		free_null(&name);
 	}
-	return (checker);
+	return (len);
 }
 
 int	simple_word(char *s, char **value)
@@ -92,7 +92,7 @@ int	simple_word(char *s, char **value)
 	return (len);
 }
 
-char	*expand_status(char *str, t_env *env, bool checker, int status)
+char	*expand_status(char *str, t_env *env, bool inside_dq, int status)
 {
 	int		j;
 	char	*value;
@@ -101,22 +101,22 @@ char	*expand_status(char *str, t_env *env, bool checker, int status)
 	j = 0;
 	while (str[j])
 	{
-		if (checker == false)
+		if (!inside_dq)
 			j += sing_qt(&str[j], &value);
-		j += doub_qt(&str[j], &value, &checker);
-		j += not_exp(&str[j], &value);
-		j += expand(&str[j], &value, env, status);
-		if (str[j] == 39 && checker == true)
+		if (str[j] == 39 && inside_dq)
 		{
 			value = ft_strjoin(value, "'");
 			j++;
 		}
-		j += simple_word(&str[j], &value);
 		if (str[j] == '$' && (str[j + 1] == '$' || !str[j + 1]))
 		{
 			value = ft_strjoin(value, "$");
 			j++;
 		}
+		j += doub_qt(&str[j], &value, &inside_dq);
+		j += not_exp(&str[j], &value);
+		j += expand(&str[j], &value, env, status);
+		j += simple_word(&str[j], &value);
 	}
 	return (value);
 }

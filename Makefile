@@ -13,6 +13,7 @@ NAME = minishell
 
 SRC = 	minishell.c \
 		display.c \
+		tools/ft_doubjoin.c\
 		tools/ft_split.c \
 		tools/ft_bzero.c \
 		tools/ft_calloc.c \
@@ -51,6 +52,7 @@ SRC = 	minishell.c \
 		expand_status/qoute_expand.c\
 		expand_status/expand_tools.c\
 		expand_status/syntax_error.c\
+		expand_status/expand_cmd.c\
 		execution/main_execute.c\
 		execution/children.c\
 		execution/dup_in.c\

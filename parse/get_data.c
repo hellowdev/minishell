@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 10:14:23 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 17:46:45 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,21 +89,20 @@ int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 
 int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 {
-	int	c;
-
-	c = 0;
+	char	**word;
+	(void)status;
 	while (head && head->type != PIPE)
 	{
 		if (head->type != WORD && head->next)
 			head = head->next;
 		else if (head->type == WORD)
 		{
-			newnode->cmd[c] = expand_status(head->value, env, false, *status);
+			word = word_to_cmd(head->value, env, false);
+			newnode->cmd = ft_doubjoin(newnode->cmd, word);
+			doubfree(word);
 			// printf("[cmd: %s]\n", newnode->cmd[c]);
-			c++;
 		}
 		head = head->next;
 	}
-	newnode->cmd[c] = NULL;
 	return (0);
 }

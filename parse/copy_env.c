@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 15:21:43 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/05/31 19:46:35 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*env_value(char *name, int i)
 	len_equal(environ[i]) + 1, ft_strlen(environ[i]));
 	if (ft_strcmp(name, "SHLVL") == 0)
 	{
-		tmp = ft_itoa(ft_atoi(value) + 1);
+		tmp = ft_itoa(ft_atoi(value, NULL) + 1);
 		free_null(&value);
 		value = tmp;
 	}
