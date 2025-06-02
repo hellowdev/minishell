@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 21:44:53 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:53:02 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	is_slash(char *s)
 char	**wich_path(t_env *env)
 {
 	char	**mypath;
+	char	*path;
 
 	mypath = NULL;
-	char *path;
 	path = env_searsh(env, "PATH");
 	mypath = ft_split(path, ':');
 	return (free_null(&path), mypath);
@@ -42,7 +42,7 @@ char	*search_path(char *cmd, t_env *env)
 	char	**env_path;
 	char	*cmd_path;
 	int		i;
-	
+
 	i = 0;
 	env_path = wich_path(env);
 	while (env_path && env_path[i])
@@ -56,7 +56,8 @@ char	*search_path(char *cmd, t_env *env)
 		i++;
 	}
 	if (access(cmd, F_OK) != 0 && env_path)
-		return (redire_err(cmd, ": command not found"), doubfree(env_path), NULL);
+		return (redire_err(cmd, ": command not found"), \
+		doubfree(env_path), NULL);
 	if (access(cmd, F_OK) != 0 && !env_path)
 		return (redire_err(cmd, ": No such file or directory"), NULL);
 	if (access(cmd, X_OK) != 0)
@@ -66,7 +67,7 @@ char	*search_path(char *cmd, t_env *env)
 
 char	*valid_path(t_env *env, char *cmd)
 {
-	struct stat info;
+	struct stat	info;
 
 	if (!*cmd)
 		return (redire_err(cmd, ": command not found"), NULL);
@@ -83,8 +84,8 @@ char	*valid_path(t_env *env, char *cmd)
 
 char	**double_env(t_env *env)
 {
-	char **ret;
-	int i;
+	char	**ret;
+	int		i;
 
 	i = 0;
 	ret = malloc((ft_sizeenv(env) + 1) * sizeof(char *));

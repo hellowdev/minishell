@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 23:37:04 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:47:07 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	one_child(t_parce **data, t_child *pack)
 {
-	int track;
-	int i_fork;
+	int	track;
+	int	i_fork;
 
 	if (built_in(*data, pack->env) == 1)
 		return ;
@@ -30,16 +30,16 @@ void	one_child(t_parce **data, t_child *pack)
 		exit(track);
 	}
 	signal(SIGINT, SIG_IGN);
-	wait(pack->status);
-	if (WIFSIGNALED(*pack->status))
-		*pack->status = WTERMSIG(*pack->status) + 128;
+	wait(&status);
+	if (WIFSIGNALED(status))
+		status = WTERMSIG(status) + 128;
 	else
-		*pack->status = WEXITSTATUS(*pack->status);
+		status = WEXITSTATUS(status);
 }
 
 void	first_child(t_parce **data, t_child *pack)
 {
-	int track;
+	int	track;
 
 	track = 0;
 	pack->i = 0;
@@ -56,8 +56,8 @@ void	first_child(t_parce **data, t_child *pack)
 
 int	listofchild(t_parce **data, t_child *pack)
 {
-	int track;
-	int oldtmp;
+	int	track;
+	int	oldtmp;
 
 	oldtmp = pack->pipefd[0];
 	track = 0;
@@ -84,12 +84,12 @@ int	listofchild(t_parce **data, t_child *pack)
 
 void	last_child(t_parce **data, int oldtmp, t_child *pack)
 {
-	int track;
+	int	track;
 
 	track = 0;
 	pack->ids[pack->i] = fork();
 	if (pack->ids[pack->i] == 0)
-	{	
+	{
 		pack->check = 1;
 		track = i_child(*data, oldtmp, NULL, pack);
 		free_doublst(data);

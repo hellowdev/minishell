@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 21:14:12 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:38:49 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_word
 typedef struct s_expand
 {
 	t_env	*env;
-	int		*status;
 }   t_expand;
 
 typedef struct s_child
@@ -136,7 +135,7 @@ int		ft_sizeenv(t_env *lst);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
-t_parce	*main_parse(int *status, char *s, t_env *env);
+t_parce	*main_parse(char *s, t_env *env);
 int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
 int		here_doc(t_token **token);
@@ -160,21 +159,21 @@ int     len_equal(char *s);
 
 // ------------------------ ALLOCATE_DATA ----------------------- //
 
-int     count_cmd(t_token *head, t_parce *newnode, int *status,t_env *env);
-int     count_infiles(t_token *head, t_parce *newnode, int *status, t_env *env);
-int		count_outfiles(t_token *head, t_parce *newnode, int *status, t_env *env);
-int		count_heredoc(t_token *head, t_parce *newnode, int *status);
-t_parce	*data_alloc(t_token *head, int *status, t_env *env);
+int     count_cmd(t_token *head, t_parce *newnode, t_env *env);
+int     count_infiles(t_token *head, t_parce *newnode, t_env *env);
+int		count_outfiles(t_token *head, t_parce *newnode, t_env *env);
+int		count_heredoc(t_token *head, t_parce *newnode);
+t_parce	*data_alloc(t_token *head, t_env *env);
 
 // ------------------------ PARCE_DATA ----------------------- //
 
-int     get_infile(t_token *head, t_parce *newnode, int *status, t_env *env);
-int     get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env);
-int     get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env);
-int     get_herdoc(t_token *head, t_parce *newnode, int *status);
-void    pars_ing(t_parce **lst, int *status, t_token *head, t_env *env);
-int     valid_word(char *s, int *status);
-int		is_spcharc(int *status, char c);
+int     get_infile(t_token *head, t_parce *newnode, t_env *env);
+int     get_cmd(t_token *head, t_parce *newnode, t_env *env);
+int     get_outfile(t_token *head, t_parce *newnode, t_env *env);
+int     get_herdoc(t_token *head, t_parce *newnode);
+void    pars_ing(t_parce **lst, t_token *head, t_env *env);
+int     valid_word(char *s);
+int		is_spcharc(char c);
 void	parse_add_back(t_parce **lst, t_parce *new);
 int     double_qt(char *s);
 int     single_qt(char *s);
@@ -182,13 +181,12 @@ char	*deljoin(char *s, bool *check_quote);
 char	**word_to_cmd(char *str, t_env *env, bool inside_dq);
 
 // ------------------------ expansion ----------------------- //
-int		calc_qout(char *s, int *status);
-int		valid_word(char *s, int *status);
+int		calc_qout(char *s);
 int		strlen_dol(char *s);
-void    update_status(int *status, char *s);
-char	*expand_status(char *head, t_env *env, bool checker, int status);
+void    update_status(char *s);
+char	*expand_status(char *head, t_env *env, bool checker);
 int		not_exp(char *s, char **value);
-int		expand(char *s, char **value, t_env *env, int status);
+int		expand(char *s, char **value, t_env *env);
 int		simple_word(char *s, char **value);
 int		check_dol_sp(char *s);
 int		special_char(char c);
@@ -203,7 +201,7 @@ void	free_env(t_env *head);
 char	**wich_path(t_env *env);
 char	*valid_path(t_env *env, char *cmd);
 // ------------------------ EXECUTION_FUNCTIONS ----------------------- //
-void	execute(t_parce *data, t_env **env, int *status);
+void	execute(t_parce *data, t_env **env);
 void	one_child(t_parce **data, t_child *pack);
 void	first_child(t_parce **data, t_child *pack);
 int		listofchild(t_parce **data, t_child *pack);
@@ -224,7 +222,7 @@ int		ft_strcm_doc(char *s1, char *s2);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
 char	*file_name(int index);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
-int		heredoc(t_parce **data, t_env *env, int *status);
+int		heredoc(t_parce **data, t_env *env);
 int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
 int		double_len(char **cmd);

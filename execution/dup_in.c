@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:37:17 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/28 21:24:52 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:50:09 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	check_infile(char **infile)
 {
-	int i;
-	int cnt;
-	int fd;
+	int	i;
+	int	cnt;
+	int	fd;
 
 	i = 0;
 	cnt = count_fd(infile);
@@ -33,7 +33,7 @@ int	check_infile(char **infile)
 			write(2, "\n", 1);
 			return (-1);
 		}
-		if (i < cnt) // close all fd - 1
+		if (i < cnt)
 			close(fd);
 		i++;
 	}
@@ -42,7 +42,7 @@ int	check_infile(char **infile)
 
 int	dup_infile(char **infile, bool last_inf)
 {
-	int fd;
+	int	fd;
 
 	if (infile)
 	{

@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   used_func.c                                        :+:      :+:    :+:   */
+/*   heredoc_tools.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:36:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 17:15:48 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:55:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-int strlen_herdoc(char *s)
+int	strlen_herdoc(char *s)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (s[i])
@@ -24,14 +23,15 @@ int strlen_herdoc(char *s)
 			return (i);
 		i++;
 	}
-	return (i);	
+	return (i);
 }
 
-int ft_strcm_doc(char *s1, char *s2)
+int	ft_strcm_doc(char *s1, char *s2)
 {
-	int i = 0;
+	int	i;
 
-	while((s1[i] == s2[i]) && s1[i] && s2[i] && s1[i] != '\n')
+	i = 0;
+	while ((s1[i] == s2[i]) && s1[i] && s2[i] && s1[i] != '\n')
 		i++;
 	if (s1[i] == '\n')
 	{

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 21:05:07 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:28:43 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char    **get_value(char *s, t_env *env, int *len)
 		*len += 2;
 		final_return = malloc(2 * sizeof(char *));
 		*final_return = ft_itoa(status);
+		// printf("status2: %d\n", status);
+		status = 0; // update status l zero
 		final_return[1] = NULL;
 	}
 	return (final_return);

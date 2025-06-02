@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 19:57:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 23:08:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:51:11 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,24 @@ int	fd_er(int fd)
 	}
 	return (fd);
 }
+
 int	check_dire(char *file)
 {
-	struct stat info;
+	struct stat	info;
 
 	if (stat(file, &info) != 0)
 		return (redire_err(file, ": No such file or directory"), 0);
 	if (S_ISDIR(info.st_mode))
 		return (redire_err(file, ": is a directory"), 0);
 	if (access(file, W_OK) != 0)
-			return (redire_err(file, ": Permission denied"), 0);
+		return (redire_err(file, ": Permission denied"), 0);
 	return (1);
 }
+
 int	check_outfile(char **outfile, bool *append)
 {
-	int i;
-	int fd;
+	int	i;
+	int	fd;
 
 	i = 0;
 	while (outfile[i])
@@ -61,7 +63,7 @@ int	check_outfile(char **outfile, bool *append)
 
 int	dup_outfile(char **outfile, bool *append)
 {
-	int fd;
+	int	fd;
 
 	if (outfile)
 	{

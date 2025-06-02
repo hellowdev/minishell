@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 15:48:27 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:28:49 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	not_exp(char *s, char **value)
 	return (len);
 }
 
-int	expand(char *s, char **value, t_env *env, int status)
+int	expand(char *s, char **value, t_env *env)
 {
 	int		i;
 	int		len; 
@@ -92,7 +92,7 @@ int	simple_word(char *s, char **value)
 	return (len);
 }
 
-char	*expand_status(char *str, t_env *env, bool inside_dq, int status)
+char	*expand_status(char *str, t_env *env, bool inside_dq)
 {
 	int		j;
 	char	*value;
@@ -115,7 +115,7 @@ char	*expand_status(char *str, t_env *env, bool inside_dq, int status)
 		}
 		j += doub_qt(&str[j], &value, &inside_dq);
 		j += not_exp(&str[j], &value);
-		j += expand(&str[j], &value, env, status);
+		j += expand(&str[j], &value, env);
 		j += simple_word(&str[j], &value);
 	}
 	return (value);

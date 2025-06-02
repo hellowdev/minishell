@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 11:13:22 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:32:35 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	disable_ctrl_echo(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &tty);
 }
 
-t_parce	*main_parse(int *status, char *s, t_env *env)
+t_parce	*main_parse(char *s, t_env *env)
 {
 	t_token	*head;
 	t_parce	*list;
 
 	list = NULL;
 	head = NULL;
-	if (calc_qout(s, status) == -1 || valid_word(s, status) == -1)
+	if (calc_qout(s) == -1 || valid_word(s) == -1)
 		return (NULL);
 	tokenization(s, &head);
 	if (!head)
 		return (NULL);
-	pars_ing(&list, status, head, env);
+	pars_ing(&list, head, env);
 	ft_lstclear(head);
 	return (list);
 }
@@ -58,10 +58,10 @@ int	int_while(t_env **env)
 			free_doublst(&lst), printf("exit\n"), status);
 		if (*line)
 			add_history(line);
-		lst = main_parse(&status, line, *env);
+		lst = main_parse(line, *env);
 		free_null(&line);
 		if (lst)
-			execute(lst, env, &status);
+			execute(lst, env);
 		free_doublst(&lst);
 	}
 	return (0);

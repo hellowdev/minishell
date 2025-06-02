@@ -6,13 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 13:17:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:02:57 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
+int	get_infile(t_token *head, t_parce *newnode, t_env *env)
 {
 	int	c;
 
@@ -23,14 +23,14 @@ int	get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		&& head->next->type == WORD)
 		{
 			newnode->infiles[c] = \
-			expand_status(head->next->value, env, false, *status);
+			expand_status(head->next->value, env, false);
 			c++;
 		}
 		else if ((!head->next || head->next->type != WORD) \
 		&& head->type == RED_IN)
 		{
 			newnode->infiles[c] = NULL;
-			return (update_status(status, "<"), 1);
+			return (update_status("<"), 1);
 		}
 		head = head->next;
 	}
@@ -38,7 +38,7 @@ int	get_infile(t_token *head, t_parce *newnode, int *status, t_env *env)
 	return (0);
 }
 
-int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
+int	get_outfile(t_token *head, t_parce *newnode, t_env *env)
 {
 	int	c;
 
@@ -49,7 +49,7 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		|| head->type == APPEND) && head->next->type == WORD)
 		{
 			newnode->outfiles[c] = \
-			expand_status(head->next->value, env, false, *status);
+			expand_status(head->next->value, env, false);
 			if (head->type == RED_OUT)
 				newnode->append[c] = false;
 			else if (head->type == APPEND)
@@ -58,14 +58,14 @@ int	get_outfile(t_token *head, t_parce *newnode, int *status, t_env *env)
 		}
 		else if ((head->type == APPEND || head->type == RED_OUT) \
 		&& (!head->next || head->next->type != WORD))
-			return (newnode->outfiles[c] = NULL, update_status(status, ">"), 1);
+			return (newnode->outfiles[c] = NULL, update_status(">"), 1);
 		head = head->next;
 	}
 	newnode->outfiles[c] = NULL;
 	return (0);
 }
 
-int	get_herdoc(t_token *head, t_parce *newnode, int *status)
+int	get_herdoc(t_token *head, t_parce *newnode)
 {
 	int	c;
 
@@ -80,18 +80,17 @@ int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 		}
 		else if (head->type == HEREDOC && \
 		(!head->next || head->next->type != WORD))
-			return (newnode->heredoc[c] = NULL, update_status(status, "<<"), 1);
+			return (newnode->heredoc[c] = NULL, update_status("<<"), 1);
 		head = head->next;
 	}
 	newnode->heredoc[c] = NULL;
 	return (0);
 }
 
-int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
+int	get_cmd(t_token *head, t_parce *newnode ,t_env *env)
 {
 	char	**word;
 
-	(void)status;
 	while (head && head->type != PIPE)
 	{
 		if (head->type != WORD && head->next)
