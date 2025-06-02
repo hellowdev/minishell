@@ -7,6 +7,8 @@ char	**ft_doubjoin(char **tab1, char **tab2)
 	int		v;
 
 	p = malloc((double_len(tab1) + double_len(tab2) + 1) * sizeof(char *));
+	if (!p)
+		return (NULL);
 	i = 0;
 	while (tab1[i])
 	{
