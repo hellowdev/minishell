@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 11:44:55 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 21:13:08 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	updt_pwd(char *dir, t_env **env)
 	}
 }
 
-void	cd_option(t_env **env, char *cwd , int *status)
+void	cd_option(t_env **env, char *cwd)
 {
 	char *ret;
 
 	ret = env_searsh(*env, "OLDPWD");
 	if (!ret)
-		return (*status = 1, ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2));
+		return (status = 1, ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2));
 	updt_oldpwd(env, cwd);
 	updt_pwd(ft_strdup(ret), env);
 	if (chdir(ret) < 0)
@@ -63,19 +63,19 @@ void	cd_option(t_env **env, char *cwd , int *status)
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(ret, 2);
 		perror(" ");
-		return (*status = 1, free_null(&ret));
+		return (status = 1, free_null(&ret));
 	}
 	printf("%s\n", ret);
 }
 
-void	cd_param(char **cmd, t_env **env, int *status, char *cwd)
+void	cd_param(char **cmd, t_env **env, char *cwd)
 {
 	char	*ret;
 
 	if (cmd[1] && ft_strcmp(cmd[1], "~") != 0)
 	{
 		if (ft_strcmp(cmd[1], "-") == 0)
-			return (cd_option(env, cwd, status));
+			return (cd_option(env, cwd));
 		if (chdir(cmd[1]) == 0)
 			updt_oldpwd(env, cwd);
 		else
@@ -83,32 +83,32 @@ void	cd_param(char **cmd, t_env **env, int *status, char *cwd)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd("cd: ", 2);
 			ft_putstr_fd(cmd[1], 2);
-			return (*status = 1, perror(" "), free_null(&cwd));
+			return (status = 1, perror(" "), free_null(&cwd));
 		}
 		ret = getcwd(NULL, 0);
 		updt_pwd(ret, env);
 	}
 }
 
-void	cd_cmd(char **cmd, t_env **env, int *status)
+void	cd_cmd(char **cmd, t_env **env)
 {
 	char	*ret;
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	cd_param(cmd, env, status, cwd);
+	cd_param(cmd, env, cwd);
 	if (!cmd[1] || ft_strcmp(cmd[1], "~") == 0)
 	{
 		ret = env_searsh(*env, "HOME");
 		if (!ret)
-			return (*status = 1, ft_putstr_fd("minishell: cd: HOME not set\n", 2));
+			return (status = 1, ft_putstr_fd("minishell: cd: HOME not set\n", 2));
 		updt_oldpwd(env, cwd);
 		updt_pwd(ret, env);
 		if (chdir(ret) < 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd("cd: ", 2);
-			return (*status = 1, ft_putstr_fd(ret, 2), perror(" "));
+			return (status = 1, ft_putstr_fd(ret, 2), perror(" "));
 		}
 	}
 }

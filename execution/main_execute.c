@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 19:53:55 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/02 21:14:28 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 	// -------- CMD --------- //
 	fd_closer(oldpipe, pipefd);
 	// if cmd builtin -> execute with built_in_func and exit();
-	if (built_in(data, pack->env, pack->status) == 1)
+	if (built_in(data, pack->env) == 1)
 		exit(*pack->status);
 	if (execute_cmd(data, *pack->env) == -1)
 		return (127);

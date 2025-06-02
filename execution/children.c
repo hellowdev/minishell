@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 13:54:34 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/02 23:37:04 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	one_child(t_parce **data, t_child *pack)
 	int track;
 	int i_fork;
 
-	if (built_in(*data, pack->env, pack->status) == 1)
+	if (built_in(*data, pack->env) == 1)
 		return ;
 	pack->i = 0;
 	track = 0;

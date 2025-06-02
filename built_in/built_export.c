@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:08:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/29 18:28:47 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/02 23:24:05 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	export_cmd(char **cmd, t_env **env)
 			write(2, "minishell: export: `", 20);
 			write(2, cmd[i], ft_strlen(cmd[i]));
 			write(2, "': not a valid identifier\n", 26);
+			status = 1;
 		}
 		else
 			add_env(env, cmd[i]);

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 19:16:25 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/02 21:44:53 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ char	*valid_path(t_env *env, char *cmd)
 		return (redire_err(cmd, ": No such file or directory"), NULL);
 	if (S_ISDIR(info.st_mode))
 		return (redire_err(cmd, ": is a directory"), NULL);
-	if (is_slash(cmd) && access(cmd, F_OK & X_OK) == 0)
-		return (ft_strdup(cmd));
+	if (is_slash(cmd) && access(cmd, X_OK) != 0)
+		return (redire_err(cmd, ": Permission denied"), NULL);
+	if (is_slash(cmd) && access(cmd, F_OK | X_OK) == 0)
+		return (status = 126, ft_strdup(cmd));
 	return (search_path(cmd, env));
 }
 

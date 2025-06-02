@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 19:43:28 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 21:14:12 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,10 +230,10 @@ void	del_file(t_parce *nodes);
 int		double_len(char **cmd);
 
 // ------------------------ BUILTIN_CMD ----------------------- //
-int		built_in(t_parce *data, t_env **env, int *status);
+int		built_in(t_parce *data, t_env **env);
 void	env_cmd(t_env *env);
 int		match_cmd(char *user_cmd, char *matcha);
-void	cd_cmd(char **cmd, t_env **env, int *status);
+void	cd_cmd(char **cmd, t_env **env);
 void	pwd_cmd(char **cmd);
 void	echo_cmd(char **cmd);
 void	unset_cmd(char **cmd, t_env **env);
