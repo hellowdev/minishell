@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 11:06:39 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 13:17:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	get_herdoc(t_token *head, t_parce *newnode, int *status)
 int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 {
 	char	**word;
+
 	(void)status;
 	while (head && head->type != PIPE)
 	{

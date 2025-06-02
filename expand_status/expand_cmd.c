@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 13:10:32 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 21:05:07 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char    **expand_cmd(char *s, t_env *env, int *len)
+char    **get_value(char *s, t_env *env, int *len)
 {
 	char	*name;
 	char	*retenv;
@@ -40,58 +40,53 @@ char    **expand_cmd(char *s, t_env *env, int *len)
 	return (final_return);
 }
 
-int	handle_expansion(char *str, char ***value, int *i, t_env *env)
+int	expand_cmd(char ***value, char *str, t_env *env, int *i)
 {
 	char	**ret;
-	int		offset;
-	int		len;
+	int		j;
 
-	offset = 0;
-	ret = expand_cmd(str, env, &offset);
-	len = double_len(ret);
-	if (len > 1)
+	j = 0;
+	ret = get_value(str, env, &j);
+	if (double_len(ret) > 1)
 	{
 		(*value)[*i] = ft_strjoin((*value)[*i], *ret);
 		*value = ft_doubjoin(*value, ret + 1);
-		*i += len - 1;
+		*i += double_len(ret) - 1;
 	}
-	else if (len == 1)
+	else if (double_len(ret) == 1)
 		(*value)[*i] = ft_strjoin((*value)[*i], *ret);
 	doubfree(ret);
-	return (offset);
+	return (j);
 }
 
-int	handle_special_cases(char *str, char **curr, bool inside_dq)
+int	edge_case(char *str, char **value, bool inside_dq)
 {
-	int	offset;
+	int	j;
 
-	offset = 0;
-	if (str[offset] == 39 && inside_dq)
+	j = 0;
+	if (str[j] == 39 && inside_dq)
 	{
-		*curr = ft_strjoin(*curr, "'");
-		offset++;
+		*value = ft_strjoin(*value, "'");
+		j++;
 	}
-	if (str[offset] == '$' && (str[offset + 1] == '$' || !str[offset + 1]))
+	if (str[j] == '$' && (str[j + 1] == '$' || !str[j + 1]))
 	{
-		*curr = ft_strjoin(*curr, "$");
-		offset++;
+		*value = ft_strjoin(*value, "$");
+		j++;
 	}
-	return (offset);
+	return (j);
 }
 
 char	**word_to_cmd(char *str, t_env *env, bool inside_dq)
 {
-	int		i;
 	int		j;
+	int     i;
 	char	**value;
+	
 
-	value = malloc(2 * sizeof(char *));
-	if (!value)
-		return (NULL);
-	value[0] = NULL;
-	value[1] = NULL;
-	i = 0;
+	value = ft_calloc(2, sizeof(char *));
 	j = 0;
+	i = 0;
 	while (str[j])
 	{
 		j += doub_qt(&str[j], &value[i], &inside_dq);
@@ -99,51 +94,8 @@ char	**word_to_cmd(char *str, t_env *env, bool inside_dq)
 		j += simple_word(&str[j], &value[i]);
 		if (!inside_dq)
 			j += sing_qt(&str[j], &value[i]);
-		j += handle_special_cases(&str[j], &value[i], inside_dq);
-		j += handle_expansion(&str[j], &value, &i, env);
+		j += edge_case(&str[j], &value[i], inside_dq);
+		j += expand_cmd(&value, &str[j], env, &i);
 	}
 	return (value);
 }
-
-// char	**word_to_cmd(char *str, t_env *env, bool inside_dq)
-// {
-// 	int		j;
-// 	int     i;
-// 	char	**value;
-// 	char	**ret_expand;
-
-// 	value = malloc(2 * sizeof(char *));
-// 	value[0] = NULL;
-// 	value[1] = NULL;
-// 	j = 0;
-// 	i = 0;
-// 	while (str[j])
-// 	{
-// 		j += doub_qt(&str[j], &value[i], &inside_dq);
-// 		j += not_exp(&str[j], &value[i]);
-// 		j += simple_word(&str[j], &value[i]);
-// 		if (!inside_dq)
-// 			j += sing_qt(&str[j], &value[i]);
-// 		if (str[j] == 39 && inside_dq)
-// 		{
-// 			value[i] = ft_strjoin(value[i], "'");
-// 			j++;
-// 		}
-// 		if (str[j] == '$' && (str[j + 1] == '$' || !str[j + 1]))
-// 		{
-// 			value[i] = ft_strjoin(value[i], "$");
-// 			j++;
-// 		}
-// 		ret_expand = expand_cmd(&str[j], env, &j);
-// 		if (double_len(ret_expand) > 1)
-// 		{
-// 			value[i] = ft_strjoin(value[i], *ret_expand);
-// 			value = ft_doubjoin(value, ret_expand + 1);
-// 			i += double_len(ret_expand) - 1;
-// 		}
-// 		else if (double_len(ret_expand) == 1)
-// 			value[i] = ft_strjoin(value[i], *ret_expand);
-// 		doubfree(ret_expand);
-// 	}
-// 	return (value);
-// }

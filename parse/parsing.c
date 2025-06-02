@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/30 09:40:37 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/02 21:07:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	after_pipe(t_token *head, int *status, t_parce **lst, t_env *env)
 
 	while (head)
 	{
-		if (head->type == PIPE && head->next && head->next->type != PIPE)
+		if (head->type == PIPE && head->next)
 		{
 			head = head->next;
 			if (head->type == PIPE)

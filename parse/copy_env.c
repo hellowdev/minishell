@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:49:58 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 11:57:45 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 13:14:51 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	copy_env(t_env **env)
 	{
 		name = ft_substr(environ[i], 0, len_equal(environ[i]));
 		if (ft_strcmp(name, "OLDPWD") == 0)
-			free(name);	
+			free(name);
 		else
 		{
 			value = env_value(name, i);
