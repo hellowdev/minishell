@@ -6,7 +6,7 @@
 /*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 17:46:45 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 11:06:39 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	get_cmd(t_token *head, t_parce *newnode, int *status, t_env *env)
 			word = word_to_cmd(head->value, env, false);
 			newnode->cmd = ft_doubjoin(newnode->cmd, word);
 			doubfree(word);
-			// printf("[cmd: %s]\n", newnode->cmd[c]);
 		}
 		head = head->next;
 	}

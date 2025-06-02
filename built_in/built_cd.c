@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 12:47:49 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/02 11:44:55 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	cd_param(char **cmd, t_env **env, int *status, char *cwd)
 {
 	char	*ret;
 
-	if (cmd[1])
+	if (cmd[1] && ft_strcmp(cmd[1], "~") != 0)
 	{
 		if (ft_strcmp(cmd[1], "-") == 0)
 			return (cd_option(env, cwd, status));
@@ -97,7 +97,7 @@ void	cd_cmd(char **cmd, t_env **env, int *status)
 
 	cwd = getcwd(NULL, 0);
 	cd_param(cmd, env, status, cwd);
-	if (!cmd[1])
+	if (!cmd[1] || ft_strcmp(cmd[1], "~") == 0)
 	{
 		ret = env_searsh(*env, "HOME");
 		if (!ret)

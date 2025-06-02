@@ -6,7 +6,7 @@
 /*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:31:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 19:46:01 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 11:18:27 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ void	exit_cmd(t_parce *data, char **cmd, t_env *env)
 	int	check;
 
 	check = 0;
-	if_notnum(0, data, cmd[1], env);
-	if (cmd[2])
-		return (status = 1, ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2));
 	nb = ft_atoi(cmd[1], &check);
 	if_notnum(check, data, cmd[1], env);
+	if (cmd[2])
+		return (status = 1, ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2));
 	printf("exit\n");
 	free_doublst(&data);
 	free_env(env);

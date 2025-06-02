@@ -6,23 +6,24 @@
 /*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 20:06:09 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/02 11:37:35 by sfartah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char    **expand_cmd(char *s, t_env *env)
+char    **expand_cmd(char *s, t_env *env, int *len)
 {
-	int		i;
 	char	*name;
 	char	*retenv;
 	char	**final_return;
+	int		i;
 
 	i = 0;
 	final_return = NULL;
 	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 0)
 	{
+		*len += check_dol_sp(&s[i]);
 		name = ft_substr(s, i + 1, check_dol_sp(&s[i]) - 1);
 		retenv = env_searsh(env, name);
 		final_return = ft_split(retenv, 32);
@@ -31,6 +32,7 @@ char    **expand_cmd(char *s, t_env *env)
 	}
 	else if (s[i] && s[i] == '$' && s[i + 1] == '?')
 	{
+		*len += 2;
 		final_return = malloc(2 * sizeof(char *));
 		*final_return = ft_itoa(status);
 		final_return[1] = NULL;
@@ -67,21 +69,16 @@ char	**word_to_cmd(char *str, t_env *env, bool inside_dq)
 			value[i] = ft_strjoin(value[i], "$");
 			j++;
 		}
-		ret_expand = expand_cmd(&str[j], env);
-		if (!ret_expand)
-			continue;
+		ret_expand = expand_cmd(&str[j], env, &j);
 		if (double_len(ret_expand) > 1)
 		{
 			value[i] = ft_strjoin(value[i], *ret_expand);
 			value = ft_doubjoin(value, ret_expand + 1);
 			i += double_len(ret_expand) - 1;
-			j += ft_strlen(value[double_len(value) - 1]) - 1;
 		}
 		else if (double_len(ret_expand) == 1)
-		{
 			value[i] = ft_strjoin(value[i], *ret_expand);
-			j += ft_strlen(value[i]);
-		}
+		doubfree(ret_expand);
 	}
 	return (value);
 }
