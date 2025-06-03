@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:32:35 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:27:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	int_while(t_env **env)
 {
 	char	*line;
 	t_parce	*lst;
+	char	*p;
 
 	lst = NULL;
 	while (1)
@@ -53,8 +54,9 @@ int	int_while(t_env **env)
 		if (!line)
 			return (free_env(*env), *env = NULL, \
 			free_doublst(&lst), printf("exit\n"), 0);
-		if (ft_strcmp(line, "exit") == 0)
-			return (free(line), free_env(*env), *env = NULL, \
+		p = skip_sp(line);
+		if (ft_strcmp(p, "exit") == 0)
+			return (free(line), free_null(&p), free_env(*env), *env = NULL, \
 			free_doublst(&lst), printf("exit\n"), status);
 		if (*line)
 			add_history(line);

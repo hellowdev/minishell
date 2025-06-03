@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:25:12 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 21:22:34 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 10:14:12 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	unset_cmd(char **cmd, t_env **env)
 	int i;
 
 	i = 1;
+	status = 0;
 	while (cmd[i])
 	{
 		if (valid_idf(cmd[i]) == 1 || !*cmd[i])

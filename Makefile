@@ -26,12 +26,10 @@ SRC = 	minishell.c \
 		tools/ft_isspace.c \
 		tools/ft_lstnew.c \
 		tools/ft_substr.c \
-		tools/ft_lstlast.c \
 		tools/ft_strcmp.c \
 		tools/ft_itoa.c \
 		tools/ft_atoi.c \
 		tools/ft_slash_join.c\
-		tools/ft_strnstr.c \
 		tools/ft_lstadd_back.c \
 		tools/ft_putstr_fd.c\
 		tools/ft_lstsize.c\

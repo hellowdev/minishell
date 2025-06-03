@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 23:37:33 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 10:11:28 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	env_cmd(t_env *env)
 			printf("%s=%s\n", env->name_env, env->value_env);
 		env = env->next;
 	}
+	status = 0;
 }
 
 int	half_builtin(t_parce *data, t_env **env, int tmp)

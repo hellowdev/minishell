@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:28:49 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 12:50:19 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,27 @@ int	not_exp(char *s, char **value)
 	return (len);
 }
 
+int	relative_path(char *s, t_env *env, char **value)
+{
+	int i;
+	char *home;
+
+	i = 0;
+	if (s[i] == '~' && !s[i + 1])
+	{
+		i = 1;
+		home = env_searsh(env, "HOME");
+		*value = ft_strjoin(*value, home);
+	}
+	else if (s[i] == '~' && s[i + 1] == '/')
+	{
+		i = 2;
+		home = env_searsh(env, "HOME");
+		*value = ft_strjoin(*value, home);
+	}
+	return (i);
+}
+
 int	expand(char *s, char **value, t_env *env)
 {
 	int		i;
@@ -55,6 +76,7 @@ int	expand(char *s, char **value, t_env *env)
 
 	len = 0;
 	i = 0;
+	len = relative_path(s, env, value);
 	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 0)
 	{
 		len = check_dol_sp(&s[i]);

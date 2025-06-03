@@ -6,11 +6,26 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:28:43 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:13:14 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	rel_path(char *s, t_env *env, char ***value)
+{
+	int i;
+
+	i = 0;
+	if (s[i] == '~' && (!s[i + 1] || s[i + 1] == '/'))
+	{
+		i = 1;
+		*value = malloc(2 * sizeof(char *));
+		(*value)[0] = env_searsh(env, "HOME");
+		(*value)[1] = NULL;
+	}
+	return (i);	
+}
 
 char    **get_value(char *s, t_env *env, int *len)
 {
@@ -21,6 +36,7 @@ char    **get_value(char *s, t_env *env, int *len)
 
 	i = 0;
 	final_return = NULL;
+	*len += rel_path(s, env, &final_return);
 	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 0)
 	{
 		*len += check_dol_sp(&s[i]);
@@ -35,8 +51,6 @@ char    **get_value(char *s, t_env *env, int *len)
 		*len += 2;
 		final_return = malloc(2 * sizeof(char *));
 		*final_return = ft_itoa(status);
-		// printf("status2: %d\n", status);
-		status = 0; // update status l zero
 		final_return[1] = NULL;
 	}
 	return (final_return);
@@ -93,11 +107,11 @@ char	**word_to_cmd(char *str, t_env *env, bool inside_dq)
 	{
 		j += doub_qt(&str[j], &value[i], &inside_dq);
 		j += not_exp(&str[j], &value[i]);
-		j += simple_word(&str[j], &value[i]);
 		if (!inside_dq)
 			j += sing_qt(&str[j], &value[i]);
 		j += edge_case(&str[j], &value[i], inside_dq);
 		j += expand_cmd(&value, &str[j], env, &i);
+		j += simple_word(&str[j], &value[i]);
 	}
 	return (value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:05:28 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 10:06:56 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/03 11:18:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	double_len(char **cmd)
 		i++;
 	return (i);
 }
+
 size_t	len_n(char *cmd)
 {
 	int i;
@@ -42,7 +43,7 @@ void	echo_cmd(char **cmd)
 
 	j = 0;
 	i = 1;
-	while (cmd[i] && len_n(cmd[i]) == ft_strlen(cmd[i]))
+	while (cmd[i] && *cmd[i] && len_n(cmd[i]) == ft_strlen(cmd[i]))
 	{
 		j++;
 		i++;
@@ -57,4 +58,5 @@ void	echo_cmd(char **cmd)
 	if (j > 0)
 		return ;
 	ft_putstr_fd("\n", 1);
+	status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:38:49 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:48:49 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ typedef struct s_child
 // --------------------------- DISPLAY ----------------------- //
 void	display_env(t_env *list);
 void	disp_ar(char **str);
-// --------------------------- TOOLS ----------------------- //
+// --------------------------getnxtline------------------------//
 char	*get_next_line(int fd);
 char	*join(char *str1, char *str2);
 char	*takeme(char *holder);
 int		new_line(char *buff);
 char	*afternwl(char *str);
-// --------------------------getnxtline------------------------//
+// --------------------------- TOOLS ----------------------- //
 int		ft_isdigit(int c);
 char	**ft_doubjoin(char **tab1, char **tab2);
 int		ft_isalpha(int c);
@@ -120,18 +120,17 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-t_token *ft_lstlast(t_token *lst);
 void    ft_lstadd_back(t_token **lst, t_token *new);
 t_token *ft_lstnew(void *content, t_type type);
 int     ft_strcmp(char *s1, char *s2);
 char	*ft_itoa(int n);
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_slash_join(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_lstsize(t_parce *lst);
 int		ft_atoi(const char *str, int *e);
 int		ft_sizeenv(t_env *lst);
+char	*skip_sp(char *s);
 
 // ------------------------ TOKENIZATION ----------------------- //
 
@@ -216,7 +215,7 @@ int		execute_cmd(t_parce *data, t_env *testenv);
 int		redire_err(char *file, char *err);
 void	fd_closer(int fd, int *pipefd);
 void	wait_proc(t_child *pack);
-
+// ------------------------ HEREDOC_FUNC ----------------------- //
 int		dup_heredoc(char **heredoc, bool input, int index);
 int		ft_strcm_doc(char *s1, char *s2);
 void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
@@ -226,7 +225,6 @@ int		heredoc(t_parce **data, t_env *env);
 int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
 int		double_len(char **cmd);
-
 // ------------------------ BUILTIN_CMD ----------------------- //
 int		built_in(t_parce *data, t_env **env);
 void	env_cmd(t_env *env);
@@ -238,8 +236,7 @@ void	unset_cmd(char **cmd, t_env **env);
 void	export_cmd(char **cmd, t_env **env);
 int		valid_idf(char *s);
 void	exit_cmd(t_parce *data, char **cmd, t_env *env);
-
-
+// ------------------------ SIGNALS ----------------------- //
 void	disable_ctrl_echo();
 void	handle_signals(int sig);
 void	signalss();

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/02 21:13:08 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:06:36 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	cd_param(char **cmd, t_env **env, char *cwd)
 {
 	char	*ret;
 
-	if (cmd[1] && ft_strcmp(cmd[1], "~") != 0)
+	if (cmd[1] && *cmd[1])
 	{
 		if (ft_strcmp(cmd[1], "-") == 0)
 			return (cd_option(env, cwd));
@@ -95,9 +95,10 @@ void	cd_cmd(char **cmd, t_env **env)
 	char	*ret;
 	char	*cwd;
 
+	status = 0;
 	cwd = getcwd(NULL, 0);
 	cd_param(cmd, env, cwd);
-	if (!cmd[1] || ft_strcmp(cmd[1], "~") == 0)
+	if (!cmd[1])
 	{
 		ret = env_searsh(*env, "HOME");
 		if (!ret)
