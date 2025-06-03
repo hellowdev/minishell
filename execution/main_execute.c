@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:57:30 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 17:54:24 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 	if (built_in(data, pack->env) == 1)
 		exit(status);
 	if (execute_cmd(data, *pack->env) == -1)
-		return (127);
+		return (status);
 	return (0);
 }
 

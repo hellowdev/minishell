@@ -6,22 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 15:13:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 17:40:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	status = 0;
-
-void	disable_ctrl_echo(void)
-{
-	struct termios		tty;
-
-	tcgetattr(STDIN_FILENO, &tty);
-	tty.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &tty);
-}
 
 t_parce	*main_parse(char *s, t_env *env)
 {
@@ -72,7 +63,6 @@ int	main(int ac, char **av)
 	(void)av;
 	ret = 0;
 	env = NULL;
-	disable_ctrl_echo();
 	if (ac == 1)
 	{
 		copy_env(&env);
