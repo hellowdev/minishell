@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:31:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 10:40:48 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:10:57 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ void	exit_cmd(t_parce *data, char **cmd, t_env *env)
 	int	check;
 
 	check = 0;
+	if (!cmd[1])
+	{
+		printf("exit\n");
+		free_doublst(&data);
+		free_env(env);
+		exit(status);
+	}
 	nb = ft_atoi(cmd[1], &check);
 	if_notnum(check, data, cmd[1], env);
 	if (cmd[2])
