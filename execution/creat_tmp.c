@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 16:27:00 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 20:07:19 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	doc_word(char *s, char **value)
 
 	i = 0;
 	len = 0;
-	if (s[i] != '$')
+	if (s[i] && s[i] != '$')
 	{
 		len = strlen_herdoc(&s[i]);
 		word = ft_substr(s, i, len);

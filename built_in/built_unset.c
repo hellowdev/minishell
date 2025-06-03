@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:25:12 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:30:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:38:42 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	valid_idf(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -28,8 +28,8 @@ int	valid_idf(char *s)
 
 void	env_delete(t_env **env, char *name)
 {
-	t_env *tmp;
-	t_env *deltmp;
+	t_env	*tmp;
+	t_env	*deltmp;
 
 	tmp = (*env);
 	deltmp = (*env);
@@ -44,7 +44,8 @@ void	env_delete(t_env **env, char *name)
 		{
 			deltmp = tmp->next;
 			tmp->next = deltmp->next;
-			return (free(deltmp->value_env), free(deltmp->name_env), free(deltmp));
+			return (free(deltmp->value_env), \
+			free(deltmp->name_env), free(deltmp));
 		}
 		tmp = tmp->next;
 	}
@@ -52,7 +53,7 @@ void	env_delete(t_env **env, char *name)
 
 void	unset_cmd(char **cmd, t_env **env)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	g_status = 0;

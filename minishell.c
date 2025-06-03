@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:34:40 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:37:57 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	int_while(t_env **env)
 {
 	char	*line;
 	t_parce	*lst;
-	
+
 	lst = NULL;
 	while (1)
 	{
@@ -52,7 +52,7 @@ int	int_while(t_env **env)
 			execute(lst, env);
 		free_doublst(&lst);
 	}
-	return (0);
+	return (g_status);
 }
 
 int	main(int ac, char **av)

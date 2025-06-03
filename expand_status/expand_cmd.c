@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:57:29 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:39:18 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	rel_path(char *s, t_env *env, char ***value)
 		(*value)[0] = env_searsh(env, "HOME");
 		(*value)[1] = NULL;
 	}
-	return (i);	
+	return (i);
 }
 
-char    **get_value(char *s, t_env *env, int *len)
+char	**get_value(char *s, t_env *env, int *len)
 {
 	char	*name;
 	char	*retenv;
@@ -96,9 +96,8 @@ int	edge_case(char *str, char **value, bool inside_dq)
 char	**word_to_cmd(char *str, t_env *env, bool inside_dq)
 {
 	int		j;
-	int     i;
+	int		i;
 	char	**value;
-	
 
 	value = ft_calloc(2, sizeof(char *));
 	j = 0;

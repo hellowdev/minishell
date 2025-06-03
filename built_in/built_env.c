@@ -6,24 +6,33 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 19:35:59 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:28:58 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	match_cmd(char *user_cmd, char *matcha)
+int	match_cmd(char *user_cmd, char *builtin)
 {
 	int	i;
+	int	j;
+	int	len;
 
+	j = 0;
 	i = 0;
-	while (matcha[i])
+	while (user_cmd[i] && builtin[i])
 	{
-		if (user_cmd[i] != matcha[i] && user_cmd[i] != matcha[i] - 32)
-			return (0);
+		if (user_cmd[i] == builtin[i] || user_cmd[i] == builtin[i] - 32)
+			j++;
 		i++;
 	}
-	return (1);
+	if (j)
+	{
+		len = ft_strlen(user_cmd);
+		if (len == j)
+			return (1);
+	}
+	return (0);
 }
 
 void	env_cmd(t_env *env)

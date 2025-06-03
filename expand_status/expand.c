@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:56:42 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 20:13:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	not_exp(char *s, char **value)
 	{
 		i++;
 		len = strlen_dol(&s[i]);
+		len++;
 		notexp = ft_substr(s, 0, len);
 		*value = ft_strjoin(*value, notexp);
 		free_null(&notexp);

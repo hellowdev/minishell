@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:08:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 19:37:27 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:37:14 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	valid_idf_exp(char *s)
 
 void	export_cmd(char **cmd, t_env **env)
 {
-	int i;
-	
+	int	i;
+
 	if (cmd[0] && !cmd[1])
 		display_export(*env);
 	i = 1;
