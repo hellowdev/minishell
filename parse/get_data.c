@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 16:04:57 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:55:11 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	get_herdoc(t_token *head, t_parce *newnode)
 	return (0);
 }
 
-int	get_cmd(t_token *head, t_parce *newnode ,t_env *env)
+int	get_cmd(t_token *head, t_parce *newnode, t_env *env)
 {
 	char	**word;
 

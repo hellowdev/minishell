@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:32:57 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 16:33:22 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:33:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ int	listofdoc(t_parce **data, t_parce *tmp, t_env *env)
 				exit(0);
 			}
 			signal(SIGINT, SIG_IGN);
-			wait(&status);
-			if (WIFSIGNALED(status))
-				return (ft_putstr_fd("\n", 1), status = 1);
+			wait(&g_status);
+			if (WIFSIGNALED(g_status))
+				return (ft_putstr_fd("\n", 1), g_status = 1);
 		}
 		i++;
 		tmp = tmp->next;
 	}
-	return (status = WEXITSTATUS(status), 0);
+	return (g_status = WEXITSTATUS(g_status), 0);
 }
 
 int	heredoc(t_parce **data, t_env *env)

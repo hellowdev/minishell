@@ -6,25 +6,11 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:03:59 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:30:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	is_slash(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 char	**wich_path(t_env *env)
 {
@@ -54,12 +40,14 @@ char	*search_path(char *cmd, t_env *env)
 		i++;
 	}
 	if (access(cmd, F_OK) != 0 && env_path)
-		return (status = 127, redire_err(cmd, ": command not found"), \
+		return (g_status = 127, redire_err(cmd, ": command not found"), \
 		doubfree(env_path), NULL);
 	if (access(cmd, F_OK) != 0 && !env_path)
-		return (status = 127, redire_err(cmd, ": No such file or directory"), NULL);
+		return (g_status = 127, \
+		redire_err(cmd, ": No such file or directory"), NULL);
 	if (access(cmd, X_OK) != 0)
-		return (status = 126, redire_err(cmd, ": Permission denied"), NULL);
+		return (g_status = 126, \
+		redire_err(cmd, ": Permission denied"), NULL);
 	return (ft_strdup(cmd));
 }
 
@@ -68,15 +56,16 @@ char	*valid_path(t_env *env, char *cmd)
 	struct stat	info;
 
 	if (!*cmd)
-		return (status = 127, redire_err(cmd, ": command not found"), NULL);
+		return (g_status = 127, redire_err(cmd, ": command not found"), NULL);
 	if (is_slash(cmd) && stat(cmd, &info) != 0)
-		return (status = 127, redire_err(cmd, ": No such file or directory"), NULL);
+		return (g_status = 127, \
+		redire_err(cmd, ": No such file or directory"), NULL);
 	if (S_ISDIR(info.st_mode))
-		return (status = 126, redire_err(cmd, ": is a directory"), NULL);
+		return (g_status = 126, redire_err(cmd, ": is a directory"), NULL);
 	if (is_slash(cmd) && access(cmd, X_OK) != 0)
-		return (status = 126, redire_err(cmd, ": Permission denied"), NULL);
+		return (g_status = 126, redire_err(cmd, ": Permission denied"), NULL);
 	if (is_slash(cmd) && access(cmd, F_OK | X_OK) == 0)
-		return (status = 126, ft_strdup(cmd));
+		return (g_status = 126, ft_strdup(cmd));
 	return (search_path(cmd, env));
 }
 

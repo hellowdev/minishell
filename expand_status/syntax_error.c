@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:16:06 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:09:56 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:30:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ void	update_status(char *s)
 	write(2, "minishell: syntax error near unexpected token `", 48);
 	write(2, s, ft_strlen(s));
 	write(2, "'\n", 2);
-	status = 258;
+	g_status = 258;
 }

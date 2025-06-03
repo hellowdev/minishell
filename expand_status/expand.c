@@ -6,25 +6,11 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 16:47:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:56:42 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	strlen_dol(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '$' || s[i] == 34 || s[i] == 39)
-			return (i);
-		i++;
-	}
-	return (i);
-}
 
 int	not_exp(char *s, char **value)
 {
@@ -47,8 +33,8 @@ int	not_exp(char *s, char **value)
 
 int	relative_path(char *s, t_env *env, char **value, int ifdoc)
 {
-	int i;
-	char *home;
+	int		i;
+	char	*home;
 
 	i = 0;
 	if (ifdoc == 0)
@@ -90,7 +76,7 @@ int	expand(char *s, char **value, t_env *env, int ifdoc)
 	}
 	else if (s[i] && s[i] == '$' && s[i + 1] == '?')
 	{
-		name = ft_itoa(status);
+		name = ft_itoa(g_status);
 		*value = ft_strjoin(*value, name);
 		len = 2;
 		free_null(&name);

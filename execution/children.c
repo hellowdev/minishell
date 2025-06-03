@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:47:07 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:33:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	one_child(t_parce **data, t_child *pack)
 		exit(track);
 	}
 	signal(SIGINT, SIG_IGN);
-	wait(&status);
-	if (WIFSIGNALED(status))
-		status = WTERMSIG(status) + 128;
+	wait(&g_status);
+	if (WIFSIGNALED(g_status))
+		g_status = WTERMSIG(g_status) + 128;
 	else
-		status = WEXITSTATUS(status);
+		g_status = WEXITSTATUS(g_status);
 }
 
 void	first_child(t_parce **data, t_child *pack)

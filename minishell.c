@@ -6,13 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 17:40:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:34:40 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	status = 0;
+int	g_status = 0;
 
 t_parce	*main_parse(char *s, t_env *env)
 {
@@ -39,7 +39,7 @@ int	int_while(t_env **env)
 	lst = NULL;
 	while (1)
 	{
-		signalss(&status);
+		signalss();
 		line = readline("minishell$ ");
 		if (!line)
 			return (free_env(*env), *env = NULL, \

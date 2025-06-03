@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:09:29 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:55:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	check_input(t_token *list)
 	return (checker);
 }
 
-t_parce	*data_alloc(t_token *head,t_env *env)
+t_parce	*data_alloc(t_token *head, t_env *env)
 {
 	t_parce	*newnode;
 

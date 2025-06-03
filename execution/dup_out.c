@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 19:57:44 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:51:11 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:30:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	dup_outfile(char **outfile, bool *append)
 	{
 		fd = check_outfile(outfile, append);
 		if (fd < 0)
-			return (status = 1, (-1));
+			return (g_status = 1, (-1));
 		dup2(fd, 1);
 		close(fd);
 	}

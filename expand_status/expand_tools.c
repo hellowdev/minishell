@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfartah <sfartah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:59:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/05/31 15:47:04 by sfartah          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:57:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	strlen_dol(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '$' || s[i] == 34 || s[i] == 39)
+			return (i);
+		i++;
+	}
+	return (i);
+}
 
 int	special_char(char c)
 {

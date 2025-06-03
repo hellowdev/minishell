@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 10:11:28 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:35:59 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	match_cmd(char *user_cmd, char *matcha)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (matcha[i])
@@ -22,7 +22,7 @@ int	match_cmd(char *user_cmd, char *matcha)
 		if (user_cmd[i] != matcha[i] && user_cmd[i] != matcha[i] - 32)
 			return (0);
 		i++;
-	}	
+	}
 	return (1);
 }
 
@@ -34,11 +34,11 @@ void	env_cmd(t_env *env)
 			printf("%s=%s\n", env->name_env, env->value_env);
 		env = env->next;
 	}
-	status = 0;
+	g_status = 0;
 }
 
 int	half_builtin(t_parce *data, t_env **env, int tmp)
-{	
+{
 	if (data->cmd[0] && match_cmd(data->cmd[0], "echo"))
 	{
 		if (dup_outfile(data->outfiles, data->append) == -1)
@@ -64,7 +64,7 @@ int	half_builtin(t_parce *data, t_env **env, int tmp)
 
 int	built_in(t_parce *data, t_env **env)
 {
-	int tmp;
+	int	tmp;
 
 	if (!data->cmd)
 		return (0);

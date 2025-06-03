@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 17:54:24 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:36:59 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 	if (dup_infile(data->infiles, data->input) == -1)
 		return (fd_closer(oldpipe, pipefd), 1);
 	if (!data->heredoc && !data->infiles \
-	&& pack->check == 1) // if not infile and not the first one
+	&& pack->check == 1)
 		dup2(oldpipe, 0);
 	if (dup_outfile(data->outfiles, data->append) == -1)
 		return (fd_closer(oldpipe, pipefd), 1);
-	else if (!data->outfiles && data->next) // if not outfile and next node 
+	else if (!data->outfiles && data->next) 
 		dup2(pipefd[1], 1);
 	fd_closer(oldpipe, pipefd);
 	if (built_in(data, pack->env) == 1)
-		exit(status);
+		exit(g_status);
 	if (execute_cmd(data, *pack->env) == -1)
-		return (status);
+		return (g_status);
 	return (0);
 }
 
@@ -65,29 +65,29 @@ void	execute(t_parce *data, t_env **env)
 	if (heredoc(&data, *env) == 1)
 		return (del_file(tmp));
 	pack.env = env;
-	if (data->next == NULL) // one NODE
+	if (data->next == NULL)
 		return (one_child(&data, &pack), del_file(tmp));
 	pipe(pack.pipefd);
 	pack.ids = malloc(ft_lstsize(data) * sizeof(int));
 	first_child(&data, &pack);
 	data = data->next;
-	newfd = listofchild(&data, &pack); // THE LIST OF NODE SEPARATE BY PIPE
-	last_child(&data, newfd, &pack); // THE LAST NODE
+	newfd = listofchild(&data, &pack);
+	last_child(&data, newfd, &pack);
 	return (wait_proc(&pack), free(pack.ids), del_file(tmp));
 }
 
 void	wait_proc(t_child *pack)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i <= pack->i)
 	{
-		signal(SIGINT, SIG_IGN); // bach nbdlo akhir signal d parent
-		waitpid(pack->ids[i++], &status, 0);
+		signal(SIGINT, SIG_IGN);
+		waitpid(pack->ids[i++], &g_status, 0);
 	}
-	if (WIFSIGNALED(status))
-		status = WTERMSIG(status) + 128;
+	if (WIFSIGNALED(g_status))
+		g_status = WTERMSIG(g_status) + 128;
 	else
-		status = WEXITSTATUS(status);
+		g_status = WEXITSTATUS(g_status);
 }

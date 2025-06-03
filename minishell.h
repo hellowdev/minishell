@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 16:33:03 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:51:39 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,23 @@
 #  define BUFFER_SIZE 5
 # endif
 
-# include <stdio.h>          // printf
-# include <stdlib.h>         // malloc, free, exit, getenv
-# include <string.h>         // strerror
-# include <unistd.h>         // write, read, access, close, fork, execve, getcwd, chdir, dup, dup2, isatty, ttyname, ttyslot
-# include <fcntl.h>          // open
-# include <errno.h>          // perror, strerror
-# include <sys/wait.h>       // wait, waitpid, wait3, wait4
-# include <signal.h>         // signal, sigaction, sigemptyset, sigaddset, kill
-# include <sys/stat.h>       // stat, lstat, fstat
-# include <dirent.h>         // opendir, readdir, closedir
-# include <termios.h>        // tcsetattr, tcgetattr
-# include <sys/ioctl.h>      // ioctl
-# include <term.h>     	     // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-# include <readline/readline.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
-# include <ncurses.h>  // readline, rl_on_new_line, rl_replace_line, rl_redisplay
-# include <readline/history.h>   // add_history, rl_clear_history
+# include <stdio.h>         
+# include <stdlib.h>        
+# include <string.h>        
+# include <unistd.h>
+# include <fcntl.h>         
+# include <errno.h>         
+# include <sys/wait.h>      
+# include <signal.h>        
+# include <sys/stat.h>      
+# include <readline/readline.h>
+# include <ncurses.h>
+# include <readline/history.h>
 # include <stdbool.h>
-#include <limits.h>
+# include <limits.h>
 
-extern int		status;
-extern char **environ;
+extern int		g_status;
+extern char		**environ;
 
 typedef enum s_type
 {
@@ -47,56 +43,50 @@ typedef enum s_type
 	RED_OUT,
 	APPEND,
 	HEREDOC
-}   t_type;
+}	t_type;
 
 typedef struct s_token
 {
-	char	*value;
-	t_type	type;
-	struct s_token *next;
-}   t_token;
+	char			*value;
+	t_type			type;
+	struct s_token	*next;
+}	t_token;
 
- 
 typedef struct s_env
 {
-	char	*name_env;
-	char	*value_env;
-	struct s_env *next;
+	char			*name_env;
+	char			*value_env;
+	struct s_env	*next;
 }	t_env;
-
 
 typedef struct s_parce
 {
-	char	**cmd;
-	char	**infiles;
-	char	**outfiles;
-	char	**heredoc;
-	bool	*append;
-	bool	input;
-	bool	check_qt;
-	struct s_parce *next;
+	char			**cmd;
+	char			**infiles;
+	char			**outfiles;
+	char			**heredoc;
+	bool			*append;
+	bool			input;
+	bool			check_qt;
+	struct s_parce	*next;
 }	t_parce;
 
 typedef struct s_word
 {
-	char    *p;
-	int     i;
-}   t_word;
+	char	*p;
+	int		i;
+}	t_word;
 
 typedef struct s_child
 {
 	t_env	**env;
-	int		*status;
 	int		check;
 	int		pipefd[2];
 	int		newpipe[2];
 	int		*ids;
 	int		i;
-}   t_child;
+}	t_child;
 
-// --------------------------- DISPLAY ----------------------- //
-void	display_env(t_env *list);
-void	disp_ar(char **str);
 // --------------------------getnxtline------------------------//
 char	*get_next_line(int fd);
 char	*join(char *str1, char *str2);
@@ -115,9 +105,9 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-void    ft_lstadd_back(t_token **lst, t_token *new);
-t_token *ft_lstnew(void *content, t_type type);
-int     ft_strcmp(char *s1, char *s2);
+void	ft_lstadd_back(t_token **lst, t_token *new);
+t_token	*ft_lstnew(void *content, t_type type);
+int		ft_strcmp(char *s1, char *s2);
 char	*ft_itoa(int n);
 char	*ft_slash_join(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
@@ -125,10 +115,8 @@ void	ft_putstr_fd(char *s, int fd);
 int		ft_lstsize(t_parce *lst);
 int		ft_atoi(const char *str, int *e);
 int		ft_sizeenv(t_env *lst);
-char	*skip_sp(char *s);
-
+int		is_slash(char *s);
 // ------------------------ TOKENIZATION ----------------------- //
-
 t_parce	*main_parse(char *s, t_env *env);
 int		red_infile(t_token **token);
 int		red_outfile(t_token **token);
@@ -141,43 +129,37 @@ int		check_words(char *s, t_token **head);
 int		doub_qt(char *s, char **str, bool *checker);
 int		doub_quote(char *s);
 int		sing_quote(char *s);
-int     sing_qt(char *s, char **str);
+int		sing_qt(char *s, char **str);
 void	tokenization(char *s, t_token **head);
-
 // ------------------------ COPY_ENV ----------------------- //
-
-t_env   *lstnew_env(void *name, void *value);
-void    env_add_back(t_env **lst, t_env *new);
+t_env	*lstnew_env(void *name, void *value);
+void	env_add_back(t_env **lst, t_env *new);
 void	copy_env(t_env **head);
-int     len_equal(char *s);
-
+int		len_equal(char *s);
 // ------------------------ ALLOCATE_DATA ----------------------- //
-
-int     count_cmd(t_token *head, t_parce *newnode, t_env *env);
-int     count_infiles(t_token *head, t_parce *newnode, t_env *env);
+int		count_cmd(t_token *head, t_parce *newnode, t_env *env);
+int		count_infiles(t_token *head, t_parce *newnode, t_env *env);
 int		count_outfiles(t_token *head, t_parce *newnode, t_env *env);
 int		count_heredoc(t_token *head, t_parce *newnode);
 t_parce	*data_alloc(t_token *head, t_env *env);
-
 // ------------------------ PARCE_DATA ----------------------- //
-
-int     get_infile(t_token *head, t_parce *newnode, t_env *env);
-int     get_cmd(t_token *head, t_parce *newnode, t_env *env);
-int     get_outfile(t_token *head, t_parce *newnode, t_env *env);
-int     get_herdoc(t_token *head, t_parce *newnode);
-void    pars_ing(t_parce **lst, t_token *head, t_env *env);
-int     valid_word(char *s);
+int		get_infile(t_token *head, t_parce *newnode, t_env *env);
+int		get_cmd(t_token *head, t_parce *newnode, t_env *env);
+int		get_outfile(t_token *head, t_parce *newnode, t_env *env);
+int		get_herdoc(t_token *head, t_parce *newnode);
+void	pars_ing(t_parce **lst, t_token *head, t_env *env);
+int		valid_word(char *s);
 int		is_spcharc(char c);
 void	parse_add_back(t_parce **lst, t_parce *new);
-int     double_qt(char *s);
-int     single_qt(char *s);
+int		double_qt(char *s);
+int		single_qt(char *s);
 char	*deljoin(char *s, bool *check_quote);
 char	**word_to_cmd(char *str, t_env *env, bool inside_dq);
 
 // ------------------------ expansion ----------------------- //
 int		calc_qout(char *s);
 int		strlen_dol(char *s);
-void    update_status(char *s);
+void	update_status(char *s);
 char	*expand_status(char *head, t_env *env, bool checker);
 int		not_exp(char *s, char **value);
 int		expand(char *s, char **value, t_env *env, int ifdoc);
@@ -231,7 +213,6 @@ void	export_cmd(char **cmd, t_env **env);
 int		valid_idf(char *s);
 void	exit_cmd(t_parce *data, char **cmd, t_env *env);
 // ------------------------ SIGNALS ----------------------- //
-void	disable_ctrl_echo();
 void	handle_signals(int sig);
-void	signalss();
-# endif
+void	signalss(void);
+#endif

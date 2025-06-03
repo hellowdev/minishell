@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:25:12 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 10:14:12 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:30:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	unset_cmd(char **cmd, t_env **env)
 	int i;
 
 	i = 1;
-	status = 0;
+	g_status = 0;
 	while (cmd[i])
 	{
 		if (valid_idf(cmd[i]) == 1 || !*cmd[i])
@@ -63,7 +63,7 @@ void	unset_cmd(char **cmd, t_env **env)
 			write(2, "minishell: unset: `", 20);
 			write(2, cmd[i], ft_strlen(cmd[i]));
 			write(2, "': not a valid identifier\n", 26);
-			status = 1;
+			g_status = 1;
 		}
 		else
 			env_delete(env, cmd[i]);

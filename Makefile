@@ -12,7 +12,6 @@ MINIFLAGS =  -lreadline -lncurses -L$(READLINE)/lib -g -Wl,-no_pie
 NAME = minishell
 
 SRC = 	minishell.c \
-		display.c \
 		tools/ft_doubjoin.c\
 		tools/ft_split.c \
 		tools/ft_bzero.c \
@@ -33,6 +32,7 @@ SRC = 	minishell.c \
 		tools/ft_lstadd_back.c \
 		tools/ft_putstr_fd.c\
 		tools/ft_lstsize.c\
+		tools/ft_isslash.c\
 		tools/get_next_line.c\
 		tools/get_next_line_utils.c\
 		parse/parsing.c\

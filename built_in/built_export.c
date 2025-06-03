@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:08:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 10:11:18 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:37:27 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	add_env(t_env **env, char *var)
 {
 	t_env	*new;
 	t_env	*tmp;
-	char 	*name;
+	char	*name;
 	char	*value;
 
 	tmp = *env;
@@ -62,7 +62,7 @@ void	add_env(t_env **env, char *var)
 
 int	valid_idf_exp(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s[i] == '=')
@@ -83,7 +83,7 @@ void	export_cmd(char **cmd, t_env **env)
 	if (cmd[0] && !cmd[1])
 		display_export(*env);
 	i = 1;
-	status = 0;
+	g_status = 0;
 	while (cmd[i])
 	{
 		if (valid_idf_exp(cmd[i]) == 1 || !*cmd[i])
@@ -91,7 +91,7 @@ void	export_cmd(char **cmd, t_env **env)
 			write(2, "minishell: export: `", 20);
 			write(2, cmd[i], ft_strlen(cmd[i]));
 			write(2, "': not a valid identifier\n", 26);
-			status = 1;
+			g_status = 1;
 		}
 		else
 			add_env(env, cmd[i]);
