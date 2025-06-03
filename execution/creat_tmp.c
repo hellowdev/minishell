@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 00:49:15 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:27:00 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*expand_doc(char *str, t_env *env)
 	while (str[j])
 	{
 		j += not_exp(&str[j], &value);
-		j += expand(&str[j], &value, env);
+		j += expand(&str[j], &value, env, 1);
 		j += doc_word(&str[j], &value);
 		if (str[j] == '$' && (str[j + 1] == '$' || !str[j + 1]))
 		{
@@ -63,7 +63,7 @@ char	*file_name(int index)
 	return (ret);
 }
 
-void	get_lineee(char *heredoc, int fd, bool quoted, t_expand *stock)
+void	get_lineee(char *heredoc, int fd, bool quoted, t_env *env)
 {
 	char	*line;
 
@@ -75,14 +75,14 @@ void	get_lineee(char *heredoc, int fd, bool quoted, t_expand *stock)
 		if (!line || ft_strcm_doc(line, heredoc) == 0)
 			return (free_null(&line));
 		if (!quoted)
-			line = expand_doc(line, stock->env);
+			line = expand_doc(line, env);
 		write(fd, line, ft_strlen(line));
 		free_null(&line);
 	}
 	return ;
 }
 
-void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock)
+void	creat_file(char **heredoc, bool quoted, int index, t_env *env)
 {
 	char	*file;
 	int		i;
@@ -96,7 +96,7 @@ void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock)
 		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0777);
 		if (fd < 0)
 			return (free_null(&file));
-		get_lineee(heredoc[i], fd, quoted, stock);
+		get_lineee(heredoc[i], fd, quoted, env);
 		close(fd);
 		i++;
 	}

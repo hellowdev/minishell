@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 12:50:19 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:47:01 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	not_exp(char *s, char **value)
 	{
 		i++;
 		len = strlen_dol(&s[i]);
-		len++;
 		notexp = ft_substr(s, 0, len);
 		*value = ft_strjoin(*value, notexp);
 		free_null(&notexp);
@@ -46,28 +45,31 @@ int	not_exp(char *s, char **value)
 	return (len);
 }
 
-int	relative_path(char *s, t_env *env, char **value)
+int	relative_path(char *s, t_env *env, char **value, int ifdoc)
 {
 	int i;
 	char *home;
 
 	i = 0;
-	if (s[i] == '~' && !s[i + 1])
+	if (ifdoc == 0)
 	{
-		i = 1;
-		home = env_searsh(env, "HOME");
-		*value = ft_strjoin(*value, home);
-	}
-	else if (s[i] == '~' && s[i + 1] == '/')
-	{
-		i = 2;
-		home = env_searsh(env, "HOME");
-		*value = ft_strjoin(*value, home);
+		if (s[i] == '~' && !s[i + 1])
+		{
+			i = 1;
+			home = env_searsh(env, "HOME");
+			*value = ft_strjoin(*value, home);
+		}
+		else if (s[i] == '~' && s[i + 1] == '/')
+		{
+			i = 2;
+			home = env_searsh(env, "HOME");
+			*value = ft_strjoin(*value, home);
+		}
 	}
 	return (i);
 }
 
-int	expand(char *s, char **value, t_env *env)
+int	expand(char *s, char **value, t_env *env, int ifdoc)
 {
 	int		i;
 	int		len; 
@@ -76,7 +78,7 @@ int	expand(char *s, char **value, t_env *env)
 
 	len = 0;
 	i = 0;
-	len = relative_path(s, env, value);
+	len = relative_path(s, env, value, ifdoc);
 	if (s[i] && s[i] == '$' && special_char(s[i + 1]) == 0)
 	{
 		len = check_dol_sp(&s[i]);
@@ -137,7 +139,7 @@ char	*expand_status(char *str, t_env *env, bool inside_dq)
 		}
 		j += doub_qt(&str[j], &value, &inside_dq);
 		j += not_exp(&str[j], &value);
-		j += expand(&str[j], &value, env);
+		j += expand(&str[j], &value, env, 0);
 		j += simple_word(&str[j], &value);
 	}
 	return (value);

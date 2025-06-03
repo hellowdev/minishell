@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 13:48:49 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:33:03 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,6 @@ typedef struct s_word
 	char    *p;
 	int     i;
 }   t_word;
-
-typedef struct s_expand
-{
-	t_env	*env;
-}   t_expand;
 
 typedef struct s_child
 {
@@ -185,7 +180,7 @@ int		strlen_dol(char *s);
 void    update_status(char *s);
 char	*expand_status(char *head, t_env *env, bool checker);
 int		not_exp(char *s, char **value);
-int		expand(char *s, char **value, t_env *env);
+int		expand(char *s, char **value, t_env *env, int ifdoc);
 int		simple_word(char *s, char **value);
 int		check_dol_sp(char *s);
 int		special_char(char c);
@@ -218,9 +213,8 @@ void	wait_proc(t_child *pack);
 // ------------------------ HEREDOC_FUNC ----------------------- //
 int		dup_heredoc(char **heredoc, bool input, int index);
 int		ft_strcm_doc(char *s1, char *s2);
-void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
+void	creat_file(char **heredoc, bool quoted, int index, t_env *env);
 char	*file_name(int index);
-void	creat_file(char **heredoc, bool quoted, int index, t_expand *stock);
 int		heredoc(t_parce **data, t_env *env);
 int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
