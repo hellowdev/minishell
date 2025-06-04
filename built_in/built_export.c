@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:08:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 21:37:14 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:07:46 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ void	add_env(t_env **env, char *var)
 
 	tmp = *env;
 	name = ft_substr(var, 0, len_equal(var));
-	value = ft_substr(var, len_equal(var) + 1, ft_strlen(var));
-	if (!*value)
-		free_null(&value);
+	if (var[len_equal(var)] == '=')
+		value = ft_substr(var, len_equal(var) + 1, ft_strlen(var));
+	else if (var[len_equal(var)] == '\0')
+		value = NULL;
 	while (tmp)
 	{
 		if (ft_strcmp(name, tmp->name_env) == 0)

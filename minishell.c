@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:36:50 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 21:37:57 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 10:15:38 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	int_while(t_env **env)
 	t_parce	*lst;
 
 	lst = NULL;
+	rl_catch_signals = 0;
 	while (1)
 	{
 		signalss();

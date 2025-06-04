@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:36:59 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 10:01:14 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	execute(t_parce *data, t_env **env)
 	first_child(&data, &pack);
 	data = data->next;
 	newfd = listofchild(&data, &pack);
-	last_child(&data, newfd, &pack);
+	if (newfd != -1)	
+		last_child(&data, newfd, &pack);
 	return (wait_proc(&pack), free(pack.ids), del_file(tmp));
 }
 
@@ -87,7 +88,15 @@ void	wait_proc(t_child *pack)
 		waitpid(pack->ids[i++], &g_status, 0);
 	}
 	if (WIFSIGNALED(g_status))
+	{
+		if (WTERMSIG(g_status) == SIGPIPE)
+		{
+			g_status = 1;
+			return ;
+		}
 		g_status = WTERMSIG(g_status) + 128;
+	}
 	else
 		g_status = WEXITSTATUS(g_status);
 }
+

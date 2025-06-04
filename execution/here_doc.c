@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:32:57 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:33:17 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 09:56:32 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,19 @@ void	del_file(t_parce *nodes)
 	}
 }
 
-int	listofdoc(t_parce **data, t_parce *tmp, t_env *env)
+int	listofdoc(t_parce **data, t_parce *tmp, t_env *env, int i)
 {
 	int	i_fork;
-	int	i;
-
-	i = 0;
+	
 	while (tmp)
 	{
 		if (tmp->heredoc)
 		{
 			i_fork = fork();
+			if (i_fork == -1)
+				return (perror("minishell: fork"), -1);
 			if (i_fork == 0)
 			{
-				signal(SIGINT, SIG_DFL);
 				creat_file(tmp->heredoc, tmp->check_qt, i, env);
 				free_doublst(data);
 				exit(0);
@@ -65,5 +64,5 @@ int	heredoc(t_parce **data, t_env *env)
 	t_parce		*tmp;
 
 	tmp = *data;
-	return (listofdoc(data, tmp, env));
+	return (listofdoc(data, tmp, env, 0));
 }

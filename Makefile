@@ -1,9 +1,5 @@
 CC = cc
 
-# CFLAGS = -Wall -Wextra -Werror 
-
-# MINIFLAGS = -lreadline
-# NCURSES = $(shell brew --prefix ncurses)
 READLINE = $(shell brew --prefix readline)
 # CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -I$(READLINE)/include

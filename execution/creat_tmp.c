@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 20:07:19 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 09:54:45 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	creat_file(char **heredoc, bool quoted, int index, t_env *env)
 	int		i;
 	int		fd;
 
+	signal(SIGINT, SIG_DFL);
 	i = 0;
 	file = NULL;
 	file = file_name(index);

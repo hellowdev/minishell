@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 21:39:18 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:29:38 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	rel_path(char *s, t_env *env, char ***value)
 	return (i);
 }
 
-char	**get_value(char *s, t_env *env, int *len)
+
+char	**get_value(char *s, t_env *env, int *len, int *check)
 {
 	char	*name;
 	char	*retenv;
@@ -42,9 +43,9 @@ char	**get_value(char *s, t_env *env, int *len)
 		*len += check_dol_sp(&s[i]);
 		name = ft_substr(s, i + 1, check_dol_sp(&s[i]) - 1);
 		retenv = env_searsh(env, name);
+		*check = export_space(retenv);
 		final_return = ft_split(retenv, 32);
-		free_null(&name);
-		free_null(&retenv);
+		return (free_null(&name), free_null(&retenv), final_return);
 	}
 	else if (s[i] && s[i] == '$' && s[i + 1] == '?')
 	{
@@ -56,23 +57,34 @@ char	**get_value(char *s, t_env *env, int *len)
 	return (final_return);
 }
 
+
 int	expand_cmd(char ***value, char *str, t_env *env, int *i)
 {
 	char	**ret;
+	int		check;
 	int		j;
+	char	**ptr;
 
 	j = 0;
-	ret = get_value(str, env, &j);
-	if (double_len(ret) > 1)
+	check = 0;
+	ptr = ft_calloc(2 , sizeof(char *));
+	ret = get_value(str, env, &j, &check);
+	if (check == 1 || double_len(ret) > 1)
 	{
 		(*value)[*i] = ft_strjoin((*value)[*i], *ret);
-		*value = ft_doubjoin(*value, ret + 1);
-		*i += double_len(ret) - 1;
+		if (double_len(ret) == 1)
+			return (ret = ft_special_join(ret, ptr), \
+			*value = ft_special_join(*value, &ret[1]), \
+			*i += double_len(ret), doubfree(ret), j);
+		else
+		{	
+			*i += double_len(ret) - 1;
+			*value = ft_doubjoin(*value, &ret[1]);
+		}
 	}
 	else if (double_len(ret) == 1)
 		(*value)[*i] = ft_strjoin((*value)[*i], *ret);
-	doubfree(ret);
-	return (j);
+	return (doubfree(ret), j);
 }
 
 int	edge_case(char *str, char **value, bool inside_dq)
