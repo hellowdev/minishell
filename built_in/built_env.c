@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 21:28:58 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:54:39 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	built_in(t_parce *data, t_env **env)
 	if (data->cmd[0] && match_cmd(data->cmd[0], "cd"))
 		return (cd_cmd(data->cmd, env), 1);
 	if (data->cmd[0] && ft_strcmp(data->cmd[0], "exit") == 0)
-		return (exit_cmd(data, data->cmd, *env), 1);
+		return (exit_cmd(data, data->cmd, env), 1);
 	if (half_builtin(data, env, tmp) == 1)
 		return (close(tmp), 1);
 	return (close(tmp), 0);

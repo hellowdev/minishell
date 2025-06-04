@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:08:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 13:07:46 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:32:56 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	add_env(t_env **env, char *var)
 	{
 		if (ft_strcmp(name, tmp->name_env) == 0)
 		{
+			free_null(&name);
 			free(tmp->value_env);
 			tmp->value_env = value;
 			return ;

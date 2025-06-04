@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:59:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 13:14:12 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:56:35 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ int	export_space(char *str)
 			chr = 1;
 		j++;
 	}
-	
 	if (str[i - 1] == 32 && chr == 1)
 		return (1);
 	return (0);
-	
 }
 
 int	strlen_dol(char *s)

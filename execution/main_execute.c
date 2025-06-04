@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 11:18:45 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 10:01:14 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:55:56 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,12 @@ int	i_child(t_parce *data, int oldpipe, int *pipefd, t_child *pack)
 		dup2(pipefd[1], 1);
 	fd_closer(oldpipe, pipefd);
 	if (built_in(data, pack->env) == 1)
+	{
+		free_env(*pack->env);
 		exit(g_status);
+	}
 	if (execute_cmd(data, *pack->env) == -1)
-		return (g_status);
+		return (free_env(*pack->env), g_status);
 	return (0);
 }
 
@@ -62,7 +65,7 @@ void	execute(t_parce *data, t_env **env)
 	t_parce	*tmp;
 
 	tmp = data;
-	if (heredoc(&data, *env) == 1)
+	if (heredoc(&data, env) == 1)
 		return (del_file(tmp));
 	pack.env = env;
 	if (data->next == NULL)
@@ -72,7 +75,7 @@ void	execute(t_parce *data, t_env **env)
 	first_child(&data, &pack);
 	data = data->next;
 	newfd = listofchild(&data, &pack);
-	if (newfd != -1)	
+	if (newfd != -1)
 		last_child(&data, newfd, &pack);
 	return (wait_proc(&pack), free(pack.ids), del_file(tmp));
 }
@@ -99,4 +102,3 @@ void	wait_proc(t_child *pack)
 	else
 		g_status = WEXITSTATUS(g_status);
 }
-

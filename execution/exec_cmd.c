@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:30:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:00:04 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*valid_path(t_env *env, char *cmd)
 char	**double_env(t_env *env)
 {
 	char	**ret;
+	char	*tmp1;
+	char	*tmp2;
 	int		i;
 
 	i = 0;
@@ -80,8 +82,12 @@ char	**double_env(t_env *env)
 		return (NULL);
 	while (env)
 	{
-		ret[i] = ft_strjoin(ft_strdup(env->name_env), ft_strdup("="));
-		ret[i] = ft_strjoin(ret[i], ft_strdup(env->value_env));
+		tmp1 = ft_strdup("=");
+		tmp2 = ft_strdup(env->value_env);
+		ret[i] = ft_strjoin(ft_strdup(env->name_env), tmp1);
+		ret[i] = ft_strjoin(ret[i], tmp2);
+		free_null(&tmp1);
+		free_null(&tmp2);
 		env = env->next;
 		i++;
 	}
@@ -103,6 +109,7 @@ int	execute_cmd(t_parce *data, t_env *testenv)
 		if (!path)
 			return (doubfree(tenv), -1);
 		execve(path, data->cmd, tenv);
+		doubfree(tenv);
 		free_null(&path);
 	}
 	return (doubfree(tenv), tenv = NULL, 0);

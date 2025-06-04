@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 13:29:38 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:55:39 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	rel_path(char *s, t_env *env, char ***value)
 	}
 	return (i);
 }
-
 
 char	**get_value(char *s, t_env *env, int *len, int *check)
 {
@@ -57,7 +56,6 @@ char	**get_value(char *s, t_env *env, int *len, int *check)
 	return (final_return);
 }
 
-
 int	expand_cmd(char ***value, char *str, t_env *env, int *i)
 {
 	char	**ret;
@@ -67,24 +65,24 @@ int	expand_cmd(char ***value, char *str, t_env *env, int *i)
 
 	j = 0;
 	check = 0;
-	ptr = ft_calloc(2 , sizeof(char *));
 	ret = get_value(str, env, &j, &check);
+	ptr = ft_calloc(2, sizeof(char *));
 	if (check == 1 || double_len(ret) > 1)
 	{
 		(*value)[*i] = ft_strjoin((*value)[*i], *ret);
 		if (double_len(ret) == 1)
 			return (ret = ft_special_join(ret, ptr), \
 			*value = ft_special_join(*value, &ret[1]), \
-			*i += double_len(ret), doubfree(ret), j);
+			*i += double_len(ret), doubfree(ret), doubfree(ptr), j);
 		else
-		{	
+		{
 			*i += double_len(ret) - 1;
 			*value = ft_doubjoin(*value, &ret[1]);
 		}
 	}
 	else if (double_len(ret) == 1)
 		(*value)[*i] = ft_strjoin((*value)[*i], *ret);
-	return (doubfree(ret), j);
+	return (doubfree(ptr), doubfree(ret), j);
 }
 
 int	edge_case(char *str, char **value, bool inside_dq)

@@ -6,17 +6,18 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 09:33:23 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:56:51 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	fork_error()
+void	fork_error(void)
 {
 	return (g_status = 1, ft_putstr_fd \
 	("minishell: fork: Resource temporarily unavailable\n", 2));
 }
+
 void	one_child(t_parce **data, t_child *pack)
 {
 	int	track;

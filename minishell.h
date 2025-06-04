@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 13:14:54 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 17:00:40 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ typedef struct s_parce
 	struct s_parce	*next;
 }	t_parce;
 
-typedef struct s_word
-{
-	char	*p;
-	int		i;
-}	t_word;
-
 typedef struct s_child
 {
 	t_env	**env;
@@ -97,7 +91,6 @@ char	*afternwl(char *str);
 int		ft_isdigit(int c);
 char	**ft_doubjoin(char **tab1, char **tab2);
 int		ft_isalpha(int c);
-void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_isspace(int c);
@@ -199,7 +192,7 @@ int		dup_heredoc(char **heredoc, bool input, int index);
 int		ft_strcm_doc(char *s1, char *s2);
 void	creat_file(char **heredoc, bool quoted, int index, t_env *env);
 char	*file_name(int index);
-int		heredoc(t_parce **data, t_env *env);
+int		heredoc(t_parce **data, t_env **env);
 int		strlen_herdoc(char *s);
 void	del_file(t_parce *nodes);
 int		double_len(char **cmd);
@@ -213,7 +206,7 @@ void	echo_cmd(char **cmd);
 void	unset_cmd(char **cmd, t_env **env);
 void	export_cmd(char **cmd, t_env **env);
 int		valid_idf(char *s);
-void	exit_cmd(t_parce *data, char **cmd, t_env *env);
+void	exit_cmd(t_parce *data, char **cmd, t_env **env);
 // ------------------------ SIGNALS ----------------------- //
 void	handle_signals(int sig);
 void	signalss(void);

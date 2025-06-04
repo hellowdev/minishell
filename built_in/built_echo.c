@@ -6,13 +6,13 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:05:28 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 12:01:48 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:57:00 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	double_len(char **cmd) // ptr [null] [null]
+int	double_len(char **cmd)
 {
 	int	i;
 

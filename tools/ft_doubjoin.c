@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:18:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 13:12:20 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:53:17 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ char	**ft_special_join(char **tab1, char **tab2)
 	doubfree(tab1);
 	return (p);
 }
-

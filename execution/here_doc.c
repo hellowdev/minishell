@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:32:57 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 09:56:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:56:06 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	del_file(t_parce *nodes)
 	}
 }
 
-int	listofdoc(t_parce **data, t_parce *tmp, t_env *env, int i)
+int	listofdoc(t_parce **data, t_parce *tmp, t_env **env, int i)
 {
 	int	i_fork;
-	
+
 	while (tmp)
 	{
 		if (tmp->heredoc)
@@ -44,8 +44,9 @@ int	listofdoc(t_parce **data, t_parce *tmp, t_env *env, int i)
 				return (perror("minishell: fork"), -1);
 			if (i_fork == 0)
 			{
-				creat_file(tmp->heredoc, tmp->check_qt, i, env);
+				creat_file(tmp->heredoc, tmp->check_qt, i, *env);
 				free_doublst(data);
+				free_env(*env);
 				exit(0);
 			}
 			signal(SIGINT, SIG_IGN);
@@ -59,7 +60,7 @@ int	listofdoc(t_parce **data, t_parce *tmp, t_env *env, int i)
 	return (g_status = WEXITSTATUS(g_status), 0);
 }
 
-int	heredoc(t_parce **data, t_env *env)
+int	heredoc(t_parce **data, t_env **env)
 {
 	t_parce		*tmp;
 
