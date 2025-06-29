@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 17:00:40 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/29 21:09:47 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ void	doubfree(char **s);
 void	free_doublst(t_parce **head);
 void	free_env(t_env *head);
 // ------------------------ PATH_CMD ----------------------- //
-char	**wich_path(t_env *env);
-char	*valid_path(t_env *env, char *cmd);
+char	**get_path(t_env *env);
+char	*path(t_env *env, char *cmd);
 // ------------------------ EXECUTION_FUNCTIONS ----------------------- //
 void	execute(t_parce *data, t_env **env);
 void	one_child(t_parce **data, t_child *pack);

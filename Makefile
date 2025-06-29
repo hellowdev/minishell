@@ -54,6 +54,7 @@ SRC = 	minishell.c \
 		execution/here_doc.c\
 		execution/creat_tmp.c\
 		execution/dup_heredoc.c\
+		execution/path_checker.c\
 		built_in/built_env.c\
 		built_in/built_cd.c\
 		built_in/built_pwd.c\

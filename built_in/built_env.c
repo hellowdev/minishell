@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:07 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 13:54:39 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/29 14:41:41 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	match_cmd(char *user_cmd, char *builtin)
 	}
 	if (j)
 	{
-		len = ft_strlen(user_cmd);
+		len = ft_strlen(builtin);
 		if (len == j)
 			return (1);
 	}
