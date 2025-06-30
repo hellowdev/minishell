@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:58:34 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/29 20:57:20 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/30 10:52:24 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	execute_cmd(t_parce *data, t_env *testenv)
 		if (!apatapati)
 			return (doubfree(tenv), -1);
 		execve(apatapati, data->cmd, tenv);
-		doubfree(tenv);
 		free_null(&apatapati);
 	}
 	return (doubfree(tenv), tenv = NULL, 0);

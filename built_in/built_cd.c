@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:48:39 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 19:33:48 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/30 10:58:37 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	cd_option(t_env **env, char *cwd)
 	ret = env_searsh(*env, "OLDPWD");
 	if (!ret)
 		return (g_status = 1, \
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2));
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2), free_null(&cwd));
 	updt_oldpwd(env, cwd);
 	updt_pwd(ft_strdup(ret), env);
 	if (chdir(ret) < 0)
@@ -67,6 +67,7 @@ void	cd_option(t_env **env, char *cwd)
 		return (g_status = 1, free_null(&ret));
 	}
 	printf("%s\n", ret);
+	free_null(&ret);
 }
 
 void	cd_param(char **cmd, t_env **env, char *cwd)
@@ -103,7 +104,7 @@ void	cd_cmd(char **cmd, t_env **env)
 	{
 		ret = env_searsh(*env, "HOME");
 		if (!ret)
-			return (g_status = 1, \
+			return (free_null(&cwd), g_status = 1, \
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2));
 		updt_oldpwd(env, cwd);
 		updt_pwd(ret, env);

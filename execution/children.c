@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:12:59 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/04 16:56:51 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/29 21:49:35 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	listofchild(t_parce **data, t_child *pack)
 		pack->ids[pack->i] = fork();
 		if (pack->ids[0] < 0)
 			return (fork_error(), -1);
-		if (pack->ids[pack->i++] == 0)
+		if (pack->ids[pack->i] == 0)
 		{
 			pack->check = 1;
 			track = i_child(*data, oldtmp, pack->newpipe, pack);
@@ -89,6 +89,7 @@ int	listofchild(t_parce **data, t_child *pack)
 		close(oldtmp);
 		oldtmp = pack->newpipe[0];
 		(*data) = (*data)->next;
+		pack->i++;
 	}
 	return (oldtmp);
 }

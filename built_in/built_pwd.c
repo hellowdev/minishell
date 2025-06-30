@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:28:55 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 18:30:32 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/06/29 21:30:10 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	pwd_cmd(char **cmd)
 		return (redire_err(cmd[0], NULL), perror(" "));
 	write(1, ret, ft_strlen(ret));
 	write(1, "\n", 1);
+	free_null(&ret);
 }
