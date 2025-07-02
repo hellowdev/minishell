@@ -1,7 +1,7 @@
 CC = cc
 
 READLINE = $(shell brew --prefix readline)
-CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include
+CFLAGS = -Wall -Wextra -Werror -I$(READLINE)/include #-fsanitize=address
 MINIFLAGS =  -lreadline -lncurses -L$(READLINE)/lib -g -Wl,-no_pie
 
 NAME = minishell
@@ -9,6 +9,7 @@ NAME = minishell
 SRC = 	minishell.c \
 		tools/ft_doubjoin.c\
 		tools/ft_split.c \
+		tools/ft_special_split.c \
 		tools/ft_calloc.c \
 		tools/ft_memcpy.c \
 		tools/ft_isdigit.c \

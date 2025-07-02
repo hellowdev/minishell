@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 21:50:32 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/29 21:09:47 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/07/02 20:14:21 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int		ft_lstsize(t_parce *lst);
 int		ft_atoi(const char *str, int *e);
 int		ft_sizeenv(t_env *lst);
 int		is_slash(char *s);
-char	**ft_special_join(char **tab1, char **tab2);
+char	**ft_salma_split(char *s, char c);
+void	*ft_memcpy_qoute(void *dest, const void *src, size_t n);
 // ------------------------ TOKENIZATION ----------------------- //
 t_parce	*main_parse(char *s, t_env *env);
 int		red_infile(t_token **token);
@@ -148,7 +149,7 @@ void	parse_add_back(t_parce **lst, t_parce *new);
 int		double_qt(char *s);
 int		single_qt(char *s);
 char	*deljoin(char *s, bool *check_quote);
-char	**word_to_cmd(char *str, t_env *env, bool inside_dq);
+char	**splited_word(char *str, t_env *env);
 
 // ------------------------ expansion ----------------------- //
 int		calc_qout(char *s);
@@ -161,7 +162,6 @@ int		simple_word(char *s, char **value);
 int		check_dol_sp(char *s);
 int		special_char(char c);
 char	*env_searsh(t_env *env, char *name);
-int		export_space(char *str);
 // ------------------------ free_data ----------------------- //
 void	free_null(char **s);
 void	ft_lstclear(t_token *lst);

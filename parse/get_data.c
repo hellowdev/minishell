@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:46:27 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/30 11:25:43 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/07/02 19:05:55 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	get_cmd(t_token *head, t_parce *newnode, t_env *env)
 			head = head->next;
 		else if (head->type == WORD)
 		{
-			word = word_to_cmd(head->value, env, false);
+			word = splited_word(head->value, env);
 			newnode->cmd = ft_doubjoin(newnode->cmd, word);
 			doubfree(word);
 		}

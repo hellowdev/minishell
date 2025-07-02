@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 20:01:10 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/29 21:08:19 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/07/02 20:04:09 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ char	*slash_path(char *cmd)
 	struct stat	info;
 
 	if (is_slash(cmd) && stat(cmd, &info) != 0)
-		return (g_status = 127, redire_err(cmd, ": No such file or directory"), NULL);
+		return (g_status = 127, \
+		redire_err(cmd, ": No such file or directory"), NULL);
 	if (S_ISDIR(info.st_mode))
 		return (g_status = 126, redire_err(cmd, ": is a directory"), NULL);
 	if (is_slash(cmd) && access(cmd, X_OK) != 0)
-		return (g_status = 126, redire_err(cmd, ": Permission denied"), NULL);	
+		return (g_status = 126, redire_err(cmd, ": Permission denied"), NULL);
 	return (ft_strdup(cmd));
 }
+
 char	*only_cmd(t_env *env, char *cmd)
 {
 	char	**env_path;
@@ -56,12 +58,8 @@ char	*only_cmd(t_env *env, char *cmd)
 char	*path(t_env *env, char *cmd)
 {
 	if (!*cmd)
-	{
-		// printf("path:\n");
 		return (g_status = 127, \
 		redire_err(cmd, ": command not found"), NULL);
-		
-	}
 	if (is_slash(cmd))
 		return (slash_path(cmd));
 	return (only_cmd(env, cmd));

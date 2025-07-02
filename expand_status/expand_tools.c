@@ -6,33 +6,11 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 12:59:22 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/30 12:19:43 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/07/02 20:12:26 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	export_space(char *str)
-{
-	int	i;
-	int	j;
-	int	chr;
-
-	chr = 0;
-	j = 0;
-	if (!str || !*str)
-		return (0);
-	i = ft_strlen(str);
-	while (str[j])
-	{
-		if (str[j] != 32 && str[j] != '\0')
-			chr = 1;
-		j++;
-	}
-	if (str[i - 1] == 32 && chr == 1)
-		return (1);
-	return (0);
-}
 
 int	strlen_dol(char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: ychedmi <ychedmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 09:51:04 by ychedmi           #+#    #+#             */
-/*   Updated: 2025/06/03 20:13:01 by ychedmi          ###   ########.fr       */
+/*   Updated: 2025/07/02 19:58:18 by ychedmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ int	relative_path(char *s, t_env *env, char **value, int ifdoc)
 			i = 1;
 			home = env_searsh(env, "HOME");
 			*value = ft_strjoin(*value, home);
+			free_null(&home);
 		}
 		else if (s[i] == '~' && s[i + 1] == '/')
 		{
 			i = 2;
 			home = env_searsh(env, "HOME");
 			*value = ft_strjoin(*value, home);
+			free_null(&home);
 		}
 	}
 	return (i);
